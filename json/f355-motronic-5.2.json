@@ -1,0 +1,49 @@
+{
+  "vehicle": "F355",
+  "ecu": "Motronic 5.2",
+  "protocol": {
+    "family": "KWP71",
+    "variant": "standard",
+    "baud": 9600
+  },
+  "parameters": [
+    {
+      "name":     "Engine RPM",
+      "units":    "rpm",
+      "type":     "int",
+      "decimals": 0,
+      "min":      0,
+      "max":      10000,
+      "address":  "0x2001",
+      "lsb":      40
+    },
+    {
+      "name":     "Injector time (left bank)",
+      "units":    "ms",
+      "type":     "float",
+      "decimals":  1,
+      "min":      0.0,
+      "max":      1580.0,
+      "address":  "0x2060"
+    },
+    {
+      "name":     "Injector time (right bank)",
+      "units":    "ms",
+      "type":     "float",
+      "decimals": 1,
+      "min":      0.0,
+      "max":      1580.0,
+      "address":  "0x2070"
+    },
+    {
+      "name":     "Load",
+      "units":    "ms",
+      "type":     "float",
+      "decimals": 1,
+      "min":      0.0,
+      "max":      1275.0,
+      "address":  "0x2005"
+    }
+  ]
+}
+
