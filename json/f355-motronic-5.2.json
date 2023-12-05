@@ -4,7 +4,8 @@
   "protocol": {
     "family": "KWP71",
     "variant": "standard",
-    "baud": 9600
+    "baud": 9600,
+    "address": "0x10"
   },
   "parameters": [
     {
@@ -15,25 +16,19 @@
       "min":      0,
       "max":      10000,
       "address":  "0x2001",
-      "lsb":      40
+      "lsb":      40,
+      "numBytes": 1
     },
     {
-      "name":     "Injector time (left bank)",
-      "units":    "ms",
-      "type":     "float",
-      "decimals":  1,
-      "min":      0.0,
-      "max":      1580.0,
-      "address":  "0x2060"
-    },
-    {
-      "name":     "Injector time (right bank)",
-      "units":    "ms",
+      "name":     "Ignition advance",
+      "units":    "degrees",
       "type":     "float",
       "decimals": 1,
-      "min":      0.0,
-      "max":      1580.0,
-      "address":  "0x2070"
+      "min":      -200,
+      "max":      800,
+      "address":  "0x2004",
+      "lsb":      1,
+      "numBytes": 1
     },
     {
       "name":     "Load",
@@ -42,8 +37,293 @@
       "decimals": 1,
       "min":      0.0,
       "max":      1275.0,
-      "address":  "0x2005"
+      "address":  "0x2005",
+      "lsb":      1,
+      "numBytes": 1
+    },
+    {
+      "name":     "Battery voltage",
+      "units":    "V",
+      "type":     "float",
+      "decimals": 1,
+      "min":      0.0,
+      "max":      25.0,
+      "address":  "0x2006",
+      "lsb":      1,
+      "numBytes": 1
+    },
+    {
+      "name":     "Intake air temperature",
+      "units":    "degrees C",
+      "type":     "float",
+      "decimals": 1,
+      "min":      -50.0,
+      "max":      150.0,
+      "address":  "0x2007",
+      "lsb":      1,
+      "numBytes": 1
+    },
+    {
+      "name":     "Engine temperature",
+      "units":    "degrees C",
+      "type":     "float",
+      "decimals": 1,
+      "min":      -50.0,
+      "max":      150.0,
+      "address":  "0x2008",
+      "lsb":      1,
+      "numBytes": 1
+    },
+    {
+      "name":     "Compressor status",
+      "units":    [ 0 : "OFF", 1 : "ON" ],
+      "address":  "0x200C",
+      "numBytes": 1
+      /* Note that the original system also listed "AIR TEMPERAT. CONTROL SYSTEM STATUS"
+         at this location. Confirm that this is simply redundant and that 200C does not
+         contain a bitfield or other compound value.
+      */
+    },
+    {
+      "name":     "Multiplicative value (LH)",
+      "units":    "",
+      "type":     "float",
+      "decimals": 3,
+      "min":      0.000,
+      "max":      2.000,
+      "address":  "0x2014",
+      "lsb":      1,
+      "numBytes": 1
+    },
+    {
+      "name":     "Additive value (LH)",
+      "units":    "",
+      "type":     "float",
+      "decimals": 3,
+      "min":      2.050, /* one of these must be wrong */
+      "max":      2.050,
+      "address":  "0x2015",
+      "lsb":      1,
+      "numBytes": 1
+    },
+    {
+      "name":     "Catalytic converter temperature (LH)",
+      "units":    "degrees C",
+      "type":     "int",
+      "decimals": 0,
+      "min":      -200,
+      "max":      1200,
+      "address":  "0x2016",
+      "lsb":      1,
+      "numBytes": 1
+    },
+    {
+      "name":     "Multiplicative value (RH)",
+      "units":    "",
+      "type":     "float",
+      "decimals": 3,
+      "min":      0.000,
+      "max":      2.000,
+      "address":  "0x2017",
+      "lsb":      1,
+      "numBytes": 1
+    },
+    {
+      "name":     "Additive value (RH)",
+      "units":    "",
+      "type":     "float",
+      "decimals": 3,
+      "min":      2.050, /* one of these must be wrong */
+      "max":      2.050,
+      "address":  "0x2018",
+      "lsb":      1,
+      "numBytes": 1
+    },
+    {
+      "name":     "Catalytic converter temperature (RH)",
+      "units":    "degrees C",
+      "type":     "int",
+      "decimals": 0,
+      "min":      -200,
+      "max":      1200,
+      "address":  "0x2019",
+      "lsb":      1,
+      "numBytes": 1
+    },
+    {
+      "name":     "Throttle angle (relative)",
+      "units":    "%",
+      "type":     "float",
+      "decimals": 1,
+      "min":      0.0,
+      "max":      130.0,
+      "address":  "0x201E",
+      "lsb":      1,
+      "numBytes": 1
+    },
+    {
+      "name":     "Road speed",
+      "units":    "km/h",
+      "type":     "int",
+      "decimals": 0,
+      "min":      0,
+      "max":      320,
+      "address":  "0x2023",
+      "lsb":      2,
+      "numBytes": 1
+    },
+    {
+      "name":     "Lambda sensor voltage (LH, upstream)",
+      "units":    "mV",
+      "type":     "int",
+      "decimals": 0,
+      "min":      0,
+      "max":      1130,
+      "address":  "0x2026",
+      "lsb":      1,
+      "numBytes": 1
+    },
+    {
+      "name":     "Lambda sensor voltage (LH, downstream)",
+      "units":    "mV",
+      "type":     "int",
+      "decimals": 0,
+      "min":      0,
+      "max":      1130,
+      "address":  "0x2027",
+      "lsb":      1,
+      "numBytes": 1
+    },
+    {
+      "name":     "Lambda sensor voltage (RH, upstream)",
+      "units":    "mV",
+      "type":     "int",
+      "decimals": 0,
+      "min":      0,
+      "max":      1130,
+      "address":  "0x2028",
+      "lsb":      1,
+      "numBytes": 1
+    },
+    {
+      "name":     "Lambda sensor voltage (RH, downstream)",
+      "units":    "mV",
+      "type":     "int",
+      "decimals": 0,
+      "min":      0,
+      "max":      1130,
+      "address":  "0x2029",
+      "lsb":      1,
+      "numBytes": 1
+    },
+    {
+      "name":     "Throttle angle (absolute)",
+      "units":    "%",
+      "type":     "float",
+      "decimals": 1,
+      "min":      -20.0,
+      "max":      120.0,
+      "address":  "0x2058",
+      "lsb":      1,
+      "numBytes": 1
+    },
+    {
+      "name":     "Throttle angle (offset)",
+      "units":    "%",
+      "type":     "float",
+      "decimals": 1,
+      "min":      -20.0,
+      "max":      120.0,
+      "address":  "0x2059",
+      "lsb":      1,
+      "numBytes": 1
+    },
+    {
+      "name":     "Secondary air valve and air pump relay",
+      "units":    [ 0 : "OFF", 1 : "ON" ],
+      "address":  "0x205A",
+      "numBytes": 1
+    },
+    {
+      "name":     "Operating mode (LH)",
+      "units":    [ 0 : "OPEN LOOP", 1 : "CLOSED LOOP" ],
+      "address":  "0x205B",
+      "numBytes": 1
+    },
+    {
+      "name":     "Operating mode (RH)",
+      "units":    [ 0 : "OPEN LOOP", 1 : "CLOSED LOOP" ],
+      "address":  "0x205C",
+      "numBytes": 1
+    },
+    {
+      "name":     "Exhaust bypass valve",
+      "units":    [ 0 : "OFF", 1 : "ON" ],
+      "address":  "0x205D",
+      "numBytes": 1
+    },
+    {
+      "name":     "Supplementary fan relay",
+      "units":    [ 0 : "ON", 1 : "OFF" ],
+      "address":  "0x205E",
+      "numBytes": 1
+    },
+    {
+      "name":     "Injector time (left bank)",
+      "units":    "ms",
+      "type":     "float",
+      "decimals":  1,
+      "min":      0.0,
+      "max":      1580.0,
+      "address":  "0x2060",
+      "lsb":      1,
+      "numBytes": 1
+    },
+    {
+      "name":     "Air flow",
+      "units":    "Kg/h",
+      "type":     "float",
+      "decimals": 1,
+      "min":      0.0,
+      "max":      1500.0,
+      "address":  "0x2064",
+      "lsb":      1,
+      "numBytes": 1
+    },
+    {
+      "name":     "Injector open time correction? (LH)",
+      "units":    "",
+      "type":     "float",
+      "decimals": 1,
+      "min":      0.0,
+      "max":      2.0,
+      "address":  "0x2066",
+      "lsb":      1,
+      "numBytes": 1
+    },
+    {
+      "name":     "Injector open time correction? (RH)",
+      "units":    "",
+      "type":     "float",
+      "decimals": 1,
+      "min":      0.0,
+      "max":      2.0,
+      "address":  "0x2068",
+      "lsb":      1,
+      "numBytes": 1
+    },
+    {
+      "name":     "Injector time (right bank)",
+      "units":    "ms",
+      "type":     "float",
+      "decimals": 1,
+      "min":      0.0,
+      "max":      1580.0,
+      "address":  "0x2070",
+      "lsb":      1,
+      "numBytes": 1
     }
-  ]
+  ],
+  "faultcodes" : [ ],
+  "actuators" : [ ]
 }
-
