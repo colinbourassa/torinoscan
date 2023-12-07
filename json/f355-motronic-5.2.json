@@ -13,22 +13,19 @@
       "units":    "rpm",
       "type":     "int",
       "decimals": 0,
-      "min":      0,
-      "max":      10000,
+      "zero":     0,
       "address":  "0x2001",
       "lsb":      40,
       "numBytes": 1
     },
     {
-      /* 0 = 5.4, 10 = 4.7, 16 = 4.2, 128 = -4.2, 130 = -4.3, 192 = -9.0, 255 = -13.7 */
       "name":     "Ignition advance",
       "units":    "degrees",
       "type":     "float",
       "decimals": 1,
-      "min":      -200,
-      "max":      800,
+      "zero":     5.4,
       "address":  "0x2004",
-      "lsb":      1,
+      "lsb":      -0.0749012,
       "numBytes": 1
     },
     {
@@ -76,13 +73,10 @@
     },
     {
       "name":     "Compressor status",
-      "units":    [ 0 : "OFF", 1 : "ON" ],
+      "units":    { "0" : "OFF", "1" : "ON" },
       "address":  "0x200C",
-      "numBytes": 1
-      /* Note that the original system also listed "AIR TEMPERAT. CONTROL SYSTEM STATUS"
-         at this location. Confirm that this is simply redundant and that 200C does not
-         contain a bitfield or other compound value.
-      */
+      "numBytes": 1,
+      "comment":  "Note that the original system also listed AIR TEMPERAT. CONTROL SYSTEM STATUS at this location. Confirm that this is simply redundant and that 200C does not contain a bitfield or other compound value."
     },
     {
       "name":     "Multiplicative value (LH)",
@@ -100,7 +94,7 @@
       "units":    "",
       "type":     "float",
       "decimals": 3,
-      "min":      2.050, /* one of these must be wrong */
+      "min":      2.050,
       "max":      2.050,
       "address":  "0x2015",
       "lsb":      1,
@@ -133,7 +127,7 @@
       "units":    "",
       "type":     "float",
       "decimals": 3,
-      "min":      2.050, /* one of these must be wrong */
+      "min":      2.050,
       "max":      2.050,
       "address":  "0x2018",
       "lsb":      1,
@@ -162,7 +156,6 @@
       "numBytes": 1
     },
     {
-      /* 10 = 12, 20 = 25, 128 = 160, 240 = 300, 243 = 303, 248 = 310 */
       "name":     "Road speed",
       "units":    "km/h",
       "type":     "int",
@@ -171,7 +164,8 @@
       "max":      320,
       "address":  "0x2023",
       "lsb":      2,
-      "numBytes": 1
+      "numBytes": 1,
+      "comment":  "10 = 12, 20 = 25, 128 = 160, 240 = 300, 243 = 303, 248 = 310"
     },
     {
       "name":     "Lambda sensor voltage (LH, upstream)",
@@ -241,31 +235,31 @@
     },
     {
       "name":     "Secondary air valve and air pump relay",
-      "units":    [ 0 : "OFF", 1 : "ON" ],
+      "units":    { "0" : "OFF", "1" : "ON" },
       "address":  "0x205A",
       "numBytes": 1
     },
     {
       "name":     "Operating mode (LH)",
-      "units":    [ 0 : "OPEN LOOP", 1 : "CLOSED LOOP" ],
+      "units":    { "0" : "OPEN LOOP", "1" : "CLOSED LOOP" },
       "address":  "0x205B",
       "numBytes": 1
     },
     {
       "name":     "Operating mode (RH)",
-      "units":    [ 0 : "OPEN LOOP", 1 : "CLOSED LOOP" ],
+      "units":    { "0" : "OPEN LOOP", "1" : "CLOSED LOOP" },
       "address":  "0x205C",
       "numBytes": 1
     },
     {
       "name":     "Exhaust bypass valve",
-      "units":    [ 0 : "OFF", 1 : "ON" ],
+      "units":    { "0" : "OFF", "1" : "ON" },
       "address":  "0x205D",
       "numBytes": 1
     },
     {
       "name":     "Supplementary fan relay",
-      "units":    [ 0 : "ON", 1 : "OFF" ],
+      "units":    { "0" : "ON", "1" : "OFF" },
       "address":  "0x205E",
       "numBytes": 1
     },
