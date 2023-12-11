@@ -42,7 +42,7 @@ int main(int argc, char** argv)
   if (infile.is_open())
   {
     json j;
-    j["vehicle"] = "F355";
+    j["vehicle"] = "";
     j["ecu"] = "";
     j["protocol"] = {
       { "familiy", "" },
