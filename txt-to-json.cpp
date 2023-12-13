@@ -45,7 +45,7 @@ int main(int argc, char** argv)
     j["vehicle"] = "";
     j["ecu"] = "";
     j["protocol"] = {
-      { "familiy", "" },
+      { "family", "" },
       { "variant", "" },
       { "baud", 0 },
       { "address", "" },
