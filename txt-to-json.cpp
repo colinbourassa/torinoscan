@@ -1,5 +1,3 @@
-// TODO: Add enum for 0 = OFF, 1 = ON, etc.
-
 #include <nlohmann/json.hpp>
 #include <iostream>
 #include <string>
@@ -27,13 +25,14 @@ int main(int argc, char** argv)
   ProcMode mode = ProcMode::None;
   int indexNum = -1;
 
-  std::regex paramSectionPattern("\\\[P\\d+\\]");
-  std::regex errorSectionPattern("\\\[E\\d+\\]");
-  std::regex actuatorSectionPattern("\\\[D\\d+\\]");
-  std::regex namePattern("NOME_ING=(.*)");
-  std::regex decimalsPattern("DECIMALI=(.*)");
-  std::regex unitsPattern("UNITI_DI_MISURA_1=(.*)");
-  std::regex generalPattern("GENERAL=(.*)");
+  const std::regex paramSectionPattern("\\\[P\\d+\\]");
+  const std::regex errorSectionPattern("\\\[E\\d+\\]");
+  const std::regex actuatorSectionPattern("\\\[D\\d+\\]");
+  const std::regex namePattern("NOME_ING=(.*)");
+  const std::regex decimalsPattern("DECIMALI=(.*)");
+  const std::regex unitsPattern("UNITI_DI_MISURA_1=(.*)");
+  const std::regex generalPattern("GENERAL=(.*)");
+  const std::regex enumPattern("POS_ING_(\\d+)=(.*)");
 
   std::string line;
   const std::string infilename(argv[1]);
@@ -137,6 +136,10 @@ int main(int argc, char** argv)
       {
         (*curArray)[indexNum]["address"] = matches[1];
       }
+      else if (std::regex_search(line, matches, enumPattern) && (matches.size() >= 3) && !excludeCurrent)
+      {
+        (*curArray)[indexNum]["enum"][matches[1]] = matches[2];
+      }
     }
     std::cout << "Reached end of file." << std::endl;
     infile.close();
@@ -146,9 +149,12 @@ int main(int argc, char** argv)
     for (int i = 0; i < paramArray.size(); i++)
     {
       paramArray[i]["numbytes"] = 1;
-      paramArray[i]["lsb"] = 0;
-      paramArray[i]["zero"] = 0;
-      paramArray[i]["units"] = "";
+      if (paramArray[i].count("enum") == 0)
+      {
+        paramArray[i]["lsb"] = 0;
+        paramArray[i]["zero"] = 0;
+        paramArray[i]["units"] = "";
+      }
     }
 
     // Populate the parent JSON object with the three sub-arrays

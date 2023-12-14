@@ -109,43 +109,48 @@
     },
     {
       "name": "STATUS SUPPLEMENTARY FAN RELAY",
+      "enum": {
+        "0": "ON",
+        "1": "OFF"
+      },
       "address": "$20 $5E",
-      "numbytes": 1,
-      "lsb": 0,
-      "zero": 0,
-      "units": ""
+      "numbytes": 1
     },
     {
       "name": "STATUS SECONDARY AIR VALVE RELAY AND AIR PUMP",
+      "enum": {
+        "0": "OFF",
+        "1": "ON"
+      },
       "address": "$20 $5A",
-      "numbytes": 1,
-      "lsb": 0,
-      "zero": 0,
-      "units": ""
+      "numbytes": 1
     },
     {
       "name": "STATUS EXHAUST BYPASS VALVE",
+      "enum": {
+        "0": "OFF",
+        "1": "ON"
+      },
       "address": "$20 $5D",
-      "numbytes": 1,
-      "lsb": 0,
-      "zero": 0,
-      "units": ""
+      "numbytes": 1
     },
     {
       "name": "COMPRESSOR STATUS",
+      "enum": {
+        "0": "OFF",
+        "1": "ON"
+      },
       "address": "$20 $0C",
-      "numbytes": 1,
-      "lsb": 0,
-      "zero": 0,
-      "units": ""
+      "numbytes": 1
     },
     {
       "name": "AIR TEMPERAT. CONTROL SYSTEM STATUS",
+      "enum": {
+        "0": "OFF",
+        "1": "ON"
+      },
       "address": "$20 $0C",
-      "numbytes": 1,
-      "lsb": 0,
-      "zero": 0,
-      "units": ""
+      "numbytes": 1
     },
     {
       "name": "VEHICLE SPEED",
@@ -194,11 +199,12 @@
     },
     {
       "name": "OPERATING MODE (BANK LH)",
+      "enum": {
+        "0": "OPEN LOOP",
+        "1": "CLOSED LOOP"
+      },
       "address": "$20 $5B",
-      "numbytes": 1,
-      "lsb": 0,
-      "zero": 0,
-      "units": ""
+      "numbytes": 1
     },
     {
       "name": "CORRECTION TJ (BANK LH)",
@@ -256,11 +262,12 @@
     },
     {
       "name": "OPERATING MODE (BANK RH)",
+      "enum": {
+        "0": "OPEN LOOP",
+        "1": "CLOSED LOOP"
+      },
       "address": "$20 $5C",
-      "numbytes": 1,
-      "lsb": 0,
-      "zero": 0,
-      "units": ""
+      "numbytes": 1
     },
     {
       "name": "CORRECTION TJ (BANK RH)",
