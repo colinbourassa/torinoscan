@@ -1,3 +1,5 @@
+// TODO: Add enum for 0 = OFF, 1 = ON, etc.
+
 #include <nlohmann/json.hpp>
 #include <iostream>
 #include <string>
