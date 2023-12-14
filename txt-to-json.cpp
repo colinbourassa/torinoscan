@@ -2,6 +2,7 @@
 #include <iostream>
 #include <string>
 #include <fstream>
+#include <unordered_set>
 #include <regex>
 using json = nlohmann::ordered_json;
 
@@ -55,43 +56,82 @@ int main(int argc, char** argv)
     json faultCodeArray = json::array();
     json actuatorArray = json::array();
     json* curArray = nullptr;
+    bool excludeCurrent = false;
+
+    const std::unordered_set<std::string> excludeNames =
+    {
+      "A/D CONVERTER SD2",
+      "SELF-LEARNT PARAMETER CANCELLING",
+      "CHECK STATUS"
+    };
 
     while (std::getline(infile, line))
     {
       if (std::regex_search(line, matches, paramSectionPattern))
       {
         // Found a section header for a parameter
-        indexNum = (mode == ProcMode::Param) ? (indexNum + 1) : 0;
+        if (mode != ProcMode::Param)
+        {
+          indexNum = 0;
+        }
+        else if (!excludeCurrent)
+        {
+          indexNum++;
+        }
+        excludeCurrent = false;
         mode = ProcMode::Param;
         curArray = &paramArray;
       }
       else if (std::regex_search(line, matches, errorSectionPattern))
       {
         // Found a section header for a fault code definition
-        indexNum = (mode == ProcMode::FaultCode) ? (indexNum + 1) : 0;
+        if (mode != ProcMode::FaultCode)
+        {
+          indexNum = 0;
+        }
+        else if (!excludeCurrent)
+        {
+          indexNum++;
+        }
+        excludeCurrent = false;
         mode = ProcMode::FaultCode;
         curArray = &faultCodeArray;
       }
       else if (std::regex_search(line, matches, actuatorSectionPattern))
       {
         // Found a section header for an actuator
-        indexNum = (mode == ProcMode::Actuator) ? (indexNum + 1) : 0;
+        if (mode != ProcMode::Actuator)
+        {
+          indexNum = 0;
+        }
+        else if (!excludeCurrent)
+        {
+          indexNum++;
+        }
+        excludeCurrent = false;
         mode = ProcMode::Actuator;
         curArray = &actuatorArray;
       }
       else if (std::regex_search(line, matches, namePattern) && (matches.size() >= 2))
       {
-        (*curArray)[indexNum]["name"] = matches[1];
+        if (excludeNames.count(matches[1]))
+        {
+          excludeCurrent = true;
+        }
+        else
+        {
+          (*curArray)[indexNum]["name"] = matches[1];
+        }
       }
-      else if (std::regex_search(line, matches, unitsPattern) && (matches.size() >= 2))
+      else if (std::regex_search(line, matches, unitsPattern) && (matches.size() >= 2) && excludeCurrent)
       {
         (*curArray)[indexNum]["units"] = matches[1];
       }
-      else if (std::regex_search(line, matches, decimalsPattern) && (matches.size() >= 2))
+      else if (std::regex_search(line, matches, decimalsPattern) && (matches.size() >= 2) && !excludeCurrent)
       {
         (*curArray)[indexNum]["decimals"] = matches[1];
       }
-      else if (std::regex_search(line, matches, generalPattern) && (matches.size() >= 2))
+      else if (std::regex_search(line, matches, generalPattern) && (matches.size() >= 2) && !excludeCurrent)
       {
         (*curArray)[indexNum]["address"] = matches[1];
       }
@@ -106,6 +146,7 @@ int main(int argc, char** argv)
       paramArray[i]["numbytes"] = 1;
       paramArray[i]["lsb"] = 0;
       paramArray[i]["zero"] = 0;
+      paramArray[i]["units"] = "";
     }
 
     // Populate the parent JSON object with the three sub-arrays

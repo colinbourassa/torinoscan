@@ -9,316 +9,557 @@
   },
   "parameters": [
     {
-      "name":     "Engine RPM",
-      "units":    "rpm",
-      "type":     "int",
-      "decimals": 0,
-      "zero":     0,
-      "address":  "0x2001",
-      "lsb":      40,
-      "numBytes": 1
+      "name": "ENGINE REVOL.",
+      "decimals": "0",
+      "address": "$2001",
+      "numbytes": 1,
+      "lsb": 40,
+      "zero": 0,
+      "units": "km/h"
     },
     {
-      "name":     "Ignition advance",
-      "units":    "degrees",
-      "type":     "float",
-      "decimals": 1,
-      "zero":     5.4,
-      "address":  "0x2004",
-      "lsb":      -0.0749012,
-      "numBytes": 1
+      "name": "INJECTION TIME (TJ)-BANK LH",
+      "decimals": "1",
+      "address": "$2060",
+      "numbytes": 1,
+      "lsb": 0.2392,
+      "zero": 0,
+      "units": "ms"
     },
     {
-      "name":     "Load",
-      "units":    "ms",
-      "type":     "float",
-      "decimals": 1,
-      "min":      0.0,
-      "max":      1275.0,
-      "address":  "0x2005",
-      "lsb":      0.1,
-      "numBytes": 1
+      "name": "INJECTION TIME (TJ)-BANK RH",
+      "decimals": "1",
+      "address": "$2070",
+      "numbytes": 1,
+      "lsb": 0.2392,
+      "zero": 0,
+      "units": "ms"
     },
     {
-      "name":     "Battery voltage",
-      "units":    "V",
-      "type":     "float",
-      "decimals": 1,
-      "min":      0.0,
-      "max":      25.0,
-      "address":  "0x2006",
-      "lsb":      1,
-      "numBytes": 1
+      "name": "LOAD (TL)",
+      "decimals": "1",
+      "address": "$2005",
+      "numbytes": 1,
+      "lsb": 0.05,
+      "zero": 0,
+      "units": "ms"
     },
     {
-      "name":     "Intake air temperature",
-      "units":    "degrees C",
-      "type":     "float",
-      "decimals": 1,
-      "min":      -50.0,
-      "max":      150.0,
-      "address":  "0x2007",
-      "lsb":      1,
-      "numBytes": 1
+      "name": "IGNITION ADVANCE",
+      "decimals": "1",
+      "address": "$2004",
+      "numbytes": 1,
+      "lsb": -0.075,
+      "zero": 5.4,
+      "units": "degrees"
     },
     {
-      "name":     "Engine temperature",
-      "units":    "degrees C",
-      "type":     "float",
-      "decimals": 1,
-      "min":      -48.0,
-      "address":  "0x2008",
-      "lsb":      0.7,
-      "numBytes": 1
+      "name": "ENGINE TEMPERATURE",
+      "decimals": "1",
+      "address": "$2008",
+      "numbytes": 1,
+      "lsb": 0.75,
+      "zero": -48.0,
+      "units": "degrees C"
     },
     {
-      "name":     "Compressor status",
-      "units":    { "0" : "OFF", "1" : "ON" },
-      "address":  "0x200C",
-      "numBytes": 1,
-      "comment":  "Note that the original system also listed AIR TEMPERAT. CONTROL SYSTEM STATUS at this location. Confirm that this is simply redundant and that 200C does not contain a bitfield or other compound value."
+      "name": "AIR FLOW",
+      "decimals": "1",
+      "address": "$2064",
+      "numbytes": 1,
+      "lsb": 0.25,
+      "zero": 0,
+      "units": "kg/h"
     },
     {
-      "name":     "Multiplicative value (LH)",
-      "units":    "",
-      "type":     "float",
-      "decimals": 3,
-      "min":      0.000,
-      "max":      2.000,
-      "address":  "0x2014",
-      "lsb":      1,
-      "numBytes": 1
+      "name": "INTAKE AIR TEMPERATURE",
+      "decimals": "1",
+      "address": "$2007",
+      "numbytes": 1,
+      "lsb": 0.75,
+      "zero": -48.0,
+      "units": "degrees C"
     },
     {
-      "name":     "Additive value (LH)",
-      "units":    "",
-      "type":     "float",
-      "decimals": 3,
-      "min":      2.050,
-      "max":      2.050,
-      "address":  "0x2015",
-      "lsb":      1,
-      "numBytes": 1
+      "name": "THROTTLE ABSOLUTE ANGLE",
+      "decimals": "1",
+      "address": "$2058",
+      "numbytes": 1,
+      "lsb": 0.5,
+      "zero": -12.8,
+      "units": "%"
     },
     {
-      "name":     "Catalytic converter temperature (LH)",
-      "units":    "degrees C",
-      "type":     "int",
-      "decimals": 0,
-      "min":      -200,
-      "max":      1200,
-      "address":  "0x2016",
-      "lsb":      1,
-      "numBytes": 1
+      "name": "RELATIVE THROTTLE ANGLE",
+      "decimals": "1",
+      "address": "$201E",
+      "numbytes": 1,
+      "lsb": 0.5,
+      "zero": 0.0,
+      "units": "%"
     },
     {
-      "name":     "Multiplicative value (RH)",
-      "units":    "",
-      "type":     "float",
-      "decimals": 3,
-      "min":      0.000,
-      "max":      2.000,
-      "address":  "0x2017",
-      "lsb":      1,
-      "numBytes": 1
+      "name": "OFFSET THROTTLE ANGLE",
+      "decimals": "1",
+      "address": "$2059",
+      "numbytes": 1,
+      "lsb": 0.50,
+      "zero": -12.8,
+      "units": "%"
     },
     {
-      "name":     "Additive value (RH)",
-      "units":    "",
-      "type":     "float",
-      "decimals": 3,
-      "min":      2.050,
-      "max":      2.050,
-      "address":  "0x2018",
-      "lsb":      1,
-      "numBytes": 1
+      "name": "STATUS SUPPLEMENTARY FAN RELAY",
+      "address": "$20 $5E",
+      "numbytes": 1,
+      "lsb": 0,
+      "zero": 0,
+      "units": ""
     },
     {
-      "name":     "Catalytic converter temperature (RH)",
-      "units":    "degrees C",
-      "type":     "int",
-      "decimals": 0,
-      "min":      -200,
-      "max":      1200,
-      "address":  "0x2019",
-      "lsb":      1,
-      "numBytes": 1
+      "name": "STATUS SECONDARY AIR VALVE RELAY AND AIR PUMP",
+      "address": "$20 $5A",
+      "numbytes": 1,
+      "lsb": 0,
+      "zero": 0,
+      "units": ""
     },
     {
-      "name":     "Throttle angle (relative)",
-      "units":    "%",
-      "type":     "float",
-      "decimals": 1,
-      "min":      0.0,
-      "max":      130.0,
-      "address":  "0x201E",
-      "lsb":      1,
-      "numBytes": 1
+      "name": "STATUS EXHAUST BYPASS VALVE",
+      "address": "$20 $5D",
+      "numbytes": 1,
+      "lsb": 0,
+      "zero": 0,
+      "units": ""
     },
     {
-      "name":     "Road speed",
-      "units":    "km/h",
-      "type":     "int",
-      "decimals": 0,
-      "min":      0,
-      "max":      320,
-      "address":  "0x2023",
-      "lsb":      2,
-      "numBytes": 1,
-      "comment":  "10 = 12, 20 = 25, 128 = 160, 240 = 300, 243 = 303, 248 = 310"
+      "name": "COMPRESSOR STATUS",
+      "address": "$20 $0C",
+      "numbytes": 1,
+      "lsb": 0,
+      "zero": 0,
+      "units": ""
     },
     {
-      "name":     "Lambda sensor voltage (LH, upstream)",
-      "units":    "mV",
-      "type":     "int",
-      "decimals": 0,
-      "min":      0,
-      "max":      1130,
-      "address":  "0x2026",
-      "lsb":      1,
-      "numBytes": 1
+      "name": "AIR TEMPERAT. CONTROL SYSTEM STATUS",
+      "address": "$20 $0C",
+      "numbytes": 1,
+      "lsb": 0,
+      "zero": 0,
+      "units": ""
     },
     {
-      "name":     "Lambda sensor voltage (LH, downstream)",
-      "units":    "mV",
-      "type":     "int",
-      "decimals": 0,
-      "min":      0,
-      "max":      1130,
-      "address":  "0x2027",
-      "lsb":      1,
-      "numBytes": 1
+      "name": "VEHICLE SPEED",
+      "decimals": "0",
+      "address": "$20 $23",
+      "numbytes": 1,
+      "lsb": 0,
+      "zero": 0,
+      "units": ""
     },
     {
-      "name":     "Lambda sensor voltage (RH, upstream)",
-      "units":    "mV",
-      "type":     "int",
-      "decimals": 0,
-      "min":      0,
-      "max":      1130,
-      "address":  "0x2028",
-      "lsb":      1,
-      "numBytes": 1
+      "name": "BATTERY VOLTAGE",
+      "decimals": "1",
+      "address": "$20 $06",
+      "numbytes": 1,
+      "lsb": 0,
+      "zero": 0,
+      "units": ""
     },
     {
-      "name":     "Lambda sensor voltage (RH, downstream)",
-      "units":    "mV",
-      "type":     "int",
-      "decimals": 0,
-      "min":      0,
-      "max":      1130,
-      "address":  "0x2029",
-      "lsb":      1,
-      "numBytes": 1
+      "name": "FRONT OXYGEN SENSOR VOLTAGE (LH BANK)",
+      "decimals": "0",
+      "address": "$20 $26",
+      "numbytes": 1,
+      "lsb": 0,
+      "zero": 0,
+      "units": ""
     },
     {
-      "name":     "Throttle angle (absolute)",
-      "units":    "%",
-      "type":     "float",
-      "decimals": 1,
-      "min":      -20.0,
-      "max":      120.0,
-      "address":  "0x2058",
-      "lsb":      1,
-      "numBytes": 1
+      "name": "REAR OXYGEN SENSOR VOLTAGE (LH BANK)",
+      "decimals": "0",
+      "address": "$20 $27",
+      "numbytes": 1,
+      "lsb": 0,
+      "zero": 0,
+      "units": ""
     },
     {
-      "name":     "Throttle angle (offset)",
-      "units":    "%",
-      "type":     "float",
-      "decimals": 1,
-      "min":      -20.0,
-      "max":      120.0,
-      "address":  "0x2059",
-      "lsb":      1,
-      "numBytes": 1
+      "name": "CATALYTIC CONVERTERS TEMPERATURE(LH BANK)",
+      "decimals": "0",
+      "address": "$20 $16",
+      "numbytes": 1,
+      "lsb": 0,
+      "zero": 0,
+      "units": ""
     },
     {
-      "name":     "Secondary air valve and air pump relay",
-      "units":    { "0" : "OFF", "1" : "ON" },
-      "address":  "0x205A",
-      "numBytes": 1
+      "name": "OPERATING MODE (BANK LH)",
+      "address": "$20 $5B",
+      "numbytes": 1,
+      "lsb": 0,
+      "zero": 0,
+      "units": ""
     },
     {
-      "name":     "Operating mode (LH)",
-      "units":    { "0" : "OPEN LOOP", "1" : "CLOSED LOOP" },
-      "address":  "0x205B",
-      "numBytes": 1
+      "name": "CORRECTION TJ (BANK LH)",
+      "decimals": "1",
+      "address": "$20 $66",
+      "numbytes": 1,
+      "lsb": 0,
+      "zero": 0,
+      "units": ""
     },
     {
-      "name":     "Operating mode (RH)",
-      "units":    { "0" : "OPEN LOOP", "1" : "CLOSED LOOP" },
-      "address":  "0x205C",
-      "numBytes": 1
+      "name": "ADDITIVE VALUE (BANK LH)",
+      "decimals": "3",
+      "address": "$20 $15",
+      "numbytes": 1,
+      "lsb": 0,
+      "zero": 0,
+      "units": ""
     },
     {
-      "name":     "Exhaust bypass valve",
-      "units":    { "0" : "OFF", "1" : "ON" },
-      "address":  "0x205D",
-      "numBytes": 1
+      "name": "MULTIPLICATIVE VALUE (BANK LH)",
+      "decimals": "3",
+      "address": "$20 $14",
+      "numbytes": 1,
+      "lsb": 0,
+      "zero": 0,
+      "units": ""
     },
     {
-      "name":     "Supplementary fan relay",
-      "units":    { "0" : "ON", "1" : "OFF" },
-      "address":  "0x205E",
-      "numBytes": 1
+      "name": "FRONT OXYGEN SENSOR VOLTAGE (BANK RH)",
+      "decimals": "0",
+      "address": "$20 $28",
+      "numbytes": 1,
+      "lsb": 0,
+      "zero": 0,
+      "units": ""
     },
     {
-      "name":     "Injector time (left bank)",
-      "units":    "ms",
-      "type":     "float",
-      "decimals":  1,
-      "min":      0.0,
-      "max":      1580.0,
-      "address":  "0x2060",
-      "lsb":      1,
-      "numBytes": 1
+      "name": "REAR OXYGEN SENSOR VOLTAGE (BANK RH)",
+      "decimals": "0",
+      "address": "$20 $29",
+      "numbytes": 1,
+      "lsb": 0,
+      "zero": 0,
+      "units": ""
     },
     {
-      "name":     "Air flow",
-      "units":    "Kg/h",
-      "type":     "float",
-      "decimals": 1,
-      "min":      0.0,
-      "max":      1500.0,
-      "address":  "0x2064",
-      "lsb":      1,
-      "numBytes": 1
+      "name": "CATALYTIC CONVERTERS TEMPERATURE (BANK RH)",
+      "decimals": "0",
+      "address": "$20 $19",
+      "numbytes": 1,
+      "lsb": 0,
+      "zero": 0,
+      "units": ""
     },
     {
-      "name":     "Injector open time correction? (LH)",
-      "units":    "",
-      "type":     "float",
-      "decimals": 1,
-      "min":      0.0,
-      "max":      2.0,
-      "address":  "0x2066",
-      "lsb":      1,
-      "numBytes": 1
+      "name": "OPERATING MODE (BANK RH)",
+      "address": "$20 $5C",
+      "numbytes": 1,
+      "lsb": 0,
+      "zero": 0,
+      "units": ""
     },
     {
-      "name":     "Injector open time correction? (RH)",
-      "units":    "",
-      "type":     "float",
-      "decimals": 1,
-      "min":      0.0,
-      "max":      2.0,
-      "address":  "0x2068",
-      "lsb":      1,
-      "numBytes": 1
+      "name": "CORRECTION TJ (BANK RH)",
+      "decimals": "1",
+      "address": "$20 $68",
+      "numbytes": 1,
+      "lsb": 0,
+      "zero": 0,
+      "units": ""
     },
     {
-      "name":     "Injector time (right bank)",
-      "units":    "ms",
-      "type":     "float",
-      "decimals": 1,
-      "min":      0.0,
-      "max":      1580.0,
-      "address":  "0x2070",
-      "lsb":      1,
-      "numBytes": 1
+      "name": "ADDITIVE VALUE (BANK RH)",
+      "decimals": "3",
+      "address": "$20 $18",
+      "numbytes": 1,
+      "lsb": 0,
+      "zero": 0,
+      "units": ""
+    },
+    {
+      "name": "MULTIPLICATIVE VALUE (BANK RH)",
+      "decimals": "3",
+      "address": "$20 $17",
+      "numbytes": 1,
+      "lsb": 0,
+      "zero": 0,
+      "units": ""
     }
   ],
-  "faultcodes" : [ ],
-  "actuators" : [ ]
+  "faultcodes": [
+    {
+      "name": "SELF-ADAPTIVE VALUES OUT OF RANGE (BANK LH)",
+      "address": "34 35 36 00 00 3 4"
+    },
+    {
+      "name": "WORN CATALYTIC CONVERTER (BANK LH)",
+      "address": "45 00 00 00 00 3 4"
+    },
+    {
+      "name": "AGED FRONT OXYGEN SENSOR (BANK LH)",
+      "address": "22 21 00 00 00 3 4"
+    },
+    {
+      "name": "AGED REAR OXYGEN SENSOR (BANK LH)",
+      "address": "23 00 00 00 00 3 4"
+    },
+    {
+      "name": "ECU CONVERTER CATALYTICS PROTECTION (BANK LH)",
+      "address": "47 00 00 00 00 3 4"
+    },
+    {
+      "name": "CONVERTER CATALYTICS TEMPERATURE (BANK LH)",
+      "address": "46 00 00 00 00 3 4"
+    },
+    {
+      "name": "FRONT OXYGEN SENSOR HEATING (BANK LH)",
+      "address": "5 00 00 00 00 1 2"
+    },
+    {
+      "name": "REAR OXYGEN SENSOR HEATING (BANK LH)",
+      "address": "4 00 00 00 00 1 2"
+    },
+    {
+      "name": "FRONT OXYGEN SENSOR SIGNAL (BANK LH)",
+      "address": "18 00 00 00 00 3 2"
+    },
+    {
+      "name": "REAR OXYGEN SENSOR SIGNAL (BANK LH)",
+      "address": "20 00 00 00 00 3 2"
+    },
+    {
+      "name": "ELECTROINJECTOR N.5 (BANK LH)",
+      "address": "154 00 00 00 00 3 4"
+    },
+    {
+      "name": "ELECTROINJECTOR N.6 (BANK LH)",
+      "address": "155 00 00 00 00 3 4"
+    },
+    {
+      "name": "ELECTROINJECTOR N.7 (BANK LH)",
+      "address": "156 00 00 00 00 3 4"
+    },
+    {
+      "name": "ELECTROINJECTOR N.8 (BANK LH)",
+      "address": "157 00 00 00 00 3 4"
+    },
+    {
+      "name": "SELF-ADAPTIVE VALUES OUT OF RANGE (BANK RH)",
+      "address": "26 27 28 00 00 3 4"
+    },
+    {
+      "name": "WORN CATALYTIC CONVERTER (BANK RH)",
+      "address": "40 00 00 00 00 3 4"
+    },
+    {
+      "name": "AGED FRONT OXYGEN SENSOR  (BANK RH)",
+      "address": "16 15 00 00 00 3 4"
+    },
+    {
+      "name": "AGED REAR OXYGEN SENSOR  (BANK RH)",
+      "address": "17 00 00 00 00 3 4"
+    },
+    {
+      "name": "ECU CONVERTER CATALYTICS PROTECTION (BANK RH)",
+      "address": "42 00 00 00 00 3 4"
+    },
+    {
+      "name": "CATALYTIC CONVERTOR TEMPERATURE (BANK RH)",
+      "address": "41 00 00 00 00 3 4"
+    },
+    {
+      "name": "FRONT LAMBDA SENSOR HEATING (BANK RH)",
+      "address": "13 00 00 00 00 1 2"
+    },
+    {
+      "name": "REAR LAMBDA SENSOR HEATING (BANK RH)",
+      "address": "14 00 00 00 00 1 2"
+    },
+    {
+      "name": "FRONT OXYGEN SENSOR SIGNAL (BANK RH)",
+      "address": "10 00 00 00 00 3 2"
+    },
+    {
+      "name": "REAR OXYGEN SENSOR SIGNAL (BANK RH)",
+      "address": "12 00 00 00 00 3 2"
+    },
+    {
+      "name": "ELECTROINJECTOR N. 1 (BANK RH)",
+      "address": "150 00 00 00 00 3 4"
+    },
+    {
+      "name": "ELECTROINJECTOR N. 2 (BANK RH)",
+      "address": "151 00 00 00 00 3 4"
+    },
+    {
+      "name": "ELECTROINJECTOR N. 3 (BANK RH)",
+      "address": "152 00 00 00 00 3 4"
+    },
+    {
+      "name": "ELECTROINJECTOR N. 4 (BANK RH)",
+      "address": "153 00 00 00 00 3 4"
+    },
+    {
+      "name": "REVOLUTIONS SENSOR",
+      "address": "111 00 00 00 00 1 2"
+    },
+    {
+      "name": "STROKE SENSOR",
+      "address": "112 00 00 00 00 3 2"
+    },
+    {
+      "name": "SECONDARY AIR SYSTEM",
+      "address": "80 00 00 00 00 3 1"
+    },
+    {
+      "name": "SECONDARY AIR PUMP",
+      "address": "84 00 00 00 00 3 1"
+    },
+    {
+      "name": "SECONDARY AIR VALVE",
+      "address": "85 00 00 00 00 3 1"
+    },
+    {
+      "name": "IDLING SPEED ADJUSTER (OPENING CIRCUIT)",
+      "address": "168 00 00 00 00 1 2"
+    },
+    {
+      "name": "IDLING SPEED ADJUSTER (CLOSING CIRCUIT)",
+      "address": "169 00 00 00 00 1 2"
+    },
+    {
+      "name": "SLOW-DOWN LIGHT",
+      "address": "43 00 00 00 00 3 1"
+    },
+    {
+      "name": "WARNING LIGHT",
+      "address": "165 00 00 00 00 1 2"
+    },
+    {
+      "name": "EXHAUST BYPASS VALVE AND EXHAUST TEMPERATURE",
+      "address": "44 295 296 00 00 3 4"
+    },
+    {
+      "name": "SUPPLEMENTARY FAN RELAY",
+      "address": "253 252 00 00 00 1 2"
+    },
+    {
+      "name": "THROTTLE POTENTIOMETER",
+      "address": "117 00 00 00 00 3 4"
+    },
+    {
+      "name": "AIR FLOW METER",
+      "address": "115 00 00 00 00 3 2"
+    },
+    {
+      "name": "INTAKE AIR TEMPERATURE SENSOR",
+      "address": "124 00 00 00 00 3 4"
+    },
+    {
+      "name": "CANISTER PURGE VALVE",
+      "address": "96 98 00 00 00 3 1"
+    },
+    {
+      "name": "CANISTER PURGE SYSTEM",
+      "address": "93 00 00 00 00 3 2"
+    },
+    {
+      "name": "WATER TEMPERATURE",
+      "address": "123 00 00 00 00 3 4"
+    },
+    {
+      "name": "BATTERY VOLTAGE",
+      "address": "107 00 00 00 00 3 2"
+    },
+    {
+      "name": "TACHOMETER SIGNAL",
+      "address": "120 00 00 00 00 3 4"
+    },
+    {
+      "name": "A.C. COMPRESSOR INTRODUCTION",
+      "address": "138 00 00 00 00 3 4"
+    },
+    {
+      "name": "ECU SELF-TESTING",
+      "address": "101 102 103 00 00 1 2"
+    },
+    {
+      "name": "KNOCK SENSOR RH",
+      "address": "210 00 00 00 00 3 4"
+    },
+    {
+      "name": "KNOCK SENSOR LH",
+      "address": "211 00 00 00 00 3 4"
+    },
+    {
+      "name": "FUEL PUMP",
+      "address": "167 00 00 00 00 1 2"
+    },
+    {
+      "name": "TCU ECU ENGINE TURNED OFF",
+      "address": "281 00 00 00 00 0 0"
+    },
+    {
+      "name": "NO CONSENT TO ALARM SYSTEM: ERROR",
+      "address": "39 00 00 00 00 0 0"
+    }
+  ],
+  "actuators": [
+    {
+      "name": "ELECTROINJECTOR N. 1",
+      "address": "3"
+    },
+    {
+      "name": "ELECTROINJECTOR N. 2",
+      "address": "7"
+    },
+    {
+      "name": "ELECTROINJECTOR N. 3",
+      "address": "4"
+    },
+    {
+      "name": "ELECTROINJECTOR N. 4",
+      "address": "5"
+    },
+    {
+      "name": "ELECTROINJECTOR N. 5",
+      "address": "31"
+    },
+    {
+      "name": "ELECTROINJECTOR N. 6",
+      "address": "35"
+    },
+    {
+      "name": "ELECTROINJECTOR N. 7",
+      "address": "32"
+    },
+    {
+      "name": "ELECTROINJECTOR N. 8",
+      "address": "33"
+    },
+    {
+      "name": "SECONDARY AIR AND PUMP AIR RELAY",
+      "address": "57"
+    },
+    {
+      "name": "SUPPLEMENTARY FAN RELAY",
+      "address": "62"
+    },
+    {
+      "name": "EXHAUST BYPASS VALVE",
+      "address": "64"
+    },
+    {
+      "name": "IDLE ACTUATOR",
+      "address": "29"
+    },
+    {
+      "name": "ANTI-EVAPORATION VALVE",
+      "address": "61"
+    }
+  ]
 }
