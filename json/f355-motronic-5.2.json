@@ -155,29 +155,30 @@
     {
       "name": "VEHICLE SPEED",
       "decimals": "0",
-      "address": "$20 $23",
+      "address": "$2023",
       "numbytes": 1,
       "lsb": 0,
-      "zero": 0,
+      "zero": 1.25,
       "units": "km/h"
     },
     {
       "name": "BATTERY VOLTAGE",
       "decimals": "1",
-      "address": "$20 $06",
+      "address": "$2006",
       "numbytes": 1,
-      "lsb": 0,
+      "lsb": 0.95,
       "zero": 0,
       "units": "V"
     },
     {
       "name": "FRONT OXYGEN SENSOR VOLTAGE (LH BANK)",
       "decimals": "0",
-      "address": "$20 $26",
+      "address": "$2026",
       "numbytes": 1,
       "lsb": 0,
       "zero": 0,
-      "units": "V"
+      "units": "mV",
+      "comment": "A value of 0x43 causes the SD2 software to display '-----', while a value of 0x44 displays 2 mV. Each LSB increment increases the displayed value by 6 mV."
     },
     {
       "name": "REAR OXYGEN SENSOR VOLTAGE (LH BANK)",
@@ -186,15 +187,15 @@
       "numbytes": 1,
       "lsb": 0,
       "zero": 0,
-      "units": "V"
+      "units": "mV"
     },
     {
       "name": "CATALYTIC CONVERTERS TEMPERATURE(LH BANK)",
       "decimals": "0",
-      "address": "$20 $16",
+      "address": "$2016",
       "numbytes": 1,
-      "lsb": 0,
-      "zero": 0,
+      "lsb": 3.90625,
+      "zero": 200,
       "units": "degrees C"
     },
     {
@@ -209,29 +210,31 @@
     {
       "name": "CORRECTION TJ (BANK LH)",
       "decimals": "1",
-      "address": "$20 $66",
+      "address": "$2066",
       "numbytes": 1,
-      "lsb": 0,
+      "lsb": 0.03125,
       "zero": 0,
       "units": ""
     },
     {
       "name": "ADDITIVE VALUE (BANK LH)",
       "decimals": "3",
-      "address": "$20 $15",
+      "address": "$2015",
       "numbytes": 1,
-      "lsb": 0,
+      "lsb": 0.016,
       "zero": 0,
-      "units": ""
+      "units": "",
+      "comment": "Original .txt file shows range as -2.050 to +2.050, but the SW seems to only accept values in the range [0x00,0x80] as valid, with them corresponding to the range [0.000,2.048]."
     },
     {
       "name": "MULTIPLICATIVE VALUE (BANK LH)",
       "decimals": "3",
-      "address": "$20 $14",
+      "address": "$2014",
       "numbytes": 1,
       "lsb": 0,
       "zero": 0,
-      "units": ""
+      "units": "",
+      "comment": ".TXT shows range as 0.000 to 2.000, but SW only ever seems to show values of 0.000 (for byte values 00-7F) or 1.000 (for byte values 80-FF)."
     },
     {
       "name": "FRONT OXYGEN SENSOR VOLTAGE (BANK RH)",
@@ -240,7 +243,7 @@
       "numbytes": 1,
       "lsb": 0,
       "zero": 0,
-      "units": "V"
+      "units": "mV"
     },
     {
       "name": "REAR OXYGEN SENSOR VOLTAGE (BANK RH)",
@@ -249,15 +252,15 @@
       "numbytes": 1,
       "lsb": 0,
       "zero": 0,
-      "units": "V"
+      "units": "mV"
     },
     {
       "name": "CATALYTIC CONVERTERS TEMPERATURE (BANK RH)",
       "decimals": "0",
-      "address": "$20 $19",
+      "address": "$2019",
       "numbytes": 1,
-      "lsb": 0,
-      "zero": 0,
+      "lsb": 3.90625,
+      "zero": 200,
       "units": "degrees C"
     },
     {
