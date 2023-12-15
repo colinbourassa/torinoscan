@@ -19,7 +19,7 @@
      <rect>
       <x>10</x>
       <y>10</y>
-      <width>281</width>
+      <width>151</width>
       <height>26</height>
      </rect>
     </property>
@@ -27,12 +27,69 @@
    <widget class="QComboBox" name="ecuComboBox">
     <property name="geometry">
      <rect>
-      <x>300</x>
+      <x>170</x>
       <y>10</y>
       <width>281</width>
       <height>26</height>
      </rect>
     </property>
+   </widget>
+   <widget class="QPushButton" name="connectButton">
+    <property name="geometry">
+     <rect>
+      <x>460</x>
+      <y>10</y>
+      <width>80</width>
+      <height>26</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Connect</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="disconnectButton">
+    <property name="enabled">
+     <bool>false</bool>
+    </property>
+    <property name="geometry">
+     <rect>
+      <x>550</x>
+      <y>10</y>
+      <width>80</width>
+      <height>26</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Disconnect</string>
+    </property>
+   </widget>
+   <widget class="QTabWidget" name="tabWidget">
+    <property name="geometry">
+     <rect>
+      <x>16</x>
+      <y>49</y>
+      <width>571</width>
+      <height>301</height>
+     </rect>
+    </property>
+    <property name="currentIndex">
+     <number>0</number>
+    </property>
+    <widget class="QWidget" name="tabParameters">
+     <attribute name="title">
+      <string>Parameters</string>
+     </attribute>
+    </widget>
+    <widget class="QWidget" name="tabFaultcodes">
+     <attribute name="title">
+      <string>Fault codes</string>
+     </attribute>
+    </widget>
+    <widget class="QWidget" name="tabActuators">
+     <attribute name="title">
+      <string>Actuators</string>
+     </attribute>
+    </widget>
    </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">
