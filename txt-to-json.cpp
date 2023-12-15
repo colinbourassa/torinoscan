@@ -153,7 +153,6 @@ int main(int argc, char** argv)
       {
         paramArray[i]["lsb"] = 0;
         paramArray[i]["zero"] = 0;
-        paramArray[i]["units"] = "";
       }
     }
 

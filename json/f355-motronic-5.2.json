@@ -15,7 +15,7 @@
       "numbytes": 1,
       "lsb": 40,
       "zero": 0,
-      "units": "km/h"
+      "units": "rpm"
     },
     {
       "name": "INJECTION TIME (TJ)-BANK LH",
@@ -113,7 +113,7 @@
         "0": "ON",
         "1": "OFF"
       },
-      "address": "$20 $5E",
+      "address": "$205E",
       "numbytes": 1
     },
     {
@@ -122,7 +122,7 @@
         "0": "OFF",
         "1": "ON"
       },
-      "address": "$20 $5A",
+      "address": "$205A",
       "numbytes": 1
     },
     {
@@ -131,7 +131,7 @@
         "0": "OFF",
         "1": "ON"
       },
-      "address": "$20 $5D",
+      "address": "$205D",
       "numbytes": 1
     },
     {
@@ -140,7 +140,7 @@
         "0": "OFF",
         "1": "ON"
       },
-      "address": "$20 $0C",
+      "address": "$200C",
       "numbytes": 1
     },
     {
@@ -149,7 +149,7 @@
         "0": "OFF",
         "1": "ON"
       },
-      "address": "$20 $0C",
+      "address": "$200C",
       "numbytes": 1
     },
     {
@@ -159,7 +159,7 @@
       "numbytes": 1,
       "lsb": 0,
       "zero": 0,
-      "units": ""
+      "units": "km/h"
     },
     {
       "name": "BATTERY VOLTAGE",
@@ -168,7 +168,7 @@
       "numbytes": 1,
       "lsb": 0,
       "zero": 0,
-      "units": ""
+      "units": "V"
     },
     {
       "name": "FRONT OXYGEN SENSOR VOLTAGE (LH BANK)",
@@ -177,7 +177,7 @@
       "numbytes": 1,
       "lsb": 0,
       "zero": 0,
-      "units": ""
+      "units": "V"
     },
     {
       "name": "REAR OXYGEN SENSOR VOLTAGE (LH BANK)",
@@ -186,7 +186,7 @@
       "numbytes": 1,
       "lsb": 0,
       "zero": 0,
-      "units": ""
+      "units": "V"
     },
     {
       "name": "CATALYTIC CONVERTERS TEMPERATURE(LH BANK)",
@@ -195,7 +195,7 @@
       "numbytes": 1,
       "lsb": 0,
       "zero": 0,
-      "units": ""
+      "units": "degrees C"
     },
     {
       "name": "OPERATING MODE (BANK LH)",
@@ -203,7 +203,7 @@
         "0": "OPEN LOOP",
         "1": "CLOSED LOOP"
       },
-      "address": "$20 $5B",
+      "address": "$205B",
       "numbytes": 1
     },
     {
@@ -240,7 +240,7 @@
       "numbytes": 1,
       "lsb": 0,
       "zero": 0,
-      "units": ""
+      "units": "V"
     },
     {
       "name": "REAR OXYGEN SENSOR VOLTAGE (BANK RH)",
@@ -249,7 +249,7 @@
       "numbytes": 1,
       "lsb": 0,
       "zero": 0,
-      "units": ""
+      "units": "V"
     },
     {
       "name": "CATALYTIC CONVERTERS TEMPERATURE (BANK RH)",
@@ -258,7 +258,7 @@
       "numbytes": 1,
       "lsb": 0,
       "zero": 0,
-      "units": ""
+      "units": "degrees C"
     },
     {
       "name": "OPERATING MODE (BANK RH)",
@@ -266,7 +266,7 @@
         "0": "OPEN LOOP",
         "1": "CLOSED LOOP"
       },
-      "address": "$20 $5C",
+      "address": "$205C",
       "numbytes": 1
     },
     {
