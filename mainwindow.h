@@ -21,13 +21,17 @@ public:
 private slots:
   void on_carComboBox_currentTextChanged(const QString &arg1);
   void on_connectButton_clicked();
+  void on_enableAllParamButton_clicked();
+  void on_disableAllParamButton_clicked();
 
 private:
   Ui::MainWindow* ui;
   std::map<std::string,std::map<std::string,std::string>> m_carConfigFilenames;
   json m_currentJson;
 
+  void setParamCheckboxStates(bool checked);
   void scanJSONDir();
   void populateCarPickList();
+  void populateParamWidgets();
 };
 #endif // MAINWINDOW_H

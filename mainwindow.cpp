@@ -7,6 +7,9 @@
 #include <QString>
 #include <QStringList>
 #include <QMessageBox>
+#include <QLabel>
+#include <QCheckBox>
+#include <QList>
 using json = nlohmann::json;
 
 MainWindow::MainWindow(QWidget *parent)
@@ -74,7 +77,56 @@ void MainWindow::on_connectButton_clicked()
     const std::string jsonFilepath = m_carConfigFilenames.at(carName).at(ecuName);
     std::ifstream f(jsonFilepath.c_str());
     m_currentJson = nlohmann::json::parse(f);
-    QMessageBox::information(this, "Protocol", QString::fromStdString(m_currentJson.at("protocol").at("family")));
+    populateParamWidgets();
+  }
+}
+
+void MainWindow::populateParamWidgets()
+{
+  int row = 0;
+  int col = 0;
+
+  for (auto paramEntry : m_currentJson.at("parameters"))
+  {
+    if (paramEntry.count("name"))
+    {
+      const QString paramName = QString::fromStdString(paramEntry.at("name"));
+      ui->parameterGrid->addWidget(new QCheckBox(paramName, ui->parametersScrollArea), row, col);
+      ui->parameterGrid->addWidget(new QLabel("0", ui->parametersScrollArea), row, col + 1);
+      if (paramEntry.count("units"))
+      {
+        const QString paramUnits = QString::fromStdString(paramEntry.at("units"));
+        ui->parameterGrid->addWidget(new QLabel(paramUnits, ui->parametersScrollArea), row, col + 2);
+      }
+      if (col == 0)
+      {
+        col = 3;
+      }
+      else
+      {
+        col = 0;
+        row++;
+      }
+    }
+  }
+}
+
+void MainWindow::on_enableAllParamButton_clicked()
+{
+  setParamCheckboxStates(true);
+}
+
+void MainWindow::on_disableAllParamButton_clicked()
+{
+  setParamCheckboxStates(false);
+}
+
+void MainWindow::setParamCheckboxStates(bool checked)
+{
+  QList<QCheckBox*> childWidgets = ui->parametersScrollArea->findChildren<QCheckBox*>();
+  foreach (QCheckBox* checkbox, childWidgets)
+  {
+    checkbox->setChecked(checked);
   }
 }
 
