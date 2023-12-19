@@ -9,7 +9,7 @@
   },
   "parameters": [
     {
-      "name": "ENGINE REVOL.",
+      "name": "Engine speed",
       "decimals": "0",
       "address": "$2001",
       "numbytes": 1,
@@ -18,7 +18,7 @@
       "units": "rpm"
     },
     {
-      "name": "INJECTION TIME (TJ)-BANK LH",
+      "name": "Injection time (TJ) LH",
       "decimals": "1",
       "address": "$2060",
       "numbytes": 1,
@@ -27,7 +27,7 @@
       "units": "ms"
     },
     {
-      "name": "INJECTION TIME (TJ)-BANK RH",
+      "name": "Injection time (TJ) RH",
       "decimals": "1",
       "address": "$2070",
       "numbytes": 1,
@@ -36,7 +36,7 @@
       "units": "ms"
     },
     {
-      "name": "LOAD (TL)",
+      "name": "Load (TL)",
       "decimals": "1",
       "address": "$2005",
       "numbytes": 1,
@@ -45,7 +45,7 @@
       "units": "ms"
     },
     {
-      "name": "IGNITION ADVANCE",
+      "name": "Ignition advance",
       "decimals": "1",
       "address": "$2004",
       "numbytes": 1,
@@ -54,7 +54,7 @@
       "units": "degrees"
     },
     {
-      "name": "ENGINE TEMPERATURE",
+      "name": "Engine temperature",
       "decimals": "1",
       "address": "$2008",
       "numbytes": 1,
@@ -63,7 +63,7 @@
       "units": "degrees C"
     },
     {
-      "name": "AIR FLOW",
+      "name": "Air flow",
       "decimals": "1",
       "address": "$2064",
       "numbytes": 1,
@@ -72,7 +72,7 @@
       "units": "kg/h"
     },
     {
-      "name": "INTAKE AIR TEMPERATURE",
+      "name": "Intake air temperature",
       "decimals": "1",
       "address": "$2007",
       "numbytes": 1,
@@ -81,7 +81,7 @@
       "units": "degrees C"
     },
     {
-      "name": "THROTTLE ABSOLUTE ANGLE",
+      "name": "Throttle absolute angle",
       "decimals": "1",
       "address": "$2058",
       "numbytes": 1,
@@ -90,7 +90,7 @@
       "units": "%"
     },
     {
-      "name": "RELATIVE THROTTLE ANGLE",
+      "name": "Relative throttle angle",
       "decimals": "1",
       "address": "$201E",
       "numbytes": 1,
@@ -99,7 +99,7 @@
       "units": "%"
     },
     {
-      "name": "OFFSET THROTTLE ANGLE",
+      "name": "Offset throttle angle",
       "decimals": "1",
       "address": "$2059",
       "numbytes": 1,
@@ -108,7 +108,7 @@
       "units": "%"
     },
     {
-      "name": "STATUS SUPPLEMENTARY FAN RELAY",
+      "name": "Supplementary fan relay status",
       "enum": {
         "0": "ON",
         "1": "OFF"
@@ -117,7 +117,7 @@
       "numbytes": 1
     },
     {
-      "name": "STATUS SECONDARY AIR VALVE RELAY AND AIR PUMP",
+      "name": "Secondary air valve relay / air pump status",
       "enum": {
         "0": "OFF",
         "1": "ON"
@@ -126,7 +126,7 @@
       "numbytes": 1
     },
     {
-      "name": "STATUS EXHAUST BYPASS VALVE",
+      "name": "Exhaust bypass valve status",
       "enum": {
         "0": "OFF",
         "1": "ON"
@@ -135,7 +135,7 @@
       "numbytes": 1
     },
     {
-      "name": "COMPRESSOR STATUS",
+      "name": "Compressor status",
       "enum": {
         "0": "OFF",
         "1": "ON"
@@ -144,7 +144,7 @@
       "numbytes": 1
     },
     {
-      "name": "AIR TEMPERAT. CONTROL SYSTEM STATUS",
+      "name": "Air temp. control system status",
       "enum": {
         "0": "OFF",
         "1": "ON"
@@ -153,7 +153,7 @@
       "numbytes": 1
     },
     {
-      "name": "VEHICLE SPEED",
+      "name": "Vehicle speed",
       "decimals": "0",
       "address": "$2023",
       "numbytes": 1,
@@ -162,7 +162,7 @@
       "units": "km/h"
     },
     {
-      "name": "BATTERY VOLTAGE",
+      "name": "Battery voltage",
       "decimals": "1",
       "address": "$2006",
       "numbytes": 1,
@@ -171,7 +171,7 @@
       "units": "V"
     },
     {
-      "name": "FRONT OXYGEN SENSOR VOLTAGE (LH BANK)",
+      "name": "Front oxygen sensor voltage (LH)",
       "decimals": "0",
       "address": "$2026",
       "numbytes": 1,
@@ -181,7 +181,7 @@
       "comment": "A value of 0x43 causes the SD2 software to display '-----', while a value of 0x44 displays 2 mV. Each LSB increment increases the displayed value by 6 mV."
     },
     {
-      "name": "REAR OXYGEN SENSOR VOLTAGE (LH BANK)",
+      "name": "Rear oxygen sensor voltage (LH)",
       "decimals": "0",
       "address": "$20 $27",
       "numbytes": 1,
@@ -190,7 +190,7 @@
       "units": "mV"
     },
     {
-      "name": "CATALYTIC CONVERTERS TEMPERATURE(LH BANK)",
+      "name": "Catalytic converters temperature (LH)",
       "decimals": "0",
       "address": "$2016",
       "numbytes": 1,
@@ -199,7 +199,7 @@
       "units": "degrees C"
     },
     {
-      "name": "OPERATING MODE (BANK LH)",
+      "name": "Operating mode (LH)",
       "enum": {
         "0": "OPEN LOOP",
         "1": "CLOSED LOOP"
@@ -208,7 +208,7 @@
       "numbytes": 1
     },
     {
-      "name": "CORRECTION TJ (BANK LH)",
+      "name": "Correction TJ (LH)",
       "decimals": "1",
       "address": "$2066",
       "numbytes": 1,
@@ -217,7 +217,7 @@
       "units": ""
     },
     {
-      "name": "ADDITIVE VALUE (BANK LH)",
+      "name": "Additive value (LH)",
       "decimals": "3",
       "address": "$2015",
       "numbytes": 1,
@@ -227,7 +227,7 @@
       "comment": "Original .txt file shows range as -2.050 to +2.050, but the SW seems to only accept values in the range [0x00,0x80] as valid, with them corresponding to the range [0.000,2.048]."
     },
     {
-      "name": "MULTIPLICATIVE VALUE (BANK LH)",
+      "name": "Multiplicative value (LH)",
       "decimals": "3",
       "address": "$2014",
       "numbytes": 1,
@@ -237,7 +237,7 @@
       "comment": ".TXT shows range as 0.000 to 2.000, but SW only ever seems to show values of 0.000 (for byte values 00-7F) or 1.000 (for byte values 80-FF)."
     },
     {
-      "name": "FRONT OXYGEN SENSOR VOLTAGE (BANK RH)",
+      "name": "Front oxygen sensor voltage (RH)",
       "decimals": "0",
       "address": "$20 $28",
       "numbytes": 1,
@@ -246,7 +246,7 @@
       "units": "mV"
     },
     {
-      "name": "REAR OXYGEN SENSOR VOLTAGE (BANK RH)",
+      "name": "Rear oxygen sensor voltage (RH)",
       "decimals": "0",
       "address": "$20 $29",
       "numbytes": 1,
@@ -255,7 +255,7 @@
       "units": "mV"
     },
     {
-      "name": "CATALYTIC CONVERTERS TEMPERATURE (BANK RH)",
+      "name": "Catalytic converters temperature (RH)",
       "decimals": "0",
       "address": "$2019",
       "numbytes": 1,
@@ -264,7 +264,7 @@
       "units": "degrees C"
     },
     {
-      "name": "OPERATING MODE (BANK RH)",
+      "name": "Operating mode (RH)",
       "enum": {
         "0": "OPEN LOOP",
         "1": "CLOSED LOOP"
@@ -273,7 +273,7 @@
       "numbytes": 1
     },
     {
-      "name": "CORRECTION TJ (BANK RH)",
+      "name": "Correction TJ (RH)",
       "decimals": "1",
       "address": "$20 $68",
       "numbytes": 1,
@@ -282,7 +282,7 @@
       "units": ""
     },
     {
-      "name": "ADDITIVE VALUE (BANK RH)",
+      "name": "Additive value (RH)",
       "decimals": "3",
       "address": "$20 $18",
       "numbytes": 1,
@@ -291,7 +291,7 @@
       "units": ""
     },
     {
-      "name": "MULTIPLICATIVE VALUE (BANK RH)",
+      "name": "Multiplicative value (RH)",
       "decimals": "3",
       "address": "$20 $17",
       "numbytes": 1,

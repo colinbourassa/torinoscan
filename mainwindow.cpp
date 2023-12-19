@@ -10,6 +10,7 @@
 #include <QLabel>
 #include <QCheckBox>
 #include <QList>
+#include "paramwidgetgroup.h"
 using json = nlohmann::json;
 
 MainWindow::MainWindow(QWidget *parent)
@@ -88,21 +89,32 @@ void MainWindow::populateParamWidgets()
 
   for (auto paramEntry : m_currentJson.at("parameters"))
   {
-    if (paramEntry.count("name"))
+    if (paramEntry.count("name") && paramEntry.count("address"))
     {
+      bool ok = false;
+
       const QString paramName = QString::fromStdString(paramEntry.at("name"));
-      ui->parameterGrid->addWidget(new QCheckBox(paramName, ui->parametersScrollArea), row, col);
-      ui->parameterGrid->addWidget(new QLabel("0", ui->parametersScrollArea), row, col + 1);
-      if (paramEntry.count("units"))
+      const unsigned int paramAddr = QString::fromStdString(paramEntry.at("address")).toUInt(&ok, 16);
+      const QString paramUnits = paramEntry.count("units") ?
+        QString::fromStdString(paramEntry.at("units")) : QString();
+
+      QMap<int,QString> enumVals;
+      if (paramEntry.count("enum"))
       {
-        const QString paramUnits = QString::fromStdString(paramEntry.at("units"));
-        ui->parameterGrid->addWidget(new QLabel(paramUnits, ui->parametersScrollArea), row, col + 2);
+        for (const auto& [key, val] : paramEntry.at("enum").items())
+        {
+          const int numeric = QString::fromStdString(key).toInt(&ok, 10);
+          if (ok)
+          {
+            enumVals[numeric] = QString::fromStdString(val);
+          }
+        }
       }
-      if (col == 0)
-      {
-        col = 3;
-      }
-      else
+
+      ParamWidgetGroup* paramWidget = new ParamWidgetGroup(paramName, paramAddr, paramUnits, enumVals, this);
+      ui->parameterGrid->addWidget(paramWidget, row, col);
+
+      if (++col > 1)
       {
         col = 0;
         row++;
@@ -123,10 +135,10 @@ void MainWindow::on_disableAllParamButton_clicked()
 
 void MainWindow::setParamCheckboxStates(bool checked)
 {
-  QList<QCheckBox*> childWidgets = ui->parametersScrollArea->findChildren<QCheckBox*>();
-  foreach (QCheckBox* checkbox, childWidgets)
+  QList<ParamWidgetGroup*> childWidgets = ui->parametersScrollArea->findChildren<ParamWidgetGroup*>();
+  foreach (ParamWidgetGroup* widget, childWidgets)
   {
-    checkbox->setChecked(checked);
+    widget->setChecked(checked);
   }
 }
 

@@ -125,6 +125,11 @@
              <height>267</height>
             </rect>
            </property>
+           <layout class="QGridLayout" name="gridLayout_6">
+            <item row="0" column="0">
+             <layout class="QGridLayout" name="faultCodeGrid"/>
+            </item>
+           </layout>
           </widget>
          </widget>
         </item>
