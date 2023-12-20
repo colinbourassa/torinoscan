@@ -34,8 +34,6 @@ private:
   QCheckBox* m_checkbox;
   QLabel* m_valLabel;
   QString m_units;
-  //QLabel* m_unitLabel;
-
 };
 
 #endif // PARAMWIDGETGROUP_H

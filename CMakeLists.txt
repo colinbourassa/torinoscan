@@ -19,6 +19,8 @@ set(PROJECT_SOURCES
         mainwindow.ui
         paramwidgetgroup.cpp
         paramwidgetgroup.h
+        actuatorwidgetgroup.cpp
+        actuatorwidgetgroup.h
 )
 
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)

@@ -11,6 +11,7 @@
 #include <QCheckBox>
 #include <QList>
 #include "paramwidgetgroup.h"
+#include "actuatorwidgetgroup.h"
 using json = nlohmann::json;
 
 MainWindow::MainWindow(QWidget *parent)
@@ -78,14 +79,28 @@ void MainWindow::on_connectButton_clicked()
     const std::string jsonFilepath = m_carConfigFilenames.at(carName).at(ecuName);
     std::ifstream f(jsonFilepath.c_str());
     m_currentJson = nlohmann::json::parse(f);
+
+    // TODO: clear out any old widgets
     populateParamWidgets();
+    populateActuatorWidgets();
+    ui->connectButton->setEnabled(false);
+    ui->disconnectButton->setEnabled(true);
   }
+}
+
+void MainWindow::on_disconnectButton_clicked()
+{
+  // TODO: disconnect via the ECU interface
+  ui->connectButton->setEnabled(true);
+  ui->disconnectButton->setEnabled(false);
 }
 
 void MainWindow::populateParamWidgets()
 {
   int row = 0;
   int col = 0;
+
+  clearParamWidgets();
 
   for (auto paramEntry : m_currentJson.at("parameters"))
   {
@@ -112,7 +127,7 @@ void MainWindow::populateParamWidgets()
       }
 
       ParamWidgetGroup* paramWidget = new ParamWidgetGroup(paramName, paramAddr, paramUnits, enumVals, this);
-      ui->parameterGrid->addWidget(paramWidget, row, col);
+      ui->parametersGrid->addWidget(paramWidget, row, col);
 
       if (++col > 1)
       {
@@ -120,6 +135,53 @@ void MainWindow::populateParamWidgets()
         row++;
       }
     }
+  }
+}
+
+void MainWindow::clearParamWidgets()
+{
+  QList<ParamWidgetGroup*> childWidgets = ui->parametersScrollArea->findChildren<ParamWidgetGroup*>();
+  foreach (ParamWidgetGroup* widget, childWidgets)
+  {
+    delete widget;
+  }
+}
+
+void MainWindow::populateActuatorWidgets()
+{
+  int row = 0;
+  int col = 0;
+
+  clearActuatorWidgets();
+
+  for (auto actEntry : m_currentJson.at("actuators"))
+  {
+    if (actEntry.count("name") && actEntry.count("address"))
+    {
+      bool ok = false;
+
+      const QString name = QString::fromStdString(actEntry.at("name"));
+      const unsigned int addr = QString::fromStdString(actEntry.at("address")).toUInt(&ok, 16);
+
+      ActuatorWidgetGroup* actWidget = new ActuatorWidgetGroup(name, addr, this);
+      ui->actuatorsGrid->addWidget(actWidget, row, col);
+      // TODO: connect the button click signal
+
+      if (++col > 1)
+      {
+        col = 0;
+        row++;
+      }
+    }
+  }
+}
+
+void MainWindow::clearActuatorWidgets()
+{
+  QList<ActuatorWidgetGroup*> childWidgets = ui->actuatorsScrollArea->findChildren<ActuatorWidgetGroup*>();
+  foreach (ActuatorWidgetGroup* widget, childWidgets)
+  {
+    delete widget;
   }
 }
 
@@ -141,4 +203,5 @@ void MainWindow::setParamCheckboxStates(bool checked)
     widget->setChecked(checked);
   }
 }
+
 

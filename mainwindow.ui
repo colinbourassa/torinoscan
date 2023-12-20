@@ -48,13 +48,6 @@
         <string>Parameters</string>
        </attribute>
        <layout class="QGridLayout" name="gridLayout_2">
-        <item row="0" column="1">
-         <widget class="QPushButton" name="disableAllParamButton">
-          <property name="text">
-           <string>Disable all</string>
-          </property>
-         </widget>
-        </item>
         <item row="0" column="0">
          <widget class="QPushButton" name="enableAllParamButton">
           <property name="text">
@@ -62,12 +55,32 @@
           </property>
          </widget>
         </item>
-        <item row="1" column="0" colspan="2">
+        <item row="0" column="1">
+         <widget class="QPushButton" name="disableAllParamButton">
+          <property name="text">
+           <string>Disable all</string>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="2">
+         <spacer name="horizontalSpacer_2">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>40</width>
+            <height>20</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+        <item row="1" column="0" colspan="3">
          <widget class="QScrollArea" name="parametersScrollArea">
           <property name="widgetResizable">
            <bool>true</bool>
           </property>
-          <widget class="QWidget" name="scrollAreaWidgetContents">
+          <widget class="QWidget" name="parametersCentralWidget">
            <property name="geometry">
             <rect>
              <x>0</x>
@@ -76,11 +89,7 @@
              <height>267</height>
             </rect>
            </property>
-           <layout class="QGridLayout" name="gridLayout_5">
-            <item row="0" column="0">
-             <layout class="QGridLayout" name="parameterGrid"/>
-            </item>
-           </layout>
+           <layout class="QGridLayout" name="parametersGrid"/>
           </widget>
          </widget>
         </item>
@@ -116,7 +125,7 @@
           <property name="widgetResizable">
            <bool>true</bool>
           </property>
-          <widget class="QWidget" name="faultCodesScrollarea">
+          <widget class="QWidget" name="faultCodesCentralWidget">
            <property name="geometry">
             <rect>
              <x>0</x>
@@ -125,20 +134,36 @@
              <height>267</height>
             </rect>
            </property>
-           <layout class="QGridLayout" name="gridLayout_6">
-            <item row="0" column="0">
-             <layout class="QGridLayout" name="faultCodeGrid"/>
-            </item>
-           </layout>
+           <layout class="QGridLayout" name="faultCodesGrid"/>
           </widget>
          </widget>
         </item>
        </layout>
       </widget>
-      <widget class="QWidget" name="tabActuators">
+      <widget class="QWidget" name="actuatorsTab">
        <attribute name="title">
         <string>Actuators</string>
        </attribute>
+       <layout class="QGridLayout" name="gridLayout_8">
+        <item row="0" column="0">
+         <widget class="QScrollArea" name="actuatorsScrollArea">
+          <property name="widgetResizable">
+           <bool>true</bool>
+          </property>
+          <widget class="QWidget" name="actuatorsCentralWidget">
+           <property name="geometry">
+            <rect>
+             <x>0</x>
+             <y>0</y>
+             <width>700</width>
+             <height>299</height>
+            </rect>
+           </property>
+           <layout class="QGridLayout" name="actuatorsGrid"/>
+          </widget>
+         </widget>
+        </item>
+       </layout>
       </widget>
      </widget>
     </item>

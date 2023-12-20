@@ -21,6 +21,7 @@ public:
 private slots:
   void on_carComboBox_currentTextChanged(const QString &arg1);
   void on_connectButton_clicked();
+  void on_disconnectButton_clicked();
   void on_enableAllParamButton_clicked();
   void on_disableAllParamButton_clicked();
 
@@ -32,6 +33,10 @@ private:
   void setParamCheckboxStates(bool checked);
   void scanJSONDir();
   void populateCarPickList();
+
   void populateParamWidgets();
+  void clearParamWidgets();
+  void populateActuatorWidgets();
+  void clearActuatorWidgets();
 };
 #endif // MAINWINDOW_H
