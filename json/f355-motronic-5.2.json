@@ -114,43 +114,48 @@
         "1": "OFF"
       },
       "address": "$205E",
-      "numbytes": 1
+      "numbytes": 1,
+      "mask": "0x01"
     },
     {
       "name": "Secondary air valve relay / air pump status",
       "enum": {
         "0": "OFF",
-        "1": "ON"
+        "16": "ON"
       },
       "address": "$205A",
-      "numbytes": 1
+      "numbytes": 1,
+      "mask": "0x10"
     },
     {
       "name": "Exhaust bypass valve status",
       "enum": {
         "0": "OFF",
-        "1": "ON"
+        "2": "ON"
       },
       "address": "$205D",
-      "numbytes": 1
+      "numbytes": 1,
+      "mask": "0x02"
     },
     {
       "name": "Compressor status",
       "enum": {
         "0": "OFF",
-        "1": "ON"
+        "4": "ON"
       },
       "address": "$200C",
-      "numbytes": 1
+      "numbytes": 1,
+      "mask": "0x04"
     },
     {
       "name": "Air temp. control system status",
       "enum": {
         "0": "OFF",
-        "1": "ON"
+        "32": "ON"
       },
       "address": "$200C",
-      "numbytes": 1
+      "numbytes": 1,
+      "mask": "0x20"
     },
     {
       "name": "Vehicle speed",
@@ -175,19 +180,20 @@
       "decimals": "0",
       "address": "$2026",
       "numbytes": 1,
-      "lsb": 0,
-      "zero": 0,
+      "lsb": 6,
+      "zero": -406,
       "units": "mV",
-      "comment": "A value of 0x43 causes the SD2 software to display '-----', while a value of 0x44 displays 2 mV. Each LSB increment increases the displayed value by 6 mV."
+      "comment": "SD2 does not accept any values lower than 0x44 as valid. 0x44 translates to 2 mV."
     },
     {
       "name": "Rear oxygen sensor voltage (LH)",
       "decimals": "0",
-      "address": "$20 $27",
+      "address": "$2027",
       "numbytes": 1,
-      "lsb": 0,
-      "zero": 0,
-      "units": "mV"
+      "lsb": 6,
+      "zero": -406,
+      "units": "mV",
+      "comment": "SD2 does not accept any values lower than 0x44 as valid. 0x44 translates to 2 mV."
     },
     {
       "name": "Catalytic converters temperature (LH)",
@@ -202,10 +208,11 @@
       "name": "Operating mode (LH)",
       "enum": {
         "0": "OPEN LOOP",
-        "1": "CLOSED LOOP"
+        "4": "CLOSED LOOP"
       },
       "address": "$205B",
-      "numbytes": 1
+      "numbytes": 1,
+      "mask": "0x04"
     },
     {
       "name": "Correction TJ (LH)",
@@ -214,7 +221,8 @@
       "numbytes": 1,
       "lsb": 0.03125,
       "zero": 0,
-      "units": ""
+      "units": "",
+      "comment": "SD2 displays ----- for values greater than 0x41 (2.0)"
     },
     {
       "name": "Additive value (LH)",
@@ -239,20 +247,22 @@
     {
       "name": "Front oxygen sensor voltage (RH)",
       "decimals": "0",
-      "address": "$20 $28",
+      "address": "$2028",
       "numbytes": 1,
-      "lsb": 0,
-      "zero": 0,
-      "units": "mV"
+      "lsb": 6,
+      "zero": -406,
+      "units": "mV",
+      "comment": "SD2 does not accept any values lower than 0x44 as valid. 0x44 translates to 2 mV."
     },
     {
       "name": "Rear oxygen sensor voltage (RH)",
       "decimals": "0",
-      "address": "$20 $29",
+      "address": "$2029",
       "numbytes": 1,
-      "lsb": 0,
-      "zero": 0,
-      "units": "mV"
+      "lsb": 6,
+      "zero": -406,
+      "units": "mV",
+      "comment": "SD2 does not accept any values lower than 0x44 as valid. 0x44 translates to 2 mV."
     },
     {
       "name": "Catalytic converters temperature (RH)",
@@ -267,37 +277,41 @@
       "name": "Operating mode (RH)",
       "enum": {
         "0": "OPEN LOOP",
-        "1": "CLOSED LOOP"
+        "4": "CLOSED LOOP"
       },
       "address": "$205C",
-      "numbytes": 1
+      "numbytes": 1,
+      "mask": "0x04"
     },
     {
       "name": "Correction TJ (RH)",
       "decimals": "1",
-      "address": "$20 $68",
+      "address": "$2068",
       "numbytes": 1,
-      "lsb": 0,
+      "lsb": 0.03125,
       "zero": 0,
-      "units": ""
+      "units": "",
+      "comment": "SD2 displays ----- for values greater than 0x41 (2.0)"
     },
     {
       "name": "Additive value (RH)",
       "decimals": "3",
-      "address": "$20 $18",
+      "address": "$2018",
       "numbytes": 1,
-      "lsb": 0,
-      "zero": 0,
-      "units": ""
+      "lsb": 0.016,
+      "zero": 0.0,
+      "units": "",
+      "comment": "SD2 displays ----- for values greater than 128 (2.048)"
     },
     {
       "name": "Multiplicative value (RH)",
       "decimals": "3",
-      "address": "$20 $17",
+      "address": "$2017",
       "numbytes": 1,
       "lsb": 0,
       "zero": 0,
-      "units": ""
+      "units": "",
+      "comment": ".TXT shows range as 0.000 to 2.000, but SW only ever seems to show values of 0.000 (for byte values 00-7F) or 1.000 (for byte values 80-FF)."
     }
   ],
   "faultcodes": [
