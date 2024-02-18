@@ -162,8 +162,8 @@
       "decimals": "0",
       "address": "$2023",
       "numbytes": 1,
-      "lsb": 0,
-      "zero": 1.25,
+      "lsb": 1.25,
+      "zero": 0,
       "units": "km/h"
     },
     {
