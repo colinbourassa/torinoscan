@@ -14,6 +14,14 @@ enum class ProcMode
   Actuator
 };
 
+std::string trim(const std::string& line)
+{
+  const char* ws = " \t\v\r\n";
+  std::size_t start = line.find_first_not_of(ws);
+  std::size_t end = line.find_last_not_of(ws);
+  return start == end ? std::string() : line.substr(start, end - start + 1);
+}
+
 int main(int argc, char** argv)
 {
   if (argc < 2)
@@ -24,6 +32,11 @@ int main(int argc, char** argv)
 
   ProcMode mode = ProcMode::None;
   int indexNum = -1;
+
+  // TODO: The section names can start with just a single letter (P, E, or D)
+  // when the ECU manages the entire engine, or with a DX/SX suffix when the
+  // section pertains to the right (destra) or left (sinistra) bank.
+  //const std::regex paramSectionPattern("\\\[P(SX)?\\d+\\]");
 
   const std::regex paramSectionPattern("\\\[P\\d+\\]");
   const std::regex errorSectionPattern("\\\[E\\d+\\]");
@@ -52,7 +65,6 @@ int main(int argc, char** argv)
       { "baud", 0 },
       { "address", "" },
     };
-
     json paramArray = json::array();
     json faultCodeArray = json::array();
     json actuatorArray = json::array();
@@ -68,6 +80,7 @@ int main(int argc, char** argv)
 
     while (std::getline(infile, line))
     {
+      line = trim(line);
       if (std::regex_search(line, matches, paramSectionPattern))
       {
         // Found a section header for a parameter
@@ -121,24 +134,59 @@ int main(int argc, char** argv)
         }
         else
         {
-          (*curArray)[indexNum]["name"] = matches[1];
+          if (curArray)
+          {
+            (*curArray)[indexNum]["name"] = matches[1];
+          }
+          else
+          {
+            std::cerr << "ERROR: Found name line (" << line << ") without previous section header!" << std::endl;
+          }
         }
       }
-      else if (std::regex_search(line, matches, unitsPattern) && (matches.size() >= 2) && excludeCurrent)
+      else if (std::regex_search(line, matches, unitsPattern) && (matches.size() >= 2) && !excludeCurrent)
       {
-        (*curArray)[indexNum]["units"] = matches[1];
+        if (curArray)
+        {
+          (*curArray)[indexNum]["units"] = matches[1];
+        }
+        else
+        {
+          std::cerr << "ERROR: Found units line (" << line << ") without previous section header!" << std::endl;
+        }
       }
       else if (std::regex_search(line, matches, decimalsPattern) && (matches.size() >= 2) && !excludeCurrent)
       {
-        (*curArray)[indexNum]["decimals"] = matches[1];
+        if (curArray)
+        {
+          (*curArray)[indexNum]["decimals"] = matches[1];
+        }
+        else
+        {
+          std::cerr << "ERROR: Found decimals line (" << line << ") without previous section header!" << std::endl;
+        }
       }
       else if (std::regex_search(line, matches, generalPattern) && (matches.size() >= 2) && !excludeCurrent)
       {
-        (*curArray)[indexNum]["address"] = matches[1];
+        if (curArray)
+        {
+          (*curArray)[indexNum]["address"] = matches[1];
+        }
+        else
+        {
+          std::cerr << "ERROR: Found general/address line (" << line << ") without previous section header!" << std::endl;
+        }
       }
       else if (std::regex_search(line, matches, enumPattern) && (matches.size() >= 3) && !excludeCurrent)
       {
-        (*curArray)[indexNum]["enum"][matches[1]] = matches[2];
+        if (curArray)
+        {
+          (*curArray)[indexNum]["enum"][matches[1]] = matches[2];
+        }
+        else
+        {
+          std::cerr << "ERROR: Found enum line (" << line << ") without previous section header!" << std::endl;
+        }
       }
     }
     std::cout << "Reached end of file." << std::endl;
