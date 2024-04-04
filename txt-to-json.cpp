@@ -6,6 +6,9 @@
 #include <regex>
 using json = nlohmann::ordered_json;
 
+/**
+ * Describes the known types of sections from the input file.
+ */
 enum class ProcMode
 {
   None,
@@ -14,17 +17,29 @@ enum class ProcMode
   Actuator
 };
 
+/**
+ * Describes the position of the ECU in vehicles that require more than one of
+ * a particular ECU type, for example, to independently control left and right
+ * banks of a V12.
+ */
 enum class Position
 {
   LeftBank, // also used for single ECUs
   RightBank
 };
 
+/**
+ * Determines the ECU position based on a substring regex match from a section title.
+ */
 Position getPosition(const std::string& s)
 {
   return ((s.size() > 1) && (s.at(1) == 'D')) ? Position::RightBank : Position::LeftBank;
 }
 
+/**
+ * Retrieves the JSON array object for the specified position from the provided
+ * map, creating the array object first if necessary.
+ */
 json* getJSONArrayAtPos(std::map<Position,json>& jArrs, Position pos)
 {
   if (jArrs.count(pos) == 0)
@@ -35,6 +50,23 @@ json* getJSONArrayAtPos(std::map<Position,json>& jArrs, Position pos)
   return &jArrs[pos];
 }
 
+/**
+ * Forms an appropriate outfile filename by changing the extension on the input
+ * filename to .json, and also adding an ECU position indicator (e.g. '-left' or
+ * '-right') if necessary.
+ */
+std::string getOutputFilename(const std::string& inputFilename, const std::string& positionDesc)
+{
+  const size_t lastDotIndex = inputFilename.find_last_of(".");
+  std::string outFilename =
+    (lastDotIndex == std::string::npos) ? inputFilename : inputFilename.substr(0, lastDotIndex);
+  outFilename += (positionDesc.empty() ? ".json" : ("-" + positionDesc + ".json"));
+  return outFilename;
+}
+
+/**
+ * Trims whitespace from both the start and end of the provided string.
+ */
 std::string trim(const std::string& line)
 {
   const char* ws = " \t\v\r\n";
@@ -52,7 +84,6 @@ int main(int argc, char** argv)
   }
 
   ProcMode mode = ProcMode::None;
-  int indexNum = -1;
 
   const std::regex paramSectionPattern("\\\[(P([DS]X)?)\\d+\\]");
   const std::regex errorSectionPattern("\\\[(E([DS]X)?)\\d+\\]");
@@ -92,16 +123,6 @@ int main(int argc, char** argv)
       if (std::regex_search(line, matches, paramSectionPattern))
       {
         const Position pos = getPosition(matches[1]);
-        std::cout << "Found parameter section '" << matches[0] << "'" << std::endl;
-        // Found a section header for a parameter
-        if (mode != ProcMode::Param)
-        {
-          indexNum = 0;
-        }
-        else if (!excludeCurrent)
-        {
-          indexNum++;
-        }
         excludeCurrent = false;
         mode = ProcMode::Param;
         curArray = getJSONArrayAtPos(paramArrays, pos);
@@ -109,16 +130,6 @@ int main(int argc, char** argv)
       else if (std::regex_search(line, matches, errorSectionPattern))
       {
         const Position pos = getPosition(matches[1]);
-        std::cout << "Found error/fault code section '" << matches[0] << "'" << std::endl;
-        // Found a section header for a fault code definition
-        if (mode != ProcMode::FaultCode)
-        {
-          indexNum = 0;
-        }
-        else if (!excludeCurrent)
-        {
-          indexNum++;
-        }
         excludeCurrent = false;
         mode = ProcMode::FaultCode;
         curArray = getJSONArrayAtPos(faultCodeArrays, pos);
@@ -126,16 +137,6 @@ int main(int argc, char** argv)
       else if (std::regex_search(line, matches, actuatorSectionPattern))
       {
         const Position pos = getPosition(matches[1]);
-        std::cout << "Found actuator section '" << matches[0] << "'" << std::endl;
-        // Found a section header for an actuator
-        if (mode != ProcMode::Actuator)
-        {
-          indexNum = 0;
-        }
-        else if (!excludeCurrent)
-        {
-          indexNum++;
-        }
         excludeCurrent = false;
         mode = ProcMode::Actuator;
         curArray = getJSONArrayAtPos(actuatorArrays, pos);
@@ -151,7 +152,6 @@ int main(int argc, char** argv)
           if (curArray)
           {
             const int nextIndex = curArray->size();
-            std::cout << "Setting name for parameter at index " << nextIndex << " to " << matches[1] << std::endl;
             (*curArray)[nextIndex]["name"] = matches[1];
           }
           else
@@ -182,7 +182,7 @@ int main(int argc, char** argv)
           const int lastIndex = curArray->size() - 1;
           if (lastIndex >= 0)
           {
-            (*curArray)[indexNum]["decimals"] = matches[1];
+            (*curArray)[lastIndex]["decimals"] = matches[1];
           }
         }
         else
@@ -197,7 +197,7 @@ int main(int argc, char** argv)
           const int lastIndex = curArray->size() - 1;
           if (lastIndex >= 0)
           {
-            (*curArray)[indexNum]["address"] = matches[1];
+            (*curArray)[lastIndex]["address"] = matches[1];
           }
         }
         else
@@ -212,7 +212,7 @@ int main(int argc, char** argv)
           const int lastIndex = curArray->size() - 1;
           if (lastIndex >= 0)
           {
-            (*curArray)[indexNum]["enum"][matches[1]] = matches[2];
+            (*curArray)[lastIndex]["enum"][matches[1]] = matches[2];
           }
         }
         else
@@ -221,7 +221,7 @@ int main(int argc, char** argv)
         }
       }
     }
-    std::cout << "Reached end of file." << std::endl;
+    std::cout << "Reached end of input file." << std::endl;
     infile.close();
 
     // Set some defaults for fields whose values we will eventually need,
@@ -229,10 +229,9 @@ int main(int argc, char** argv)
     //for (json paramArray : paramArrays)
     for (auto& [pos, paramArray] : paramArrays)
     {
-      std::cout << "Setting default fields in parameter array of size " << paramArray.size() << "..." << std::endl;
+      std::cout << "Setting default fields in parameter array (" << paramArray.size() << " elements)..." << std::endl;
       for (int i = 0; i < paramArray.size(); i++)
       {
-        std::cout << "Setting numbytes field for parameter at index " << i << "..." << std::endl;
         paramArray[i]["numbytes"] = 1;
         if (paramArray[i].count("enum") == 0)
         {
@@ -245,12 +244,7 @@ int main(int argc, char** argv)
     ecuJsons[Position::LeftBank]["vehicle"] = "";
     ecuJsons[Position::LeftBank]["ecu"] = "";
     ecuJsons[Position::LeftBank]["position"] = ""; // e.g. right or left bank
-    ecuJsons[Position::LeftBank]["protocol"] = {
-      { "family", "" },
-      { "variant", "" },
-      { "baud", 0 },
-      { "address", "" },
-    };
+    ecuJsons[Position::LeftBank]["protocol"] = { { "family", "" }, { "variant", "" }, { "baud", 0 }, { "address", "" } };
     // Populate the parent JSON object with the three sub-arrays
     ecuJsons[Position::LeftBank]["parameters"] = paramArrays[Position::LeftBank];
     ecuJsons[Position::LeftBank]["faultcodes"] = faultCodeArrays[Position::LeftBank];
@@ -268,12 +262,7 @@ int main(int argc, char** argv)
       ecuJsons[Position::RightBank]["vehicle"] = "";
       ecuJsons[Position::RightBank]["ecu"] = "";
       ecuJsons[Position::RightBank]["position"] = "right"; // e.g. right or left bank
-      ecuJsons[Position::RightBank]["protocol"] = {
-        { "family", "" },
-        { "variant", "" },
-        { "baud", 0 },
-        { "address", "" },
-      };
+      ecuJsons[Position::RightBank]["protocol"] = { { "family", "" }, { "variant", "" }, { "baud", 0 }, { "address", "" } };
 
       if (paramArrays.count(Position::RightBank))
       {
@@ -292,21 +281,14 @@ int main(int argc, char** argv)
       }
     }
 
-    std::cout << "Preparing to write output file..." << std::endl;
-
-    // Determine output filename and write the output
-    size_t lastIndex = infilename.find_last_of(".");
     for (auto const& [pos, j] : ecuJsons)
     {
-      const std::string ecuPosDescriptor = std::string("-") + j["position"].get<std::string>();
-      const std::string outfilename = (lastIndex == std::string::npos) ?
-        (infilename + ecuPosDescriptor + ".json") : (infilename.substr(0, lastIndex) + ecuPosDescriptor + ".json");
-      std::cout << "Writing output file '" << outfilename << "'... ";
-      std::ofstream outfile(outfilename);
+      const std::string outFilename = getOutputFilename(infilename, j["position"].get<std::string>());
+      std::cout << "Writing output file '" << outFilename << "'... ";
+      std::ofstream outfile(outFilename);
       outfile << std::setw(2) << j << std::endl;
       std::cout << "done." << std::endl;
     }
-    std::cout << "done." << std::endl;
   }
 
   return 0;
