@@ -18,33 +18,27 @@ enum class ProcMode
 };
 
 /**
- * Describes the position of the ECU in vehicles that require more than one of
- * a particular ECU type, for example, to independently control left and right
- * banks of a V12.
- */
-enum class Position
-{
-  LeftBank, // also used for single ECUs
-  RightBank
-};
-
-/**
  * Determines the ECU position based on a substring regex match from a section title.
+ * This function takes the alpha-character portion of the section name, e.g. "P" from "P23"
+ * or "PDX" from "PDX0".
  */
-Position getPosition(const std::string& s)
+int getPosition(const std::string& s)
 {
-  return ((s.size() > 1) && (s.at(1) == 'D')) ? Position::RightBank : Position::LeftBank;
+  // Interpret a section name with "D" as the second character as representing
+  // the "destra" (right) bank ECU. We don't bother with explicit checking for
+  // "S" ("sinistra") as both left-bank ECUs and single ECUs are treated the same.
+  return ((s.size() > 1) && (s.at(1) == 'D')) ? 1 : 0;
 }
 
 /**
  * Retrieves the JSON array object for the specified position from the provided
  * map, creating the array object first if necessary.
  */
-json* getJSONArrayAtPos(std::map<Position,json>& jArrs, Position pos)
+json* getJSONArrayAtPos(std::map<int,json>& jArrs, int pos)
 {
   if (jArrs.count(pos) == 0)
   {
-    std::cout << "Creating json::array for position: " << ((pos == Position::LeftBank) ? "left/single" : "right") << std::endl;
+    std::cout << "Creating json::array for position: " << ((pos == 0) ? "left/single" : "right") << std::endl;
     jArrs.emplace(pos, json::array());
   }
   return &jArrs[pos];
@@ -100,13 +94,13 @@ int main(int argc, char** argv)
   std::ifstream infile(infilename);
 
   std::smatch matches;
-  std::map<Position,json> ecuJsons;
+  std::map<int,json> ecuJsons;
 
   if (infile.is_open())
   {
-    std::map<Position,json> paramArrays;
-    std::map<Position,json> faultCodeArrays;
-    std::map<Position,json> actuatorArrays;
+    std::map<int,json> paramArrays;
+    std::map<int,json> faultCodeArrays;
+    std::map<int,json> actuatorArrays;
     json* curArray = nullptr;
     bool excludeCurrent = false;
 
@@ -122,21 +116,21 @@ int main(int argc, char** argv)
       line = trim(line);
       if (std::regex_search(line, matches, paramSectionPattern))
       {
-        const Position pos = getPosition(matches[1]);
+        const int pos = getPosition(matches[1]);
         excludeCurrent = false;
         mode = ProcMode::Param;
         curArray = getJSONArrayAtPos(paramArrays, pos);
       }
       else if (std::regex_search(line, matches, errorSectionPattern))
       {
-        const Position pos = getPosition(matches[1]);
+        const int pos = getPosition(matches[1]);
         excludeCurrent = false;
         mode = ProcMode::FaultCode;
         curArray = getJSONArrayAtPos(faultCodeArrays, pos);
       }
       else if (std::regex_search(line, matches, actuatorSectionPattern))
       {
-        const Position pos = getPosition(matches[1]);
+        const int pos = getPosition(matches[1]);
         excludeCurrent = false;
         mode = ProcMode::Actuator;
         curArray = getJSONArrayAtPos(actuatorArrays, pos);
@@ -226,7 +220,6 @@ int main(int argc, char** argv)
 
     // Set some defaults for fields whose values we will eventually need,
     // but that are not stored in the original .txt file.
-    //for (json paramArray : paramArrays)
     for (auto& [pos, paramArray] : paramArrays)
     {
       std::cout << "Setting default fields in parameter array (" << paramArray.size() << " elements)..." << std::endl;
@@ -241,14 +234,16 @@ int main(int argc, char** argv)
       }
     }
 
-    ecuJsons[Position::LeftBank]["vehicle"] = "";
-    ecuJsons[Position::LeftBank]["ecu"] = "";
-    ecuJsons[Position::LeftBank]["position"] = ""; // e.g. right or left bank
-    ecuJsons[Position::LeftBank]["protocol"] = { { "family", "" }, { "variant", "" }, { "baud", 0 }, { "address", "" } };
+    ecuJsons[0]["vehicle"] = "";
+    ecuJsons[0]["ecu"] = "";
+    ecuJsons[0]["position"] = ""; // e.g. left or right bank - this is only populated later
+                                  // if we need to discriminate between more than one
+    ecuJsons[0]["protocol"] = { { "family", "" }, { "variant", "" }, { "baud", 0 }, { "address", "" } };
+
     // Populate the parent JSON object with the three sub-arrays
-    ecuJsons[Position::LeftBank]["parameters"] = paramArrays[Position::LeftBank];
-    ecuJsons[Position::LeftBank]["faultcodes"] = faultCodeArrays[Position::LeftBank];
-    ecuJsons[Position::LeftBank]["actuators"] = actuatorArrays[Position::LeftBank];
+    ecuJsons[0]["parameters"] = paramArrays[0];
+    ecuJsons[0]["faultcodes"] = faultCodeArrays[0];
+    ecuJsons[0]["actuators"] = actuatorArrays[0];
 
     if ((paramArrays.size() > 1) ||
         (faultCodeArrays.size() > 1) ||
@@ -256,28 +251,26 @@ int main(int argc, char** argv)
     {
       std::cout << "At least one of the parameter, fault code, or actuator arrays has more than one entry, " <<
        "suggesting a left/right engine bank arrangement." << std::endl;
+
       // If we have a right bank, then we know that we can label the first ECU as "left".
-      ecuJsons[Position::LeftBank]["position"] = "left";
+      ecuJsons[0]["position"] = "left";
 
-      ecuJsons[Position::RightBank]["vehicle"] = "";
-      ecuJsons[Position::RightBank]["ecu"] = "";
-      ecuJsons[Position::RightBank]["position"] = "right"; // e.g. right or left bank
-      ecuJsons[Position::RightBank]["protocol"] = { { "family", "" }, { "variant", "" }, { "baud", 0 }, { "address", "" } };
+      ecuJsons[1]["vehicle"] = "";
+      ecuJsons[1]["ecu"] = "";
+      ecuJsons[1]["position"] = "right"; // e.g. right or left bank
+      ecuJsons[1]["protocol"] = { { "family", "" }, { "variant", "" }, { "baud", 0 }, { "address", "" } };
 
-      if (paramArrays.count(Position::RightBank))
+      if (paramArrays.count(1))
       {
-        std::cout << "Adding right bank parameters array to JSON for right bank ECU..." << std::endl;
-        ecuJsons[Position::RightBank]["parameters"] = paramArrays[Position::RightBank];
+        ecuJsons[1]["parameters"] = paramArrays[1];
       }
-      if (faultCodeArrays.count(Position::RightBank))
+      if (faultCodeArrays.count(1))
       {
-        std::cout << "Adding right bank fault code array to JSON for right bank ECU..." << std::endl;
-        ecuJsons[Position::RightBank]["faultcodes"] = faultCodeArrays[Position::RightBank];
+        ecuJsons[1]["faultcodes"] = faultCodeArrays[1];
       }
-      if (actuatorArrays.count(Position::RightBank))
+      if (actuatorArrays.count(1))
       {
-        std::cout << "Adding right bank actuator array to JSON for right bank ECU..." << std::endl;
-        ecuJsons[Position::RightBank]["actuators"] = actuatorArrays[Position::RightBank];
+        ecuJsons[1]["actuators"] = actuatorArrays[1];
       }
     }
 
