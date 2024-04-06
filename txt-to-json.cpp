@@ -63,10 +63,16 @@ std::string getOutputFilename(const std::string& inputFilename, const std::strin
  */
 std::string trim(const std::string& line)
 {
+  std::string result;
   const char* ws = " \t\v\r\n";
   std::size_t start = line.find_first_not_of(ws);
   std::size_t end = line.find_last_not_of(ws);
-  return start == end ? std::string() : line.substr(start, end - start + 1);
+  if (start != end)
+  {
+    result = line.substr(start, end - start + 1);
+  }
+  result = std::regex_replace(result, std::regex("\xB0"), "deg");
+  return result;
 }
 
 int main(int argc, char** argv)
