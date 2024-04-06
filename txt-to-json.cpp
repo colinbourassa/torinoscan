@@ -71,6 +71,10 @@ std::string trim(const std::string& line)
   {
     result = line.substr(start, end - start + 1);
   }
+
+  // Replace the degree symbol (extended ASCII 0xB0) with "deg" so that the JSON
+  // processor doesn't complain. Note that there may be other examples of >0x80
+  // chars that we will need to address.
   result = std::regex_replace(result, std::regex("\xB0"), "deg");
   return result;
 }
@@ -104,6 +108,11 @@ int main(int argc, char** argv)
 
   if (infile.is_open())
   {
+    // TODO: Determine whether we want to populate index 0 in each of these
+    // maps with an empty JSON array (so that the JSON output file will always
+    // have param, fault code, and actuator sections -- even if one or more of
+    // those sections is empty), OR if we want to do a check later and only
+    // add the array to the JSON parent object if the array is non-null.
     std::map<int,json> paramArrays;
     std::map<int,json> faultCodeArrays;
     std::map<int,json> actuatorArrays;
