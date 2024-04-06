@@ -31,20 +31,6 @@ int getPosition(const std::string& s)
 }
 
 /**
- * Retrieves the JSON array object for the specified position from the provided
- * map, creating the array object first if necessary.
- */
-json* getJSONArrayAtPos(std::map<int,json>& jArrs, int pos)
-{
-  if (jArrs.count(pos) == 0)
-  {
-    std::cout << "Creating json::array for position: " << ((pos == 0) ? "left/single" : "right") << std::endl;
-    jArrs.emplace(pos, json::array());
-  }
-  return &jArrs[pos];
-}
-
-/**
  * Forms an appropriate outfile filename by changing the extension on the input
  * filename to .json, and also adding an ECU position indicator (e.g. '-left' or
  * '-right') if necessary.
@@ -88,15 +74,14 @@ int main(int argc, char** argv)
   }
 
   ProcMode mode = ProcMode::None;
-
-  const std::regex paramSectionPattern("\\\[(P([DS]X)?)\\d+\\]");
-  const std::regex errorSectionPattern("\\\[(E([DS]X)?)\\d+\\]");
-  const std::regex actuatorSectionPattern("\\\[(D([DS]X)?)\\d+\\]");
-  const std::regex namePattern("NOME_ING=(.*)");
-  const std::regex decimalsPattern("DECIMALI=(.*)");
-  const std::regex unitsPattern("UNITI_DI_MISURA_1=(.*)");
-  const std::regex generalPattern("GENERAL=(.*)");
-  const std::regex enumPattern("POS_ING_(\\d+)=(.*)");
+  const std::regex paramSectionPattern("^\\s*\\\[(P([DS]X)?)\\d+\\]");
+  const std::regex errorSectionPattern("^\\s*\\\[(E([DS]X)?)\\d+\\]");
+  const std::regex actuatorSectionPattern("^\\s*\\\[(D([DS]X)?)\\d+\\]");
+  const std::regex namePattern("^\\s*NOME_ING=(.*)");
+  const std::regex decimalsPattern("^\\s*DECIMALI=(.*)");
+  const std::regex unitsPattern("^\\s*UNITI_DI_MISURA_1=(.*)");
+  const std::regex generalPattern("^\\s*GENERAL=(.*)");
+  const std::regex enumPattern("^\\s*POS_ING_(\\d+)=(.*)");
 
   std::string line;
   const std::string infilename(argv[1]);
@@ -104,20 +89,24 @@ int main(int argc, char** argv)
   std::ifstream infile(infilename);
 
   std::smatch matches;
-  std::map<int,json> ecuJsons;
 
   if (infile.is_open())
   {
-    // TODO: Determine whether we want to populate index 0 in each of these
-    // maps with an empty JSON array (so that the JSON output file will always
-    // have param, fault code, and actuator sections -- even if one or more of
-    // those sections is empty), OR if we want to do a check later and only
-    // add the array to the JSON parent object if the array is non-null.
-    std::map<int,json> paramArrays;
-    std::map<int,json> faultCodeArrays;
-    std::map<int,json> actuatorArrays;
+    bool foundRightBank = false;
+    std::map<int,json> ecuJsons;
     json* curArray = nullptr;
     bool excludeCurrent = false;
+
+    for (int index = 0; index <= 1; index++)
+    {
+      ecuJsons[index]["vehicle"] = "";
+      ecuJsons[index]["ecu"] = "";
+      ecuJsons[index]["position"] = "";
+      ecuJsons[index]["protocol"] = { { "family", "" }, { "variant", "" }, { "baud", 0 }, { "address", "" } };
+      ecuJsons[index]["parameters"] = json::array();
+      ecuJsons[index]["faultcodes"] = json::array();
+      ecuJsons[index]["actuators"] = json::array();
+    }
 
     const std::unordered_set<std::string> excludeNames =
     {
@@ -132,23 +121,26 @@ int main(int argc, char** argv)
       if (std::regex_search(line, matches, paramSectionPattern))
       {
         const int pos = getPosition(matches[1]);
+        foundRightBank = (foundRightBank || (pos == 1));
         excludeCurrent = false;
         mode = ProcMode::Param;
-        curArray = getJSONArrayAtPos(paramArrays, pos);
+        curArray = &ecuJsons[pos]["parameters"];
       }
       else if (std::regex_search(line, matches, errorSectionPattern))
       {
         const int pos = getPosition(matches[1]);
+        foundRightBank = (foundRightBank || (pos == 1));
         excludeCurrent = false;
         mode = ProcMode::FaultCode;
-        curArray = getJSONArrayAtPos(faultCodeArrays, pos);
+        curArray = &ecuJsons[pos]["faultcodes"];
       }
       else if (std::regex_search(line, matches, actuatorSectionPattern))
       {
         const int pos = getPosition(matches[1]);
+        foundRightBank = (foundRightBank || (pos == 1));
         excludeCurrent = false;
         mode = ProcMode::Actuator;
-        curArray = getJSONArrayAtPos(actuatorArrays, pos);
+        curArray = &ecuJsons[pos]["actuators"];
       }
       else if (std::regex_search(line, matches, namePattern) && (matches.size() >= 2))
       {
@@ -165,7 +157,7 @@ int main(int argc, char** argv)
           }
           else
           {
-            std::cerr << "ERROR: Found name line (" << line << ") without previous section header!" << std::endl;
+            std::cerr << "Matched name line (" << line << ") outside of known section, ignoring..." << std::endl;
           }
         }
       }
@@ -181,7 +173,7 @@ int main(int argc, char** argv)
         }
         else
         {
-          std::cerr << "ERROR: Found units line (" << line << ") without previous section header!" << std::endl;
+          std::cerr << "Matched units line (" << line << ") outside of known section, ignoring..." << std::endl;
         }
       }
       else if (std::regex_search(line, matches, decimalsPattern) && (matches.size() >= 2) && !excludeCurrent)
@@ -196,7 +188,7 @@ int main(int argc, char** argv)
         }
         else
         {
-          std::cerr << "ERROR: Found decimals line (" << line << ") without previous section header!" << std::endl;
+          std::cerr << "Matched decimals line (" << line << ") outside of known section, ignoring..." << std::endl;
         }
       }
       else if (std::regex_search(line, matches, generalPattern) && (matches.size() >= 2) && !excludeCurrent)
@@ -211,7 +203,7 @@ int main(int argc, char** argv)
         }
         else
         {
-          std::cerr << "ERROR: Found general/address line (" << line << ") without previous section header!" << std::endl;
+          std::cerr << "Matched general/address line (" << line << ") outside of known section, ignoring..." << std::endl;
         }
       }
       else if (std::regex_search(line, matches, enumPattern) && (matches.size() >= 3) && !excludeCurrent)
@@ -226,7 +218,7 @@ int main(int argc, char** argv)
         }
         else
         {
-          std::cerr << "ERROR: Found enum line (" << line << ") without previous section header!" << std::endl;
+          std::cerr << "Matched enum line (" << line << ") outside of known section, ignoring..." << std::endl;
         }
       }
     }
@@ -235,68 +227,37 @@ int main(int argc, char** argv)
 
     // Set some defaults for fields whose values we will eventually need,
     // but that are not stored in the original .txt file.
-    for (auto& [pos, paramArray] : paramArrays)
+    for (int ecuIndex = 0; ecuIndex <= 1; ecuIndex++)
     {
-      std::cout << "Setting default fields in parameter array (" << paramArray.size() << " elements)..." << std::endl;
-      for (int i = 0; i < paramArray.size(); i++)
+      for (int paramIndex = 0; paramIndex < ecuJsons[ecuIndex]["parameters"].size(); paramIndex++)
       {
-        paramArray[i]["numbytes"] = 1;
-        if (paramArray[i].count("enum") == 0)
+        ecuJsons[ecuIndex]["parameters"][paramIndex]["numbytes"] = 1;
+        if (ecuJsons[ecuIndex]["parameters"][paramIndex].count("enum") == 0)
         {
-          paramArray[i]["lsb"] = 0;
-          paramArray[i]["zero"] = 0;
+          ecuJsons[ecuIndex]["parameters"][paramIndex]["lsb"] = 0;
+          ecuJsons[ecuIndex]["parameters"][paramIndex]["zero"] = 0;
         }
       }
     }
 
-    ecuJsons[0]["vehicle"] = "";
-    ecuJsons[0]["ecu"] = "";
-    ecuJsons[0]["position"] = ""; // e.g. left or right bank - this is only populated later
-                                  // if we need to discriminate between more than one
-    ecuJsons[0]["protocol"] = { { "family", "" }, { "variant", "" }, { "baud", 0 }, { "address", "" } };
-
-    // Populate the parent JSON object with the three sub-arrays
-    ecuJsons[0]["parameters"] = paramArrays[0];
-    ecuJsons[0]["faultcodes"] = faultCodeArrays[0];
-    ecuJsons[0]["actuators"] = actuatorArrays[0];
-
-    if ((paramArrays.size() > 1) ||
-        (faultCodeArrays.size() > 1) ||
-        (actuatorArrays.size() > 1))
+    if (foundRightBank)
     {
-      std::cout << "At least one of the parameter, fault code, or actuator arrays has more than one entry, " <<
-       "suggesting a left/right engine bank arrangement." << std::endl;
-
-      // If we have a right bank, then we know that we can label the first ECU as "left".
       ecuJsons[0]["position"] = "left";
+      ecuJsons[1]["position"] = "right";
+      std::cout << "Found at least one parameter, fault code, actuator entry marked for the right bank ECU." << std::endl;
 
-      ecuJsons[1]["vehicle"] = "";
-      ecuJsons[1]["ecu"] = "";
-      ecuJsons[1]["position"] = "right"; // e.g. right or left bank
-      ecuJsons[1]["protocol"] = { { "family", "" }, { "variant", "" }, { "baud", 0 }, { "address", "" } };
-
-      if (paramArrays.count(1))
-      {
-        ecuJsons[1]["parameters"] = paramArrays[1];
-      }
-      if (faultCodeArrays.count(1))
-      {
-        ecuJsons[1]["faultcodes"] = faultCodeArrays[1];
-      }
-      if (actuatorArrays.count(1))
-      {
-        ecuJsons[1]["actuators"] = actuatorArrays[1];
-      }
-    }
-
-    for (auto const& [pos, j] : ecuJsons)
-    {
-      const std::string outFilename = getOutputFilename(infilename, j["position"].get<std::string>());
+      const std::string outFilename = getOutputFilename(infilename, ecuJsons[1]["position"].get<std::string>());
       std::cout << "Writing output file '" << outFilename << "'... ";
       std::ofstream outfile(outFilename);
-      outfile << std::setw(2) << j << std::endl;
+      outfile << std::setw(2) << ecuJsons[1] << std::endl;
       std::cout << "done." << std::endl;
     }
+
+    const std::string outFilename = getOutputFilename(infilename, ecuJsons[0]["position"].get<std::string>());
+    std::cout << "Writing output file '" << outFilename << "'... ";
+    std::ofstream outfile(outFilename);
+    outfile << std::setw(2) << ecuJsons[0] << std::endl;
+    std::cout << "done." << std::endl;
   }
 
   return 0;
