@@ -73,10 +73,14 @@ int main(int argc, char** argv)
     return 0;
   }
 
-  ProcMode mode = ProcMode::None;
+  // TODO: Some of the SD2 TXT files have section titles in the
+  // format "[S#]", and these contain fields similar to those
+  // found in the parameter ("[P#]") sections. We need to figure
+  // out how these sections are processed by SD2. See DMul0092.
   const std::regex paramSectionPattern("^\\s*\\\[(P([DS]X)?)\\d+\\]");
   const std::regex errorSectionPattern("^\\s*\\\[(E([DS]X)?)\\d+\\]");
   const std::regex actuatorSectionPattern("^\\s*\\\[(D([DS]X)?)\\d+\\]");
+  const std::regex genericSectionPattern("\\\[.*\\]");
   const std::regex namePattern("^\\s*NOME_ING=(.*)");
   const std::regex decimalsPattern("^\\s*DECIMALI=(.*)");
   const std::regex unitsPattern("^\\s*UNITI_DI_MISURA_1=(.*)");
@@ -123,7 +127,6 @@ int main(int argc, char** argv)
         const int pos = getPosition(matches[1]);
         foundRightBank = (foundRightBank || (pos == 1));
         excludeCurrent = false;
-        mode = ProcMode::Param;
         curArray = &ecuJsons[pos]["parameters"];
       }
       else if (std::regex_search(line, matches, errorSectionPattern))
@@ -131,7 +134,6 @@ int main(int argc, char** argv)
         const int pos = getPosition(matches[1]);
         foundRightBank = (foundRightBank || (pos == 1));
         excludeCurrent = false;
-        mode = ProcMode::FaultCode;
         curArray = &ecuJsons[pos]["faultcodes"];
       }
       else if (std::regex_search(line, matches, actuatorSectionPattern))
@@ -139,8 +141,12 @@ int main(int argc, char** argv)
         const int pos = getPosition(matches[1]);
         foundRightBank = (foundRightBank || (pos == 1));
         excludeCurrent = false;
-        mode = ProcMode::Actuator;
         curArray = &ecuJsons[pos]["actuators"];
+      }
+      else if (std::regex_search(line, matches, genericSectionPattern))
+      {
+        std::cout << "Found unknown section ('" << matches[0] << "'), skipping." << std::endl;
+        curArray = nullptr;
       }
       else if (std::regex_search(line, matches, namePattern) && (matches.size() >= 2))
       {
