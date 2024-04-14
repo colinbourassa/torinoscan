@@ -62,6 +62,7 @@ std::string trim(const std::string& line)
   // processor doesn't complain. Note that there may be other examples of >0x80
   // chars that we will need to address.
   result = std::regex_replace(result, std::regex("\xB0"), "deg");
+  result = std::regex_replace(result, std::regex("\x85"), "...");
   return result;
 }
 
