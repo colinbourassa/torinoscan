@@ -534,55 +534,55 @@
   ],
   "actuators": [
     {
-      "name": "ELECTROINJECTOR N. 1",
+      "name": "Injector no. 1",
       "address": "3"
     },
     {
-      "name": "ELECTROINJECTOR N. 2",
+      "name": "Injector no. 2",
       "address": "7"
     },
     {
-      "name": "ELECTROINJECTOR N. 3",
+      "name": "Injector no. 3",
       "address": "4"
     },
     {
-      "name": "ELECTROINJECTOR N. 4",
+      "name": "Injector no. 4",
       "address": "5"
     },
     {
-      "name": "ELECTROINJECTOR N. 5",
+      "name": "Injector no. 5",
       "address": "31"
     },
     {
-      "name": "ELECTROINJECTOR N. 6",
+      "name": "Injector no. 6",
       "address": "35"
     },
     {
-      "name": "ELECTROINJECTOR N. 7",
+      "name": "Injector no. 7",
       "address": "32"
     },
     {
-      "name": "ELECTROINJECTOR N. 8",
+      "name": "Injector no. 8",
       "address": "33"
     },
     {
-      "name": "SECONDARY AIR AND PUMP AIR RELAY",
+      "name": "Secondary air pump relay",
       "address": "57"
     },
     {
-      "name": "SUPPLEMENTARY FAN RELAY",
+      "name": "Supplementary fan relay",
       "address": "62"
     },
     {
-      "name": "EXHAUST BYPASS VALVE",
+      "name": "Exhaust bypass valve",
       "address": "64"
     },
     {
-      "name": "IDLE ACTUATOR",
+      "name": "Idle actuator",
       "address": "29"
     },
     {
-      "name": "ANTI-EVAPORATION VALVE",
+      "name": "Anti-evaporation valve",
       "address": "61"
     }
   ]
