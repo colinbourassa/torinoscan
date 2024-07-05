@@ -58,7 +58,7 @@ std::string trim(const std::string& line)
     result = line.substr(start, end - start + 1);
   }
 
-  // Replace the degree symbol (extended ASCII 0xB0) with "deg" so that the JSON
+  // Replace the CP1252 symbols with a short description "deg" so that the JSON
   // processor doesn't complain. Note that there may be other examples of >0x80
   // chars that we will need to address.
   result = std::regex_replace(result, std::regex("\xB0"), "deg");
