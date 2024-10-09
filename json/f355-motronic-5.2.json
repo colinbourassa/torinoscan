@@ -316,115 +316,115 @@
   ],
   "faultcodes": [
     {
-      "name": "SELF-ADAPTIVE VALUES OUT OF RANGE (BANK LH)",
+      "name": "Self-adaptive values out of range (LH)",
       "address": "34 35 36 00 00 3 4"
     },
     {
-      "name": "WORN CATALYTIC CONVERTER (BANK LH)",
+      "name": "Worn catalytic converter (LH)",
       "address": "45 00 00 00 00 3 4"
     },
     {
-      "name": "AGED FRONT OXYGEN SENSOR (BANK LH)",
+      "name": "Aged front oxygen sensor (LH)",
       "address": "22 21 00 00 00 3 4"
     },
     {
-      "name": "AGED REAR OXYGEN SENSOR (BANK LH)",
+      "name": "Aged rear oxygen sensor (LH)",
       "address": "23 00 00 00 00 3 4"
     },
     {
-      "name": "ECU CONVERTER CATALYTICS PROTECTION (BANK LH)",
+      "name": "ECU catalytic converter protection (LH)",
       "address": "47 00 00 00 00 3 4"
     },
     {
-      "name": "CONVERTER CATALYTICS TEMPERATURE (BANK LH)",
+      "name": "Catalytic converter temperature (LH)",
       "address": "46 00 00 00 00 3 4"
     },
     {
-      "name": "FRONT OXYGEN SENSOR HEATING (BANK LH)",
+      "name": "Front oxygen sensor heating (LH)",
       "address": "5 00 00 00 00 1 2"
     },
     {
-      "name": "REAR OXYGEN SENSOR HEATING (BANK LH)",
+      "name": "Rear oxygen sensor heating (LH)",
       "address": "4 00 00 00 00 1 2"
     },
     {
-      "name": "FRONT OXYGEN SENSOR SIGNAL (BANK LH)",
+      "name": "Front oxygen sensor signal (LH)",
       "address": "18 00 00 00 00 3 2"
     },
     {
-      "name": "REAR OXYGEN SENSOR SIGNAL (BANK LH)",
+      "name": "Rear oxygen sensor signal (LH)",
       "address": "20 00 00 00 00 3 2"
     },
     {
-      "name": "ELECTROINJECTOR N.5 (BANK LH)",
+      "name": "Fuel injector #5 (LH)",
       "address": "154 00 00 00 00 3 4"
     },
     {
-      "name": "ELECTROINJECTOR N.6 (BANK LH)",
+      "name": "Fuel injector #6 (LH)",
       "address": "155 00 00 00 00 3 4"
     },
     {
-      "name": "ELECTROINJECTOR N.7 (BANK LH)",
+      "name": "Fuel injector #7 (LH)",
       "address": "156 00 00 00 00 3 4"
     },
     {
-      "name": "ELECTROINJECTOR N.8 (BANK LH)",
+      "name": "Fuel injector #8 (LH)",
       "address": "157 00 00 00 00 3 4"
     },
     {
-      "name": "SELF-ADAPTIVE VALUES OUT OF RANGE (BANK RH)",
+      "name": "Self-adaptive values out of range (RH)",
       "address": "26 27 28 00 00 3 4"
     },
     {
-      "name": "WORN CATALYTIC CONVERTER (BANK RH)",
+      "name": "Worn catalytic converter (RH)",
       "address": "40 00 00 00 00 3 4"
     },
     {
-      "name": "AGED FRONT OXYGEN SENSOR  (BANK RH)",
+      "name": "Aged front oxygen sensor (RH)",
       "address": "16 15 00 00 00 3 4"
     },
     {
-      "name": "AGED REAR OXYGEN SENSOR  (BANK RH)",
+      "name": "Aged rear oxygen sensor (RH)",
       "address": "17 00 00 00 00 3 4"
     },
     {
-      "name": "ECU CONVERTER CATALYTICS PROTECTION (BANK RH)",
+      "name": "ECU catalytic converter protection (RH)",
       "address": "42 00 00 00 00 3 4"
     },
     {
-      "name": "CATALYTIC CONVERTOR TEMPERATURE (BANK RH)",
+      "name": "Catalytic converter temperature (RH)",
       "address": "41 00 00 00 00 3 4"
     },
     {
-      "name": "FRONT LAMBDA SENSOR HEATING (BANK RH)",
+      "name": "Front lambda sensor heating (RH)",
       "address": "13 00 00 00 00 1 2"
     },
     {
-      "name": "REAR LAMBDA SENSOR HEATING (BANK RH)",
+      "name": "Rear lambda sensor heating (RH)",
       "address": "14 00 00 00 00 1 2"
     },
     {
-      "name": "FRONT OXYGEN SENSOR SIGNAL (BANK RH)",
+      "name": "Front oxygen sensor signal (RH)",
       "address": "10 00 00 00 00 3 2"
     },
     {
-      "name": "REAR OXYGEN SENSOR SIGNAL (BANK RH)",
+      "name": "Rear oxygen sensor signal (RH)",
       "address": "12 00 00 00 00 3 2"
     },
     {
-      "name": "ELECTROINJECTOR N. 1 (BANK RH)",
+      "name": "Fuel injector #1 (RH)",
       "address": "150 00 00 00 00 3 4"
     },
     {
-      "name": "ELECTROINJECTOR N. 2 (BANK RH)",
+      "name": "Fuel injector #2 (RH)",
       "address": "151 00 00 00 00 3 4"
     },
     {
-      "name": "ELECTROINJECTOR N. 3 (BANK RH)",
+      "name": "Fuel injector #3 (RH)",
       "address": "152 00 00 00 00 3 4"
     },
     {
-      "name": "ELECTROINJECTOR N. 4 (BANK RH)",
+      "name": "Fuel injector #4 (RH)",
       "address": "153 00 00 00 00 3 4"
     },
     {
@@ -436,99 +436,99 @@
       "address": "112 00 00 00 00 3 2"
     },
     {
-      "name": "SECONDARY AIR SYSTEM",
+      "name": "Secondary air system",
       "address": "80 00 00 00 00 3 1"
     },
     {
-      "name": "SECONDARY AIR PUMP",
+      "name": "Secondary air pump",
       "address": "84 00 00 00 00 3 1"
     },
     {
-      "name": "SECONDARY AIR VALVE",
+      "name": "Secondary air valve",
       "address": "85 00 00 00 00 3 1"
     },
     {
-      "name": "IDLING SPEED ADJUSTER (OPENING CIRCUIT)",
+      "name": "Idle speed adjuster (opening circuit)",
       "address": "168 00 00 00 00 1 2"
     },
     {
-      "name": "IDLING SPEED ADJUSTER (CLOSING CIRCUIT)",
+      "name": "Idle speed adjuster (closing circuit)",
       "address": "169 00 00 00 00 1 2"
     },
     {
-      "name": "SLOW-DOWN LIGHT",
+      "name": "Slow-down light",
       "address": "43 00 00 00 00 3 1"
     },
     {
-      "name": "WARNING LIGHT",
+      "name": "Warning light",
       "address": "165 00 00 00 00 1 2"
     },
     {
-      "name": "EXHAUST BYPASS VALVE AND EXHAUST TEMPERATURE",
+      "name": "Exhaust bypass valve and exhaust temperature",
       "address": "44 295 296 00 00 3 4"
     },
     {
-      "name": "SUPPLEMENTARY FAN RELAY",
+      "name": "Supplementary fan relay",
       "address": "253 252 00 00 00 1 2"
     },
     {
-      "name": "THROTTLE POTENTIOMETER",
+      "name": "Throttle potentiometer",
       "address": "117 00 00 00 00 3 4"
     },
     {
-      "name": "AIR FLOW METER",
+      "name": "Air flow meter",
       "address": "115 00 00 00 00 3 2"
     },
     {
-      "name": "INTAKE AIR TEMPERATURE SENSOR",
+      "name": "Intake air temperature sensor",
       "address": "124 00 00 00 00 3 4"
     },
     {
-      "name": "CANISTER PURGE VALVE",
+      "name": "Canister purge valve",
       "address": "96 98 00 00 00 3 1"
     },
     {
-      "name": "CANISTER PURGE SYSTEM",
+      "name": "Canister purge system",
       "address": "93 00 00 00 00 3 2"
     },
     {
-      "name": "WATER TEMPERATURE",
+      "name": "Water temperature",
       "address": "123 00 00 00 00 3 4"
     },
     {
-      "name": "BATTERY VOLTAGE",
+      "name": "Battery voltage",
       "address": "107 00 00 00 00 3 2"
     },
     {
-      "name": "TACHOMETER SIGNAL",
+      "name": "Tachometer signal",
       "address": "120 00 00 00 00 3 4"
     },
     {
-      "name": "A.C. COMPRESSOR INTRODUCTION",
+      "name": "A/C compressor",
       "address": "138 00 00 00 00 3 4"
     },
     {
-      "name": "ECU SELF-TESTING",
+      "name": "ECU self-testing",
       "address": "101 102 103 00 00 1 2"
     },
     {
-      "name": "KNOCK SENSOR RH",
+      "name": "Knock sensor (RH)",
       "address": "210 00 00 00 00 3 4"
     },
     {
-      "name": "KNOCK SENSOR LH",
+      "name": "Knock sensor (LH)",
       "address": "211 00 00 00 00 3 4"
     },
     {
-      "name": "FUEL PUMP",
+      "name": "Fuel pump",
       "address": "167 00 00 00 00 1 2"
     },
     {
-      "name": "TCU ECU ENGINE TURNED OFF",
+      "name": "TCU ECU engine turned off",
       "address": "281 00 00 00 00 0 0"
     },
     {
-      "name": "NO CONSENT TO ALARM SYSTEM: ERROR",
+      "name": "No consent to alarm system: error",
       "address": "39 00 00 00 00 0 0"
     }
   ],
