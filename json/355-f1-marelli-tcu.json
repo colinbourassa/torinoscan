@@ -1,0 +1,936 @@
+{
+  "vehicle": "F355",
+  "ecu": "Marelli F1 TCU",
+  "protocol": {
+    "family": "Marelli1AF",
+    "variant": "ferrari",
+    "baud": 9600,
+    "address": "0x02",
+    "comment": "Not sure if we need to identify this protocol as a special variant; the difference I've noticed at this point is that bytes 01-04 of the 0xAE reply are used as real data rather than just sync bytes."
+  },
+  "parameters": [
+    {
+      "name": "Engagement potentiometer travel",
+      "decimals": "2",
+      "id": "$01",
+      "lsb": 0.03,
+      "zero": -3.71 
+    },
+    {
+      "name": "Potentiometer clutch travel (deg)",
+      "decimals": "2",
+      "id": "$02",
+      "lsb": 0.07,
+      "zero": -41.75 
+    },
+    {
+      "name": "Clutch travel (mm)",
+      "decimals": "2",
+      "id": "$03",
+      "lsb": 0.0355,
+      "zero": -2.70 
+    },
+    {
+      "name": "Clutch travel reference (mm)",
+      "decimals": "2",
+      "id": "$04",
+      "lsb": 0.0355,
+      "zero": -2.70
+    },
+    {
+      "name": "Throttle potentiometer",
+      "decimals": "0",
+      "id": "$05",
+      "lsb": 1,
+      "zero": 0
+    },
+    {
+      "name": "Hydraulic circuit pressure (bar)",
+      "decimals": "1",
+      "id": "$06",
+      "lsb": 0.1,
+      "zero": 0
+    },
+    {
+      "name": "Water temperature",
+      "decimals": "1",
+      "id": "$07",
+      "lsb": 0,
+      "zero": 0,
+      "comment": "TODO: BCD value, e.g. 0x1253 is 125.3 deg"
+    },
+    {
+      "name": "Battery voltage",
+      "decimals": "1",
+      "id": "$08",
+      "lsb": 2.44,
+      "zero": 0
+    },
+    {
+      "name": "Lever status",
+      "enum": {
+        "0": "Neutral",
+        "1": "Up",
+        "2": "Rev. gear",
+        "3": "Down",
+        "4": "Neutral"
+      },
+      "id": "$09"
+    },
+    {
+      "name": "Engine speed (RPM)",
+      "decimals": "0",
+      "id": "$0A",
+      "lsb": 1,
+      "zero": 0
+    },
+    {
+      "name": "Gearbox primary angle speed (RPM)",
+      "decimals": "0",
+      "address": "$0B",
+      "lsb": 1,
+      "zero": 0
+    },
+    {
+      "name": "VEHICLE SPEED",
+      "decimals": "0",
+      "address": "$0C",
+      "numbytes": 1,
+      "lsb": 0,
+      "zero": 0
+    },
+    {
+      "name": "GEAR ENGAGED",
+      "enum": {
+        "0": "NEUTRAL",
+        "1": "FIRST",
+        "2": "SECOND",
+        "3": "THIRD",
+        "4": "FOURTH",
+        "5": "FIFTH",
+        "6": "SIXTH",
+        "7": "REVERSE"
+      },
+      "address": "$0D",
+      "numbytes": 1
+    },
+    {
+      "name": "BRAKE SW STATUS",
+      "enum": {
+        "0": "ON",
+        "1": "OFF"
+      },
+      "address": "$0E $01",
+      "numbytes": 1
+    },
+    {
+      "name": "DRIVER SIDE DOOR STATUS",
+      "enum": {
+        "0": "OFF",
+        "1": "ON"
+      },
+      "address": "$0E $02",
+      "numbytes": 1
+    },
+    {
+      "name": "KEY INPUT CONDITION",
+      "enum": {
+        "0": "OFF",
+        "1": "ON"
+      },
+      "address": "$0E $04",
+      "numbytes": 1
+    },
+    {
+      "name": "START-UP INPUT STATUS",
+      "enum": {
+        "0": "OFF",
+        "1": "ON"
+      },
+      "address": "$0E $08",
+      "numbytes": 1
+    },
+    {
+      "name": "AUTO SW STATUS",
+      "enum": {
+        "0": "OFF",
+        "1": "ON"
+      },
+      "address": "$0E $10",
+      "numbytes": 1
+    },
+    {
+      "name": "SPORT SW STATUS",
+      "enum": {
+        "0": "OFF",
+        "1": "ON"
+      },
+      "address": "$0E $20",
+      "numbytes": 1
+    },
+    {
+      "name": "LOW GRIP SW STATUS",
+      "enum": {
+        "0": "OFF",
+        "1": "ON"
+      },
+      "address": "$0E $40",
+      "numbytes": 1
+    },
+    {
+      "name": "SV CURRENT CONTROL FOR UNEVEN GEAR ENGAGEMENT",
+      "decimals": "1",
+      "address": "$0F",
+      "numbytes": 1,
+      "lsb": 0,
+      "zero": 0
+    },
+    {
+      "name": "SV CURRENT CONTROL FOR EVEN GEAR ENGAGEMENT",
+      "decimals": "1",
+      "address": "$10",
+      "numbytes": 1,
+      "lsb": 0,
+      "zero": 0
+    },
+    {
+      "name": "CLUTCH SV CURRENT CONTROL",
+      "decimals": "2",
+      "address": "$11",
+      "numbytes": 1,
+      "lsb": 0,
+      "zero": 0
+    },
+    {
+      "name": "1-2-3 SELECTION SV CONTROL",
+      "enum": {
+        "0": "RANG 1a-2a",
+        "1": "RANG 3a-4a",
+        "2": "RANG 5a-6a",
+        "3": "REVERSE STATUS"
+      },
+      "address": "$12 $13",
+      "numbytes": 1
+    },
+    {
+      "name": "PUMP RELAY CONTROL",
+      "enum": {
+        "0": "RELAY OFF",
+        "1": "RELAY ON"
+      },
+      "address": "$14",
+      "numbytes": 1
+    },
+    {
+      "name": "EFFECTIVE TORQUE MOTRONIC",
+      "decimals": "0",
+      "address": "$15",
+      "numbytes": 1,
+      "lsb": 0,
+      "zero": 0
+    },
+    {
+      "name": "THRESHOLDS FOR SURE MINIMUM SHIFT TO NEUTRAL",
+      "decimals": "0",
+      "address": "$01",
+      "numbytes": 1,
+      "lsb": 0,
+      "zero": 0
+    },
+    {
+      "name": "THRESHOLDS FOR SURE MINIMUM SHIFT TO FIRST SPEED",
+      "decimals": "0",
+      "address": "$01",
+      "numbytes": 1,
+      "lsb": 0,
+      "zero": 0
+    },
+    {
+      "name": "THRESHOLD FOR SURE MAXIMUM SHIFT TO SECOND SPEED",
+      "decimals": "0",
+      "address": "$01",
+      "numbytes": 1,
+      "lsb": 0,
+      "zero": 0
+    },
+    {
+      "name": "THRESHOLDS FOR SURE MAXIMUM SHIFT TO THIRD SPEED",
+      "decimals": "0",
+      "address": "$01",
+      "numbytes": 1,
+      "lsb": 0,
+      "zero": 0
+    },
+    {
+      "name": "THRESHOLDS FOR SURE MAXIMUM SHIFT TO FOURTH SPEED",
+      "decimals": "0",
+      "address": "$01",
+      "numbytes": 1,
+      "lsb": 0,
+      "zero": 0
+    },
+    {
+      "name": "THRESHOLDS FOR SURE MAXIMUM SHIFT TO FIFTH SPEED",
+      "decimals": "0",
+      "address": "$01",
+      "numbytes": 1,
+      "lsb": 0,
+      "zero": 0
+    },
+    {
+      "name": "THRESHOLDS FOR SURE MAXIMUM SHIFT TO SIXTH SPEED",
+      "decimals": "0",
+      "address": "$01",
+      "numbytes": 1,
+      "lsb": 0,
+      "zero": 0
+    },
+    {
+      "name": "THRESHOLDS FOR SURE MINIMUM SHIFT TO REVERSE",
+      "decimals": "0",
+      "address": "$01",
+      "numbytes": 1,
+      "lsb": 0,
+      "zero": 0
+    },
+    {
+      "name": "THRESHOLDS FOR SURE MAXIMUM SHIFT TO NEUTRAL",
+      "decimals": "0",
+      "address": "$02",
+      "numbytes": 1,
+      "lsb": 0,
+      "zero": 0
+    },
+    {
+      "name": "THRESHOLDS FOR SURE MAXIMUM SHIFT TO FIRST SPEED",
+      "decimals": "0",
+      "address": "$02",
+      "numbytes": 1,
+      "lsb": 0,
+      "zero": 0
+    },
+    {
+      "name": "THRESHOLDS FOR SURE MAXIMUM SHIFT TO SECOND SPEED",
+      "decimals": "0",
+      "address": "$02",
+      "numbytes": 1,
+      "lsb": 0,
+      "zero": 0
+    },
+    {
+      "name": "THRESHOLDS FOR SURE MAXIMUM SHIFT TO THIRD SPEED",
+      "decimals": "0",
+      "address": "$02",
+      "numbytes": 1,
+      "lsb": 0,
+      "zero": 0
+    },
+    {
+      "name": "THRESHOLDS FOR SURE MAXIMUM SHIFT TO FOURTH SPEED",
+      "decimals": "0",
+      "address": "$02",
+      "numbytes": 1,
+      "lsb": 0,
+      "zero": 0
+    },
+    {
+      "name": "THRESHOLDS FOR SURE MAXIMUM SHIFT TO FIFTH SPEED",
+      "decimals": "0",
+      "address": "$02",
+      "numbytes": 1,
+      "lsb": 0,
+      "zero": 0
+    },
+    {
+      "name": "THRESHOLDS FOR SURE MAXIMUM SHIFT TO SIXTH SPEED",
+      "decimals": "0",
+      "address": "$02",
+      "numbytes": 1,
+      "lsb": 0,
+      "zero": 0
+    },
+    {
+      "name": "THRESHOLDS FOR SURE MAXIMUM SHIFT TO REVERSE",
+      "decimals": "0",
+      "address": "$02",
+      "numbytes": 1,
+      "lsb": 0,
+      "zero": 0
+    },
+    {
+      "name": "THRESHOLDS FOR MINIMUM SURE NEUTRAL SELECTION",
+      "decimals": "0",
+      "address": "$03",
+      "numbytes": 1,
+      "lsb": 0,
+      "zero": 0
+    },
+    {
+      "name": "THRESHOLDS FOR MINIMUM SURE FIRST SPEED SELECTION",
+      "decimals": "0",
+      "address": "$03",
+      "numbytes": 1,
+      "lsb": 0,
+      "zero": 0
+    },
+    {
+      "name": "THRESHOLDS FOR MINIMUM SURE SECOND SPEED SELECTION",
+      "decimals": "0",
+      "address": "$03",
+      "numbytes": 1,
+      "lsb": 0,
+      "zero": 0
+    },
+    {
+      "name": "THRESHOLDS FOR MINIMUM SURE THIRD SPEED SELECTION",
+      "decimals": "0",
+      "address": "$03",
+      "numbytes": 1,
+      "lsb": 0,
+      "zero": 0
+    },
+    {
+      "name": "THRESHOLDS FOR MINIMUM SURE FOURTH SPEED SELECTION",
+      "decimals": "0",
+      "address": "$03",
+      "numbytes": 1,
+      "lsb": 0,
+      "zero": 0
+    },
+    {
+      "name": "THRESHOLDS FOR MINIMUM SURE FIFTH SPEED SELECTION",
+      "decimals": "0",
+      "address": "$03",
+      "numbytes": 1,
+      "lsb": 0,
+      "zero": 0
+    },
+    {
+      "name": "THRESHOLDS FOR MINIMUM SURE SIXTH SPEED SELECTION",
+      "decimals": "0",
+      "address": "$03",
+      "numbytes": 1,
+      "lsb": 0,
+      "zero": 0
+    },
+    {
+      "name": "THRESHOLDS FOR MINIMUM SURE REVERSE GEAR SELECTION",
+      "decimals": "0",
+      "address": "$03",
+      "numbytes": 1,
+      "lsb": 0,
+      "zero": 0
+    },
+    {
+      "name": "THRESHOLDS FOR MAX. SURE NEUTRAL SELECTION",
+      "decimals": "0",
+      "address": "$04",
+      "numbytes": 1,
+      "lsb": 0,
+      "zero": 0
+    },
+    {
+      "name": "THRESHOLDS FOR MAX. SURE FIRST GEAR SELECTION",
+      "decimals": "0",
+      "address": "$04",
+      "numbytes": 1,
+      "lsb": 0,
+      "zero": 0
+    },
+    {
+      "name": "THRESHOLDS FOR MAX. SURE SECOND GEAR SELECTION",
+      "decimals": "0",
+      "address": "$04",
+      "numbytes": 1,
+      "lsb": 0,
+      "zero": 0
+    },
+    {
+      "name": "THRESHOLDS FOR MAX. SURE THIRD GEAR SELECTION",
+      "decimals": "0",
+      "address": "$04",
+      "numbytes": 1,
+      "lsb": 0,
+      "zero": 0
+    },
+    {
+      "name": "THRESHOLDS FOR MAX. SURE FOURTH GEAR SELECTION",
+      "decimals": "0",
+      "address": "$04",
+      "numbytes": 1,
+      "lsb": 0,
+      "zero": 0
+    },
+    {
+      "name": "THRESHOLDS FOR MAX. SURE FIFTH GEAR SELECTION",
+      "decimals": "0",
+      "address": "$04",
+      "numbytes": 1,
+      "lsb": 0,
+      "zero": 0
+    },
+    {
+      "name": "THRESHOLDS FOR MAX. SURE SIXTH GEAR SELECTION",
+      "decimals": "0",
+      "address": "$04",
+      "numbytes": 1,
+      "lsb": 0,
+      "zero": 0
+    },
+    {
+      "name": "THRESHOLDS FOR MAX. SURE REVERSE GEAR SELECTION",
+      "decimals": "0",
+      "address": "$04",
+      "numbytes": 1,
+      "lsb": 0,
+      "zero": 0
+    },
+    {
+      "name": "SELF-CALIBRATED CLOSED CLUTCH POSITION",
+      "decimals": "2",
+      "address": "$16",
+      "numbytes": 1,
+      "lsb": 0,
+      "zero": 0
+    },
+    {
+      "name": "P.I.. DISTANCE POSITION - CLOSED SELF-CALIBRATED",
+      "decimals": "2",
+      "address": "$17",
+      "numbytes": 1,
+      "lsb": 0,
+      "zero": 0
+    },
+    {
+      "name": "SELF-CALIBRATED MIN. ACCELERATOR POSITION",
+      "decimals": "2",
+      "address": "$18",
+      "numbytes": 1,
+      "lsb": 0,
+      "zero": 0
+    },
+    {
+      "name": "CLOSED POTENT.CURRENT AT SYSTEM CENTRE, SELF-CALIBRATED CLUTCH SOLENOID VALVE",
+      "decimals": "2",
+      "address": "$19",
+      "numbytes": 1,
+      "lsb": 0,
+      "zero": 0
+    },
+    {
+      "name": "WIDE THRESHOLDS FOR MIN. NEUTRAL SELECTION",
+      "decimals": "0",
+      "address": "$07",
+      "numbytes": 1,
+      "lsb": 0,
+      "zero": 0
+    },
+    {
+      "name": "WIDE THRESHOLDS FOR MIN. FIRST GEAR SELECTION",
+      "decimals": "0",
+      "address": "$07",
+      "numbytes": 1,
+      "lsb": 0,
+      "zero": 0
+    },
+    {
+      "name": "WIDE THRESHOLDS FOR MIN. SECOND GEAR SELECTION",
+      "decimals": "0",
+      "address": "$07",
+      "numbytes": 1,
+      "lsb": 0,
+      "zero": 0
+    },
+    {
+      "name": "WIDE THRESHOLDS FOR MIN. THIRD GEAR SELECTION",
+      "decimals": "0",
+      "address": "$07",
+      "numbytes": 1,
+      "lsb": 0,
+      "zero": 0
+    },
+    {
+      "name": "WIDE THRESHOLDS FOR MIN. FOURTH GEAR SELECTION",
+      "decimals": "0",
+      "address": "$07",
+      "numbytes": 1,
+      "lsb": 0,
+      "zero": 0
+    },
+    {
+      "name": "WIDE THRESHOLDS FOR MIN. FIFTH GEAR SELECTION",
+      "decimals": "0",
+      "address": "$07",
+      "numbytes": 1,
+      "lsb": 0,
+      "zero": 0
+    },
+    {
+      "name": "WIDE THRESHOLDS FOR MIN. SIXTH GEAR SELECTION",
+      "decimals": "0",
+      "address": "$07",
+      "numbytes": 1,
+      "lsb": 0,
+      "zero": 0
+    },
+    {
+      "name": "WIDE THRESHOLDS FOR MIN. REVERSE GEAR SELECTION",
+      "decimals": "0",
+      "address": "$07",
+      "numbytes": 1,
+      "lsb": 0,
+      "zero": 0
+    },
+    {
+      "name": "WIDE THRESHOLDS FOR MAX. NEUTRAL SELECTION",
+      "decimals": "0",
+      "address": "$08",
+      "numbytes": 1,
+      "lsb": 0,
+      "zero": 0
+    },
+    {
+      "name": "WIDE THRESHOLDS FOR MAX. FIRST GEAR SELECTION",
+      "decimals": "0",
+      "address": "$08",
+      "numbytes": 1,
+      "lsb": 0,
+      "zero": 0
+    },
+    {
+      "name": "WIDE THRESHOLDS FOR MAX. SECOND GEAR SELECTION",
+      "decimals": "0",
+      "address": "$08",
+      "numbytes": 1,
+      "lsb": 0,
+      "zero": 0
+    },
+    {
+      "name": "WIDE THRESHOLDS FOR MAX. THIRD GEAR SELECTION",
+      "decimals": "0",
+      "address": "$08",
+      "numbytes": 1,
+      "lsb": 0,
+      "zero": 0
+    },
+    {
+      "name": "WIDE THRESHOLDS FOR MAX. FOURTH GEAR SELECTION",
+      "decimals": "0",
+      "address": "$08",
+      "numbytes": 1,
+      "lsb": 0,
+      "zero": 0
+    },
+    {
+      "name": "WIDE THRESHOLDS FOR MAX. FIFTH GEAR SELECTION",
+      "decimals": "0",
+      "address": "$08",
+      "numbytes": 1,
+      "lsb": 0,
+      "zero": 0
+    },
+    {
+      "name": "WIDE THRESHOLDS FOR MAX. SIXTH GEAR SELECTION",
+      "decimals": "0",
+      "address": "$08",
+      "numbytes": 1,
+      "lsb": 0,
+      "zero": 0
+    },
+    {
+      "name": "WIDE THRESHOLDS FOR MAX. REVERSE GEAR SELECTION",
+      "decimals": "0",
+      "address": "$08",
+      "numbytes": 1,
+      "lsb": 0,
+      "zero": 0
+    },
+    {
+      "name": "OPEN LID STATUS",
+      "enum": {
+        "0": "OFF",
+        "1": "ON"
+      },
+      "address": "$0E $80",
+      "numbytes": 1
+    },
+    {
+      "name": "ENGAGEMENT POTENTIOMETER TRAVEL: PURE VALUE",
+      "decimals": "0",
+      "address": "$01",
+      "numbytes": 1,
+      "lsb": 0,
+      "zero": 0
+    },
+    {
+      "name": "SELECTION POTENTIOMETER TRAVEL: PURE VALUE",
+      "decimals": "0",
+      "address": "$02",
+      "numbytes": 1,
+      "lsb": 0,
+      "zero": 0
+    },
+    {
+      "name": "GEARBOX ACTUATOR CENTERINg",
+      "decimals": "1",
+      "address": "",
+      "numbytes": 1,
+      "lsb": 0,
+      "zero": 0
+    },
+    {
+      "name": "CLUTCH POSITION AS NEW",
+      "decimals": "2",
+      "address": "$1F",
+      "numbytes": 1,
+      "lsb": 0,
+      "zero": 0
+    },
+    {
+      "name": "CLUTCH WEAR",
+      "decimals": "2",
+      "address": "$03",
+      "numbytes": 1,
+      "lsb": 0,
+      "zero": 0
+    },
+    {
+      "name": "GEAR ENGAGEMENTS WITH WRONG SHIFTS",
+      "decimals": "0",
+      "address": "$00",
+      "numbytes": 1,
+      "lsb": 0,
+      "zero": 0
+    },
+    {
+      "name": "GEARBOX INPUT HIGH RPM",
+      "decimals": "0",
+      "address": "$01",
+      "numbytes": 1,
+      "lsb": 0,
+      "zero": 0
+    },
+    {
+      "name": "OPPOSITE GEARS ENGAGEMENTS",
+      "decimals": "0",
+      "address": "$02",
+      "numbytes": 1,
+      "lsb": 0,
+      "zero": 0
+    },
+    {
+      "name": "CLUTCH BEYOND PIS",
+      "decimals": "0",
+      "address": "$03",
+      "numbytes": 1,
+      "lsb": 0,
+      "zero": 0
+    },
+    {
+      "name": "CLUTCH HYDRAULIC FAILURE",
+      "decimals": "0",
+      "address": "$04",
+      "numbytes": 1,
+      "lsb": 0,
+      "zero": 0
+    }
+  ],
+  "faultcodes": [
+    {
+      "name": "REVERSE SWITCH ERROR",
+      "address": "$00 $01"
+    },
+    {
+      "name": "STAND-BY SWITCH ERROR",
+      "address": "$00 $02"
+    },
+    {
+      "name": "SWITCH DOWN: ERROR",
+      "address": "$00 $04"
+    },
+    {
+      "name": "SWITCH UP: ERROR",
+      "address": "$00 $08"
+    },
+    {
+      "name": "CLUTCH POTENTIOMETER ERROR",
+      "address": "$00 $10"
+    },
+    {
+      "name": "SELECTION POTENTIOMETER ERROR",
+      "address": "$00 $20"
+    },
+    {
+      "name": "ENGAGEMENT POTENTIOMETER ERROR",
+      "address": "$00 $40"
+    },
+    {
+      "name": "ACCELERATOR POTENTIOMETER ERROR",
+      "address": "$01 $00"
+    },
+    {
+      "name": "OIL PRESSURE SENSOR ERROR",
+      "address": "$02 $00"
+    },
+    {
+      "name": "BATTERY VOLTAGE ERROR",
+      "address": "$08 $00"
+    },
+    {
+      "name": "CAN LINE ERROR",
+      "address": "$80 $00"
+    },
+    {
+      "name": "ENGINE REVOLUTIONS ERROR",
+      "address": "$00 $04"
+    },
+    {
+      "name": "GEARBOX OUTPUT REVOLUTIONS ERROR",
+      "address": "$00 $08"
+    },
+    {
+      "name": "GEARBOX INPUT REVOLUTIONS ERROR",
+      "address": "$00 $10"
+    },
+    {
+      "name": "ERROR ON THE SECOND MICROPROCESSOR",
+      "address": "$00 $20"
+    },
+    {
+      "name": "RESET ECU ERROR",
+      "address": "$00 $40"
+    },
+    {
+      "name": "GROUND DETACHMENT ERROR",
+      "address": "$00 $80"
+    },
+    {
+      "name": "DISPLAY CONTROL ERROR",
+      "address": "$00 $01"
+    },
+    {
+      "name": "BUZZER CONTROL ERROR",
+      "address": "$00 $02"
+    },
+    {
+      "name": "PUMP RELAY ERROR",
+      "address": "$00 $08"
+    },
+    {
+      "name": "MOTOR IGNITION RELAY ERROR",
+      "address": "$00 $10"
+    },
+    {
+      "name": "SELF-SUPPLY RELAY ERROR",
+      "address": "$00 $20"
+    },
+    {
+      "name": "SEL.1 SOLENOID VALVE ERROR",
+      "address": "$02 $00"
+    },
+    {
+      "name": "SEL.2 SOLENOID VALVE ERROR",
+      "address": "$04 $00"
+    },
+    {
+      "name": "SEL.4 SOLENOID VALVE ERROR",
+      "address": "$08 $00"
+    },
+    {
+      "name": "REVERSE LIGHT RELAY ERROR",
+      "address": "$10 $00"
+    },
+    {
+      "name": "CLUTCH SOLENOID VALVE ERROR",
+      "address": "$20 $00"
+    },
+    {
+      "name": "SOLENOID VALVE FOR UNEVEN GEARS ENGAGEMENT: ERROR",
+      "address": "$40 $00"
+    },
+    {
+      "name": "SOLENOID VALVE FOR EVEN GEARS ENGAGEMENT: ERROR",
+      "address": "$80 $00"
+    },
+    {
+      "name": "SELECTION POSITIONING ERROR",
+      "address": "$00 $01"
+    },
+    {
+      "name": "ENGAGEMENT POSITIONING ERROR",
+      "address": "$00 $02"
+    }
+  ],
+  "actuators": [
+    {
+      "name": "1ST GEAR ENGAGEMENT",
+      "address": "1"
+    },
+    {
+      "name": "2ND GEAR ENGAGEMENT",
+      "address": "2"
+    },
+    {
+      "name": "3RD GEAR ENGAGEMENT",
+      "address": "3"
+    },
+    {
+      "name": "4TH GEAR ENGAGEMENT",
+      "address": "4"
+    },
+    {
+      "name": "5TH GEAR ENGAGEMENT",
+      "address": "5"
+    },
+    {
+      "name": "6TH GEAR ENGAGEMENT",
+      "address": "6"
+    },
+    {
+      "name": "NEUTRAL ENGAGEMENT",
+      "address": "0"
+    },
+    {
+      "name": "REVERSE GEAR ENGAGEMENT",
+      "address": "7"
+    },
+    {
+      "name": "ACTUATOR CENTERING",
+      "address": "0"
+    },
+    {
+      "name": "AIR BLEEDING FROM HYDRAULIC CIRCUIT (CLUTCH ACTUATOR)",
+      "address": "0"
+    },
+    {
+      "name": "AIR BLEEDING FROM HYDRAULIC CIRCUIT (ENGAGEMENT/SELECTION ACTUATOR)",
+      "address": "0"
+    },
+    {
+      "name": "CUSTOMIZATION"
+    },
+    {
+      "name": "SELF-LEARNING",
+      "address": ""
+    },
+    {
+      "name": "PUMP HANDLING"
+    },
+    {
+      "name": "REVERSE GEAR LIGHTS"
+    },
+    {
+      "name": "CLUTCH SV"
+    },
+    {
+      "name": "DISPLAY CONTROL"
+    },
+    {
+      "name": "BUZZER CONTROL"
+    },
+    {
+      "name": "CLUTCH POSITION AS NEW",
+      "address": "0"
+    }
+  ]
+}
