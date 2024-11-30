@@ -102,6 +102,13 @@ void MainWindow::populateParamWidgets()
 
   clearParamWidgets();
 
+  // TODO: Some protocols provided different mechanisms to read parameter data
+  // out of the ECU. This code needs to determine whether a parameters is, for
+  // example, a RAM location read versus a "value read" (which is available
+  // with the Marelli 1AF protocol). There are also parameters that are read
+  // cohesively with their entire snapshot page (another 1AF feature), so we
+  // would most likely want to display such parameters together in a group.
+
   for (auto paramEntry : m_currentJson.at("parameters"))
   {
     if (paramEntry.count("name") && paramEntry.count("address"))
@@ -203,5 +210,4 @@ void MainWindow::setParamCheckboxStates(bool checked)
     widget->setChecked(checked);
   }
 }
-
 

@@ -6,7 +6,7 @@
     "variant": "ferrari",
     "baud": 9600,
     "address": "0x02",
-    "comment": "Not sure if we need to identify this protocol as a special variant; the difference I've noticed at this point is that bytes 01-04 of the 0xAE reply are used as real data rather than just sync bytes."
+    "comment": "Not sure if we need to identify this protocol as a special variant; the difference I've noticed at this point is that bytes 01-04 of the 0xAE reply are used as real data rather than just sync bytes. Also, the snapshots contain 16 bytes rather than 10. TODO: Confirm which parameters require RAM read operations, and which 'value read' operations."
   },
   "parameters": [
     {
@@ -733,6 +733,116 @@
       "numbytes": 1,
       "lsb": 0,
       "zero": 0
+    },
+    {
+      "name": "Pump activation counter",
+      "id": "$1A",
+      "comment": "TODO: Ensure consistency in the use of 'address' versus 'id' fields to indicate type of request."
+    },
+    {
+      "name": "Pump time on (mins)",
+      "id": "$1B"
+    },
+    {
+      "name": "System time on (mins)",
+      "id": "$1C"
+    },
+    {
+      "name": "Clutch overheat time",
+      "id": "$1D",
+      "comment": "TODO: Determine type of request"
+    }
+  ],
+  "snapshots": [
+    {
+      "page" : 5,
+      "data" : [
+        {
+          "name" : "Neutral engagement counter",
+          "offset" : "$00",
+          "numbytes" : 2
+        },
+        {
+          "name" : "1st gear engagement counter",
+          "offset" : "$02",
+          "numbytes" : 2
+        },
+        {
+          "name" : "2nd gear engagement counter",
+          "offset" : "$04",
+          "numbytes" : 2
+        },
+        {
+          "name" : "3rd gear engagement counter",
+          "offset" : "$06",
+          "numbytes" : 2
+        },
+        {
+          "name" : "4th gear engagement counter",
+          "offset" : "$08",
+          "numbytes" : 2
+        },
+        {
+          "name" : "5th gear engagement counter",
+          "offset" : "$0A",
+          "numbytes" : 2
+        },
+        {
+          "name" : "6th gear engagement counter",
+          "offset" : "$0C",
+          "numbytes" : 2
+        },
+        {
+          "name" : "Reverse engagement counter",
+          "offset" : "$0E",
+          "numbytes" : 2
+        }
+      ]
+    },
+    {
+      "page" : 6,
+      "data" : [
+        {
+          "name" : "Distance run in neutral (km)",
+          "offset" : "$00",
+          "numbytes" : 2
+        },
+        {
+          "name" : "Distance run in 1st gear (km)",
+          "offset" : "$02",
+          "numbytes" : 2
+        },
+        {
+          "name" : "Distance run in 2nd gear (km)",
+          "offset" : "$04",
+          "numbytes" : 2
+        },
+        {
+          "name" : "Distance run in 3rd gear (km)",
+          "offset" : "$06",
+          "numbytes" : 2
+        },
+        {
+          "name" : "Distance run in 4th gear (km)",
+          "offset" : "$08",
+          "numbytes" : 2
+        },
+        {
+          "name" : "Distance run in 5th gear (km)",
+          "offset" : "$0A",
+          "numbytes" : 2
+        },
+        {
+          "name" : "Distance run in 6th gear",
+          "offset" : "$0C",
+          "numbytes" : 2
+        },
+        {
+          "name" : "Distance run in reverse",
+          "offset" : "$0E",
+          "numbytes" : 2
+        }
+      ]
     }
   ],
   "faultcodes": [
@@ -863,35 +973,36 @@
   ],
   "actuators": [
     {
-      "name": "1ST GEAR ENGAGEMENT",
-      "address": "1"
+      "name": "1st gear engagement",
+      "address": "1",
+      "comment": "The .txt file does not seem to contain both the actuator ID and parameter for these actuators. The only number provided appears to be parameter."
     },
     {
-      "name": "2ND GEAR ENGAGEMENT",
+      "name": "2nd gear engagement",
       "address": "2"
     },
     {
-      "name": "3RD GEAR ENGAGEMENT",
+      "name": "3rd gear engagement",
       "address": "3"
     },
     {
-      "name": "4TH GEAR ENGAGEMENT",
+      "name": "4th gear engagement",
       "address": "4"
     },
     {
-      "name": "5TH GEAR ENGAGEMENT",
+      "name": "5th gear engagement",
       "address": "5"
     },
     {
-      "name": "6TH GEAR ENGAGEMENT",
+      "name": "6th gear engagement",
       "address": "6"
     },
     {
-      "name": "NEUTRAL ENGAGEMENT",
+      "name": "Neutral engagement",
       "address": "0"
     },
     {
-      "name": "REVERSE GEAR ENGAGEMENT",
+      "name": "Reverse gear engagement",
       "address": "7"
     },
     {
