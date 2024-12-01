@@ -1,8 +1,0 @@
-At least one protocol (Marelli TCU) is capable of reading parameter data by
-requesting a "value code", which is not a memory address and does not require
-specifying a byte count. The ECU will apparently return the number of bytes
-that are appropriate for the requested value, which is not consistent across
-all values. We are identifying such parameters by using the JSON field named
-"id" instead of "address".
-
-Change the JSON to place snapshot data among the regular "parameters" section; just add a field named "snapshot" with the ID of the snapshot page. The "address" field can then be used as an offset within that page.

@@ -6,7 +6,7 @@
     "variant": "ferrari",
     "baud": 9600,
     "address": "0x02",
-    "comment": "Not sure if we need to identify this protocol as a special variant; the difference I've noticed at this point is that bytes 01-04 of the 0xAE reply are used as real data rather than just sync bytes. Also, the snapshots contain 16 bytes rather than 10. TODO: Confirm which parameters require RAM read operations, and which 'value read' operations."
+    "comment": "The Ferrari variant of this protocol has the following differences: (a) bytes 01-04 of the 0xAE reply are used as real data rather than just sync bytes; (b) snapshots contain 16 bytes rather than 10. TODO: Confirm which parameters require RAM read operations, and which 'value read' operations."
   },
   "parameters": [
     {
@@ -751,98 +751,102 @@
       "name": "Clutch overheat time",
       "id": "$1D",
       "comment": "TODO: Determine type of request"
-    }
-  ],
-  "snapshots": [
-    {
-      "page" : 5,
-      "data" : [
-        {
-          "name" : "Neutral engagement counter",
-          "offset" : "$00",
-          "numbytes" : 2
-        },
-        {
-          "name" : "1st gear engagement counter",
-          "offset" : "$02",
-          "numbytes" : 2
-        },
-        {
-          "name" : "2nd gear engagement counter",
-          "offset" : "$04",
-          "numbytes" : 2
-        },
-        {
-          "name" : "3rd gear engagement counter",
-          "offset" : "$06",
-          "numbytes" : 2
-        },
-        {
-          "name" : "4th gear engagement counter",
-          "offset" : "$08",
-          "numbytes" : 2
-        },
-        {
-          "name" : "5th gear engagement counter",
-          "offset" : "$0A",
-          "numbytes" : 2
-        },
-        {
-          "name" : "6th gear engagement counter",
-          "offset" : "$0C",
-          "numbytes" : 2
-        },
-        {
-          "name" : "Reverse engagement counter",
-          "offset" : "$0E",
-          "numbytes" : 2
-        }
-      ]
     },
     {
-      "page" : 6,
-      "data" : [
-        {
-          "name" : "Distance run in neutral (km)",
-          "offset" : "$00",
-          "numbytes" : 2
-        },
-        {
-          "name" : "Distance run in 1st gear (km)",
-          "offset" : "$02",
-          "numbytes" : 2
-        },
-        {
-          "name" : "Distance run in 2nd gear (km)",
-          "offset" : "$04",
-          "numbytes" : 2
-        },
-        {
-          "name" : "Distance run in 3rd gear (km)",
-          "offset" : "$06",
-          "numbytes" : 2
-        },
-        {
-          "name" : "Distance run in 4th gear (km)",
-          "offset" : "$08",
-          "numbytes" : 2
-        },
-        {
-          "name" : "Distance run in 5th gear (km)",
-          "offset" : "$0A",
-          "numbytes" : 2
-        },
-        {
-          "name" : "Distance run in 6th gear",
-          "offset" : "$0C",
-          "numbytes" : 2
-        },
-        {
-          "name" : "Distance run in reverse",
-          "offset" : "$0E",
-          "numbytes" : 2
-        }
-      ]
+      "name" : "Neutral engagement counter",
+      "snapshot": 5,
+      "offset" : "$00",
+      "numbytes" : 2
+    },
+    {
+      "name" : "1st gear engagement counter",
+      "snapshot": 5,
+      "offset" : "$02",
+      "numbytes" : 2
+    },
+    {
+      "name" : "2nd gear engagement counter",
+      "snapshot": 5,
+      "offset" : "$04",
+      "numbytes" : 2
+    },
+    {
+      "name" : "3rd gear engagement counter",
+      "snapshot": 5,
+      "offset" : "$06",
+      "numbytes" : 2
+    },
+    {
+      "name" : "4th gear engagement counter",
+      "snapshot": 5,
+      "offset" : "$08",
+      "numbytes" : 2
+    },
+    {
+      "name" : "5th gear engagement counter",
+      "snapshot": 5,
+      "offset" : "$0A",
+      "numbytes" : 2
+    },
+    {
+      "name" : "6th gear engagement counter",
+      "snapshot": 5,
+      "offset" : "$0C",
+      "numbytes" : 2
+    },
+    {
+      "name" : "Reverse gear engagement counter",
+      "snapshot": 5,
+      "offset" : "$0E",
+      "numbytes" : 2
+    },
+    {
+      "name" : "Distance run in neutral (km)",
+      "snapshot": 6,
+      "offset" : "$00",
+      "numbytes" : 2
+    },
+    {
+      "name" : "Distance run in 1st gear (km)",
+      "snapshot": 6,
+      "offset" : "$02",
+      "numbytes" : 2
+    },
+    {
+      "name" : "Distance run in 2nd gear (km)",
+      "snapshot": 6,
+      "offset" : "$04",
+      "numbytes" : 2
+    },
+    {
+      "name" : "Distance run in 3rd gear (km)",
+      "snapshot": 6,
+      "offset" : "$06",
+      "numbytes" : 2
+    },
+    {
+      "name" : "Distance run in 4th gear (km)",
+      "snapshot": 6,
+      "offset" : "$08",
+      "numbytes" : 2
+    },
+    {
+      "name" : "Distance run in 5th gear (km)",
+      "snapshot": 6,
+      "offset" : "$0A",
+      "numbytes" : 2
+    },
+    {
+      "name" : "Distance run in 6th gear (km)",
+      "snapshot": 6,
+      "offset" : "$0C",
+      "numbytes" : 2
+    },
+    {
+      "name" : "Distance run in reverse (km)",
+      "snapshot": 6,
+      "offset" : "$0E",
+      "numbytes" : 2
     }
   ],
   "faultcodes": [
