@@ -74,10 +74,15 @@ int main(int argc, char** argv)
     return 0;
   }
 
-  // TODO: Some of the SD2 TXT files have section titles in the
-  // format "[S#]", and these contain fields similar to those
-  // found in the parameter ("[P#]") sections. We need to figure
-  // out how these sections are processed by SD2. See DMul0092.
+  // NOTE: Some of the SD2 TXT files have section titles in the format "[S##]"
+  // or "[ST##]", and these are for "statistical parameters". This is just a
+  // category of parameters that are displayed in a different window by WSDC32,
+  // and they are not necessarily handled in a fundamentally different way.
+  // However, the Marelli 1AF protocol provides a "read snapshot" feature that
+  // returns a cohesive block of data, and the Marelli Cambio F1 TCU (MCAM0151)
+  // puts this snapshot data in the "statistical parameters" category. That
+  // category also includes data read using the "read value" 1AF protocol command.
+
   const std::regex paramSectionPattern("^\\s*\\\[(P([DS]X)?)\\d+\\]");
   const std::regex errorSectionPattern("^\\s*\\\[(E([DS]X)?)\\d+\\]");
   const std::regex actuatorSectionPattern("^\\s*\\\[(D([DS]X)?)\\d+\\]");
