@@ -1,0 +1,340 @@
+{
+  "vehicle": "512TR",
+  "ecu": "Motronic",
+  "position": "left",
+  "protocol": {
+    "family": "KWP71",
+    "variant": "standard",
+    "baud": 4800,
+    "address": "0x10"
+  },
+  "parameters": [
+    {
+      "name": "ENGINE REVOL.",
+      "decimals": "0",
+      "address": "$02 $00 $3B",
+      "numbytes": 1,
+      "lsb": 0,
+      "zero": 0
+    },
+    {
+      "name": "LOAD",
+      "decimals": "1",
+      "address": "$01 $00 $40",
+      "numbytes": 1,
+      "lsb": 0,
+      "zero": 0
+    },
+    {
+      "name": "INJECTION TIME",
+      "decimals": "1",
+      "address": "$02 $00 $60",
+      "numbytes": 1,
+      "lsb": 0,
+      "zero": 0
+    },
+    {
+      "name": "IGNITION ADVANCE",
+      "decimals": "1",
+      "address": "$01 $00 $55",
+      "numbytes": 1,
+      "lsb": 0,
+      "zero": 0
+    },
+    {
+      "name": "ENGINE TEMPERATURE",
+      "decimals": "1",
+      "address": "$01 $00 $38",
+      "numbytes": 1,
+      "lsb": 0,
+      "zero": 0
+    },
+    {
+      "name": "AIR FLOW",
+      "decimals": "1",
+      "address": "$02 $00 $9B",
+      "numbytes": 1,
+      "lsb": 0,
+      "zero": 0
+    },
+    {
+      "name": "VEHICLE SPEED",
+      "decimals": "0",
+      "address": "$01 $00 $8C",
+      "numbytes": 1,
+      "lsb": 0,
+      "zero": 0
+    },
+    {
+      "name": "COMPRESSOR STATUS",
+      "enum": {
+        "0": "OFF",
+        "1": "ON"
+      },
+      "address": "$01 $00 $20 $80",
+      "numbytes": 1
+    },
+    {
+      "name": "AIR TEMPERAT. CONTROL SYSTEM STATUS",
+      "enum": {
+        "0": "OFF",
+        "1": "ON"
+      },
+      "address": "$01 $00 $20 $40",
+      "numbytes": 1
+    },
+    {
+      "name": "SECONDARY AIR VALVE CONDIT.",
+      "enum": {
+        "0": "OFF",
+        "1": "ON"
+      },
+      "address": "$01 $00 $21 $08",
+      "numbytes": 1
+    },
+    {
+      "name": "THROTTLE ABSOL.ANGLE",
+      "decimals": "1",
+      "address": "$08 $00",
+      "numbytes": 1,
+      "lsb": 0,
+      "zero": 0
+    },
+    {
+      "name": "THROTTLE RELAT.ANGLE",
+      "decimals": "1",
+      "address": "$01 $03 $42",
+      "numbytes": 1,
+      "lsb": 0,
+      "zero": 0
+    },
+    {
+      "name": "THROTTLE OFF SET ANGLE",
+      "decimals": "1",
+      "address": "$01 $03 $45",
+      "numbytes": 1,
+      "lsb": 0,
+      "zero": 0
+    },
+    {
+      "name": "BATTERY VOLTAGE",
+      "decimals": "2",
+      "address": "$08 $01",
+      "numbytes": 1,
+      "lsb": 0,
+      "zero": 0
+    },
+    {
+      "name": "OXY. SENS.VOLTAGE",
+      "decimals": "0",
+      "address": "$08 $07",
+      "numbytes": 1,
+      "lsb": 0,
+      "zero": 0
+    },
+    {
+      "name": "CATALYTIC CONVER.TEMP.",
+      "decimals": "0",
+      "address": "$08 $02",
+      "numbytes": 1,
+      "lsb": 0,
+      "zero": 0
+    },
+    {
+      "name": "FUNCTIONING MODE",
+      "enum": {
+        "0": "CLOSED LOOP",
+        "1": "OPEN LOOP"
+      },
+      "address": "$01 $00 $29 $20",
+      "numbytes": 1
+    },
+    {
+      "name": "TJ CORRECTION",
+      "decimals": "3",
+      "address": "$01 $02 $0F",
+      "numbytes": 1,
+      "lsb": 0,
+      "zero": 0
+    },
+    {
+      "name": "ADDITIVE VALUE",
+      "decimals": "3",
+      "address": "$01 $02 $07",
+      "numbytes": 1,
+      "lsb": 0,
+      "zero": 0
+    },
+    {
+      "name": "MULTIPLIER VALUE",
+      "decimals": "3",
+      "address": "$01 $02 $01",
+      "numbytes": 1,
+      "lsb": 0,
+      "zero": 0
+    },
+    {
+      "name": "MOTOR CONDITION",
+      "enum": {
+        "0": "IDLING",
+        "1": "OUT OF IDLE",
+        "2": "FULL OPEN",
+        "3": "OFF"
+      },
+      "address": "$01 $00 $20 $03",
+      "numbytes": 1
+    }
+  ],
+  "faultcodes": [
+    {
+      "name": "Revolution sensor",
+      "address": "$2F"
+    },
+    {
+      "name": "Stroke sensor",
+      "address": "$08"
+    },
+    {
+      "name": "Secondary air valve",
+      "address": "$20"
+    },
+    {
+      "name": "Idle actuator (open circuit)",
+      "address": "$04"
+    },
+    {
+      "name": "Idle actuator (short circuit)",
+      "address": "$16"
+    },
+    {
+      "name": "Warning light",
+      "address": "$02"
+    },
+    {
+      "name": "Slow-down light",
+      "address": "$1F"
+    },
+    {
+      "name": "Injector no. 7",
+      "address": "$22"
+    },
+    {
+      "name": "Injector no. 8",
+      "address": "$10"
+    },
+    {
+      "name": "Injector no. 9",
+      "address": "$21"
+    },
+    {
+      "name": "Injector no. 10",
+      "address": "$23"
+    },
+    {
+      "name": "Injector no. 11",
+      "address": "$0F"
+    },
+    {
+      "name": "Injector no. 12",
+      "address": "$11"
+    },
+    {
+      "name": "ADditive value out of range",
+      "address": "$67"
+    },
+    {
+      "name": "Multiplicative value out of range",
+      "address": "$66"
+    },
+    {
+      "name": "Lambda regulation out of range",
+      "address": "$65"
+    },
+    {
+      "name": "Throttle potentiometer",
+      "address": "$35"
+    },
+    {
+      "name": "Air flow meter",
+      "address": "$07"
+    },
+    {
+      "name": "Canister purge valve",
+      "address": "$05"
+    },
+    {
+      "name": "Water temperature",
+      "address": "$2D"
+    },
+    {
+      "name": "Battery voltage",
+      "address": "$25"
+    },
+    {
+      "name": "Lambda sensor",
+      "address": "$1C"
+    },
+    {
+      "name": "Thermocouple control unit",
+      "address": "$2C"
+    },
+    {
+      "name": "Catalytic convertor temp. too high",
+      "address": "$6A"
+    },
+    {
+      "name": "Tachometer signal",
+      "address": "$09"
+    },
+    {
+      "name": "TDC acknowledgment",
+      "address": "$6B"
+    },
+    {
+      "name": "A/C compressor",
+      "address": "$28"
+    },
+    {
+      "name": "ECU self diagnosis",
+      "address": "$64"
+    }
+  ],
+  "actuators": [
+    {
+      "name": "Injector no. 7",
+      "address": "$22"
+    },
+    {
+      "name": "Injector no. 8",
+      "address": "$10"
+    },
+    {
+      "name": "Injector no. 9",
+      "address": "$21"
+    },
+    {
+      "name": "Injector no. 10",
+      "address": "$23"
+    },
+    {
+      "name": "Injector no. 11",
+      "address": "$0F"
+    },
+    {
+      "name": "Injector no. 12",
+      "address": "$11"
+    },
+    {
+      "name": "Idle actuator",
+      "address": "$04"
+    },
+    {
+      "name": "Anti-evaporation valve",
+      "address": "$05"
+    },
+    {
+      "name": "Secondary air valve",
+      "address": "$20"
+    }
+  ]
+}
