@@ -1,90 +1,193 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "type": "object",
-
+  "description": "Note that some of the numeric value fields in this schema are actually typed as strings; this is to allow expressing addresses and offsets in hexadecimal by using the convention of prefixing with '0x'.",
   "properties": {
-    "vehicle": { "type": "string" },
-    "ecu": { "type": "string" },
-    "comment": { "type": "string" },
+    "vehicle": {
+      "type": "string",
+      "description": "Make/model of the vehicle to which this configuration applies."
+    },
+    "ecu": {
+      "type": "string",
+      "description": "Distinguishes the ECU among the numerous modules that may exist in the vehicle.",
+      "examples": [
+        "Bosch ABS",
+        "Bosch Motronic",
+        "Marelli 1AF"
+      ]
+    },
+    "position": {
+      "type": "string",
+      "description": "Identifies the location in the vehicle; used when there is more than one instance of a particular ECU type, such as for an engine that is managed by one ECU per bank.",
+      "examples": [
+        "left",
+        "right"
+      ]
+    },
+    "comment": {
+      "type": "string"
+    },
     "protocol": {
       "type": "object",
       "properties": {
-        "family": { "type": "string" },
-        "variant": { "type": "string" },
-        "baud": { "type": "number" },
-        "address": { "type": "string" },
-        "comment": { "type": "string" }
+        "family": {
+          "type": "string",
+          "examples": [
+            "KWP71",
+            "FIAT-9141",
+            "Marelli1AF"
+          ]
+        },
+        "variant": {
+          "type": "string",
+          "description": "Used to differentiate standard/official implementations of a protocol from other versions. Use 'standard' for the official version."
+        },
+        "baud": {
+          "type": "number",
+          "description": "Speed of the serial communication. This is specified in its own field because it often differs between modules, even for modules that have otherwise adhered to the official specification of a protocol."
+        },
+        "address": {
+          "type": "string",
+          "description": "Single-byte address of the target module that is sent in the slow-init sequence."
+        },
+        "comment": {
+          "type": "string"
+        }
       },
+      "required": [
+        "family",
+        "baud"
+      ],
       "additionalProperties": false
     },
-
-    "parameters" : {
+    "parameters": {
       "type": "array",
       "items": {
         "type": "object",
         "properties": {
-          "name": { "type": "string" },
-          "decimals": { "type": "number" },
-          "address": { "type": "string" },
-          "numbytes": { "type": "number" },
-          "id": { "type": "string" },
-          "snapshot": { "type": "number" },
-          "offset": { "type": "string" },
-          "enumvals" : {
+          "name": {
+            "type": "string"
+          },
+          "decimals": {
+            "type": "number",
+            "description": "Number of digits to appear after the decimal point when the value of this parameter is being displayed"
+          },
+          "address": {
+            "type": "string",
+            "description": "Used together with numbytes to describe a memory location in RAM/ROM"
+          },
+          "numbytes": {
+            "type": "number"
+          },
+          "id": {
+            "type": "string",
+            "description": "Describes a value identified by the ECU with an index rather than a memory address."
+          },
+          "snapshot": {
+            "type": "number",
+            "description": "Number of the snapshot page in which this parameter is stored."
+          },
+          "offset": {
+            "type": "string"
+          },
+          "enumvals": {
             "type": "object"
           },
-          "lsb": { "type": "number" },
-          "zero": { "type": "number" },
-          "units": { "type": "string" },
-          "mask": { "type": "string" },
-          "comment": { "type": "string" }
+          "lsb": {
+            "type": "number",
+            "description": "Value (in target units) of the least significant bit of the raw data."
+          },
+          "zero": {
+            "type": "number",
+            "description": "Offset (in target units) that is applied to a raw value of zero. May be either positive or negative."
+          },
+          "units": {
+            "type": "string",
+            "description": "Physical units expressed by this parameter value.",
+            "examples": [
+              "RPM",
+              "milliseconds"
+            ]
+          },
+          "mask": {
+            "type": "string",
+            "description": "Bitmask that is applied to the raw value (via a bitwise AND) before any further processing is done."
+          },
+          "comment": {
+            "type": "string"
+          }
         },
         "additionalProperties": false,
         "oneOf": [
           {
-            "required": ["address", "numbytes"],
-            "$comment": "Used for memory locations (RAM/ROM)"
+            "required": [
+              "address",
+              "numbytes"
+            ],
+            "description": "Used for memory locations (RAM/ROM)"
           },
           {
-            "required": ["id"],
-            "$comment": "Used for sampled values stored by the ECU"
+            "required": [
+              "id"
+            ],
+            "description": "Used for sampled values stored by the ECU. The ECU is expected to return the appropriate number of bytes to properly express the stored value."
           },
           {
-            "required": ["snapshot", "offset", "numbytes"],
-            "$comment": "Used for a location within snapshot data"
+            "required": [
+              "snapshot",
+              "offset",
+              "numbytes"
+            ],
+            "description": "Used for a location within snapshot data"
           }
         ]
       }
     },
-    
-    "faultcodes" : {
+    "faultcodes": {
       "type": "array",
       "items": {
         "type": "object",
         "properties": {
-          "name": { "type": "string" },
-          "address": { "type": "string",
-                       "$comment": "TODO: Determine the combination of property fields that will be required to uniquely identify a stored fault code. It may be a single scalar identifying the fault, or it may be an address and bitmask." },
-          "comment": { "type": "string" }
+          "name": {
+            "type": "string"
+          },
+          "address": {
+            "type": "string",
+            "$comment": "TODO: Determine the combination of property fields that will be required to uniquely identify a stored fault code. It may be a single scalar identifying the fault, or it may be an address and bitmask."
+          },
+          "comment": {
+            "type": "string"
+          }
         }
       }
     },
-      
-    "actuators" : {
+    "actuators": {
       "type": "array",
       "items": {
         "type": "object",
         "properties": {
-          "name": { "type": "string" },
-          "id": { "type": "string" },
-          "parameter": { "type": "string" },
-          "comment": { "type": "string" },
+          "name": {
+            "type": "string"
+          },
+          "id": {
+            "type": "string",
+            "description": "Identifies the actuator to trigger. Note that some actuators may require parameter data, in which case the 'parameter' property must also be used."
+          },
+          "parameter": {
+            "type": "string"
+          },
+          "comment": {
+            "type": "string"
+          }
         },
         "additionalProperties": false,
-        "required": [ "id" ]
+        "required": [
+          "name",
+          "id"
+        ]
       }
     },
-      
     "additionalProperties": false
-  }
+  },
+  "additionalProperties": false
 }
