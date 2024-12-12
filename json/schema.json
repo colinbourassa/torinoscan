@@ -1,0 +1,90 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+
+  "properties": {
+    "vehicle": { "type": "string" },
+    "ecu": { "type": "string" },
+    "comment": { "type": "string" },
+    "protocol": {
+      "type": "object",
+      "properties": {
+        "family": { "type": "string" },
+        "variant": { "type": "string" },
+        "baud": { "type": "number" },
+        "address": { "type": "string" },
+        "comment": { "type": "string" }
+      },
+      "additionalProperties": false
+    },
+
+    "parameters" : {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "name": { "type": "string" },
+          "decimals": { "type": "number" },
+          "address": { "type": "string" },
+          "numbytes": { "type": "number" },
+          "id": { "type": "string" },
+          "snapshot": { "type": "number" },
+          "offset": { "type": "string" },
+          "enumvals" : {
+            "type": "object"
+          },
+          "lsb": { "type": "number" },
+          "zero": { "type": "number" },
+          "units": { "type": "string" },
+          "mask": { "type": "string" },
+          "comment": { "type": "string" }
+        },
+        "additionalProperties": false,
+        "oneOf": [
+          {
+            "required": ["address", "numbytes"],
+            "$comment": "Used for memory locations (RAM/ROM)"
+          },
+          {
+            "required": ["id"],
+            "$comment": "Used for sampled values stored by the ECU"
+          },
+          {
+            "required": ["snapshot", "offset", "numbytes"],
+            "$comment": "Used for a location within snapshot data"
+          }
+        ]
+      }
+    },
+    
+    "faultcodes" : {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "name": { "type": "string" },
+          "address": { "type": "string",
+                       "$comment": "TODO: Determine the combination of property fields that will be required to uniquely identify a stored fault code. It may be a single scalar identifying the fault, or it may be an address and bitmask." },
+          "comment": { "type": "string" }
+        }
+      }
+    },
+      
+    "actuators" : {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "name": { "type": "string" },
+          "id": { "type": "string" },
+          "parameter": { "type": "string" },
+          "comment": { "type": "string" },
+        },
+        "additionalProperties": false,
+        "required": [ "id" ]
+      }
+    },
+      
+    "additionalProperties": false
+  }
+}
