@@ -195,7 +195,18 @@ int main(int argc, char** argv)
           const int lastIndex = curArray->size() - 1;
           if (lastIndex >= 0)
           {
-            (*curArray)[lastIndex]["decimals"] = matches[1];
+            try
+            {
+              (*curArray)[lastIndex]["decimals"] = std::stoi(matches[1]);
+            }
+            catch (std::invalid_argument const& ex)
+            {
+              std::cerr << "Failed to parse 'decimals' string (" << line << ")" << std::endl;
+            }
+            catch (std::out_of_range const& ex)
+            {
+              std::cerr << "'decimals' string out of range (" << line << ")" << std::endl;
+            }
           }
         }
         else
