@@ -11,7 +11,7 @@
   "parameters": [
     {
       "name": "ENGINE REVOL.",
-      "decimals": "0",
+      "decimals": 0,
       "address": "$02 $00 $3B",
       "numbytes": 1,
       "lsb": 0,
@@ -19,7 +19,7 @@
     },
     {
       "name": "LOAD",
-      "decimals": "1",
+      "decimals": 1,
       "address": "$01 $00 $40",
       "numbytes": 1,
       "lsb": 0,
@@ -27,7 +27,7 @@
     },
     {
       "name": "INJECTION TIME",
-      "decimals": "1",
+      "decimals": 1,
       "address": "$02 $00 $60",
       "numbytes": 1,
       "lsb": 0,
@@ -35,7 +35,7 @@
     },
     {
       "name": "IGNITION ADVANCE",
-      "decimals": "1",
+      "decimals": 1,
       "address": "$01 $00 $55",
       "numbytes": 1,
       "lsb": 0,
@@ -43,7 +43,7 @@
     },
     {
       "name": "ENGINE TEMPERATURE",
-      "decimals": "1",
+      "decimals": 1,
       "address": "$01 $00 $38",
       "numbytes": 1,
       "lsb": 0,
@@ -51,7 +51,7 @@
     },
     {
       "name": "AIR FLOW",
-      "decimals": "1",
+      "decimals": 1,
       "address": "$02 $00 $9B",
       "numbytes": 1,
       "lsb": 0,
@@ -59,7 +59,7 @@
     },
     {
       "name": "VEHICLE SPEED",
-      "decimals": "0",
+      "decimals": 0,
       "address": "$01 $00 $8C",
       "numbytes": 1,
       "lsb": 0,
@@ -67,7 +67,7 @@
     },
     {
       "name": "COMPRESSOR STATUS",
-      "enum": {
+      "enumvals": {
         "0": "OFF",
         "1": "ON"
       },
@@ -76,7 +76,7 @@
     },
     {
       "name": "AIR TEMPERAT. CONTROL SYSTEM STATUS",
-      "enum": {
+      "enumvals": {
         "0": "OFF",
         "1": "ON"
       },
@@ -85,7 +85,7 @@
     },
     {
       "name": "SECONDARY AIR VALVE CONDIT.",
-      "enum": {
+      "enumvals": {
         "0": "OFF",
         "1": "ON"
       },
@@ -94,7 +94,7 @@
     },
     {
       "name": "THROTTLE ABSOL.ANGLE",
-      "decimals": "1",
+      "decimals": 1,
       "address": "$08 $00",
       "numbytes": 1,
       "lsb": 0,
@@ -102,7 +102,7 @@
     },
     {
       "name": "THROTTLE RELAT.ANGLE",
-      "decimals": "1",
+      "decimals": 1,
       "address": "$01 $03 $42",
       "numbytes": 1,
       "lsb": 0,
@@ -110,7 +110,7 @@
     },
     {
       "name": "THROTTLE OFF SET ANGLE",
-      "decimals": "1",
+      "decimals": 1,
       "address": "$01 $03 $45",
       "numbytes": 1,
       "lsb": 0,
@@ -118,7 +118,7 @@
     },
     {
       "name": "BATTERY VOLTAGE",
-      "decimals": "2",
+      "decimals": 2,
       "address": "$08 $01",
       "numbytes": 1,
       "lsb": 0,
@@ -126,7 +126,7 @@
     },
     {
       "name": "OXY. SENS.VOLTAGE",
-      "decimals": "0",
+      "decimals": 0,
       "address": "$08 $07",
       "numbytes": 1,
       "lsb": 0,
@@ -134,7 +134,7 @@
     },
     {
       "name": "CATALYTIC CONVER.TEMP.",
-      "decimals": "0",
+      "decimals": 0,
       "address": "$08 $02",
       "numbytes": 1,
       "lsb": 0,
@@ -142,7 +142,7 @@
     },
     {
       "name": "FUNCTIONING MODE",
-      "enum": {
+      "enumvals": {
         "0": "CLOSED LOOP",
         "1": "OPEN LOOP"
       },
@@ -151,7 +151,7 @@
     },
     {
       "name": "TJ CORRECTION",
-      "decimals": "3",
+      "decimals": 3,
       "address": "$01 $02 $0F",
       "numbytes": 1,
       "lsb": 0,
@@ -159,7 +159,7 @@
     },
     {
       "name": "ADDITIVE VALUE",
-      "decimals": "3",
+      "decimals": 3,
       "address": "$01 $02 $07",
       "numbytes": 1,
       "lsb": 0,
@@ -167,7 +167,7 @@
     },
     {
       "name": "MULTIPLIER VALUE",
-      "decimals": "3",
+      "decimals": 3,
       "address": "$01 $02 $01",
       "numbytes": 1,
       "lsb": 0,
@@ -175,7 +175,7 @@
     },
     {
       "name": "MOTOR CONDITION",
-      "enum": {
+      "enumvals": {
         "0": "IDLING",
         "1": "OUT OF IDLE",
         "2": "FULL OPEN",
@@ -302,39 +302,39 @@
   "actuators": [
     {
       "name": "Injector no. 7",
-      "address": "$22"
+      "id": "$22"
     },
     {
       "name": "Injector no. 8",
-      "address": "$10"
+      "id": "$10"
     },
     {
       "name": "Injector no. 9",
-      "address": "$21"
+      "id": "$21"
     },
     {
       "name": "Injector no. 10",
-      "address": "$23"
+      "id": "$23"
     },
     {
       "name": "Injector no. 11",
-      "address": "$0F"
+      "id": "$0F"
     },
     {
       "name": "Injector no. 12",
-      "address": "$11"
+      "id": "$11"
     },
     {
       "name": "Idle actuator",
-      "address": "$04"
+      "id": "$04"
     },
     {
       "name": "Anti-evaporation valve",
-      "address": "$05"
+      "id": "$05"
     },
     {
       "name": "Secondary air valve",
-      "address": "$20"
+      "id": "$20"
     }
   ]
 }
