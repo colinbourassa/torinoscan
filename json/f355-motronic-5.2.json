@@ -10,8 +10,8 @@
   "parameters": [
     {
       "name": "Engine speed",
-      "decimals": "0",
-      "address": "$2001",
+      "decimals": 0,
+      "address": "0x2001",
       "numbytes": 1,
       "lsb": 40,
       "zero": 0,
@@ -19,8 +19,8 @@
     },
     {
       "name": "Injection time (TJ) LH",
-      "decimals": "1",
-      "address": "$2060",
+      "decimals": 1,
+      "address": "0x2060",
       "numbytes": 1,
       "lsb": 0.2392,
       "zero": 0,
@@ -28,8 +28,8 @@
     },
     {
       "name": "Injection time (TJ) RH",
-      "decimals": "1",
-      "address": "$2070",
+      "decimals": 1,
+      "address": "0x2070",
       "numbytes": 1,
       "lsb": 0.2392,
       "zero": 0,
@@ -37,8 +37,8 @@
     },
     {
       "name": "Load (TL)",
-      "decimals": "1",
-      "address": "$2005",
+      "decimals": 1,
+      "address": "0x2005",
       "numbytes": 1,
       "lsb": 0.05,
       "zero": 0,
@@ -46,8 +46,8 @@
     },
     {
       "name": "Ignition advance",
-      "decimals": "1",
-      "address": "$2004",
+      "decimals": 1,
+      "address": "0x2004",
       "numbytes": 1,
       "lsb": -0.075,
       "zero": 5.4,
@@ -55,8 +55,8 @@
     },
     {
       "name": "Engine temperature",
-      "decimals": "1",
-      "address": "$2008",
+      "decimals": 1,
+      "address": "0x2008",
       "numbytes": 1,
       "lsb": 0.75,
       "zero": -48.0,
@@ -64,8 +64,8 @@
     },
     {
       "name": "Air flow",
-      "decimals": "1",
-      "address": "$2064",
+      "decimals": 1,
+      "address": "0x2064",
       "numbytes": 1,
       "lsb": 0.25,
       "zero": 0,
@@ -73,8 +73,8 @@
     },
     {
       "name": "Intake air temperature",
-      "decimals": "1",
-      "address": "$2007",
+      "decimals": 1,
+      "address": "0x2007",
       "numbytes": 1,
       "lsb": 0.75,
       "zero": -48.0,
@@ -82,8 +82,8 @@
     },
     {
       "name": "Throttle absolute angle",
-      "decimals": "1",
-      "address": "$2058",
+      "decimals": 1,
+      "address": "0x2058",
       "numbytes": 1,
       "lsb": 0.5,
       "zero": -12.8,
@@ -91,8 +91,8 @@
     },
     {
       "name": "Relative throttle angle",
-      "decimals": "1",
-      "address": "$201E",
+      "decimals": 1,
+      "address": "0x201E",
       "numbytes": 1,
       "lsb": 0.5,
       "zero": 0.0,
@@ -100,8 +100,8 @@
     },
     {
       "name": "Offset throttle angle",
-      "decimals": "1",
-      "address": "$2059",
+      "decimals": 1,
+      "address": "0x2059",
       "numbytes": 1,
       "lsb": 0.50,
       "zero": -12.8,
@@ -113,7 +113,7 @@
         "0": "ON",
         "1": "OFF"
       },
-      "address": "$205E",
+      "address": "0x205E",
       "numbytes": 1,
       "mask": "0x01"
     },
@@ -123,7 +123,7 @@
         "0": "OFF",
         "16": "ON"
       },
-      "address": "$205A",
+      "address": "0x205A",
       "numbytes": 1,
       "mask": "0x10"
     },
@@ -133,7 +133,7 @@
         "0": "OFF",
         "2": "ON"
       },
-      "address": "$205D",
+      "address": "0x205D",
       "numbytes": 1,
       "mask": "0x02"
     },
@@ -143,7 +143,7 @@
         "0": "OFF",
         "4": "ON"
       },
-      "address": "$200C",
+      "address": "0x200C",
       "numbytes": 1,
       "mask": "0x04"
     },
@@ -153,14 +153,14 @@
         "0": "OFF",
         "32": "ON"
       },
-      "address": "$200C",
+      "address": "0x200C",
       "numbytes": 1,
       "mask": "0x20"
     },
     {
       "name": "Vehicle speed",
-      "decimals": "0",
-      "address": "$2023",
+      "decimals": 0,
+      "address": "0x2023",
       "numbytes": 1,
       "lsb": 1.25,
       "zero": 0,
@@ -168,8 +168,8 @@
     },
     {
       "name": "Battery voltage",
-      "decimals": "1",
-      "address": "$2006",
+      "decimals": 1,
+      "address": "0x2006",
       "numbytes": 1,
       "lsb": 0.95,
       "zero": 0,
@@ -177,8 +177,8 @@
     },
     {
       "name": "Front oxygen sensor voltage (LH)",
-      "decimals": "0",
-      "address": "$2026",
+      "decimals": 0,
+      "address": "0x2026",
       "numbytes": 1,
       "lsb": 6,
       "zero": -406,
@@ -187,8 +187,8 @@
     },
     {
       "name": "Rear oxygen sensor voltage (LH)",
-      "decimals": "0",
-      "address": "$2027",
+      "decimals": 0,
+      "address": "0x2027",
       "numbytes": 1,
       "lsb": 6,
       "zero": -406,
@@ -197,8 +197,8 @@
     },
     {
       "name": "Catalytic converters temperature (LH)",
-      "decimals": "0",
-      "address": "$2016",
+      "decimals": 0,
+      "address": "0x2016",
       "numbytes": 1,
       "lsb": 3.90625,
       "zero": 200,
@@ -210,14 +210,14 @@
         "0": "OPEN LOOP",
         "4": "CLOSED LOOP"
       },
-      "address": "$205B",
+      "address": "0x205B",
       "numbytes": 1,
       "mask": "0x04"
     },
     {
       "name": "Correction TJ (LH)",
-      "decimals": "1",
-      "address": "$2066",
+      "decimals": 1,
+      "address": "0x2066",
       "numbytes": 1,
       "lsb": 0.03125,
       "zero": 0,
@@ -226,8 +226,8 @@
     },
     {
       "name": "Additive value (LH)",
-      "decimals": "3",
-      "address": "$2015",
+      "decimals": 3,
+      "address": "0x2015",
       "numbytes": 1,
       "lsb": 0.016,
       "zero": 0,
@@ -236,8 +236,8 @@
     },
     {
       "name": "Multiplicative value (LH)",
-      "decimals": "3",
-      "address": "$2014",
+      "decimals": 3,
+      "address": "0x2014",
       "numbytes": 1,
       "lsb": 0,
       "zero": 0,
@@ -246,8 +246,8 @@
     },
     {
       "name": "Front oxygen sensor voltage (RH)",
-      "decimals": "0",
-      "address": "$2028",
+      "decimals": 0,
+      "address": "0x2028",
       "numbytes": 1,
       "lsb": 6,
       "zero": -406,
@@ -256,8 +256,8 @@
     },
     {
       "name": "Rear oxygen sensor voltage (RH)",
-      "decimals": "0",
-      "address": "$2029",
+      "decimals": 0,
+      "address": "0x2029",
       "numbytes": 1,
       "lsb": 6,
       "zero": -406,
@@ -266,8 +266,8 @@
     },
     {
       "name": "Catalytic converters temperature (RH)",
-      "decimals": "0",
-      "address": "$2019",
+      "decimals": 0,
+      "address": "0x2019",
       "numbytes": 1,
       "lsb": 3.90625,
       "zero": 200,
@@ -279,14 +279,14 @@
         "0": "OPEN LOOP",
         "4": "CLOSED LOOP"
       },
-      "address": "$205C",
+      "address": "0x205C",
       "numbytes": 1,
       "mask": "0x04"
     },
     {
       "name": "Correction TJ (RH)",
-      "decimals": "1",
-      "address": "$2068",
+      "decimals": 1,
+      "address": "0x2068",
       "numbytes": 1,
       "lsb": 0.03125,
       "zero": 0,
@@ -295,8 +295,8 @@
     },
     {
       "name": "Additive value (RH)",
-      "decimals": "3",
-      "address": "$2018",
+      "decimals": 3,
+      "address": "0x2018",
       "numbytes": 1,
       "lsb": 0.016,
       "zero": 0.0,
@@ -305,8 +305,8 @@
     },
     {
       "name": "Multiplicative value (RH)",
-      "decimals": "3",
-      "address": "$2017",
+      "decimals": 3,
+      "address": "0x2017",
       "numbytes": 1,
       "lsb": 0,
       "zero": 0,

@@ -12,49 +12,49 @@
     {
       "name": "Engagement potentiometer travel",
       "decimals": 2,
-      "id": "$01",
+      "id": "0x01",
       "lsb": 0.03,
       "zero": -3.71 
     },
     {
       "name": "Potentiometer clutch travel (deg)",
       "decimals": 2,
-      "id": "$02",
+      "id": "0x02",
       "lsb": 0.07,
       "zero": -41.75 
     },
     {
       "name": "Clutch travel (mm)",
       "decimals": 2,
-      "id": "$03",
+      "id": "0x03",
       "lsb": 0.0355,
       "zero": -2.70 
     },
     {
       "name": "Clutch travel reference (mm)",
       "decimals": 2,
-      "id": "$04",
+      "id": "0x04",
       "lsb": 0.0355,
       "zero": -2.70
     },
     {
       "name": "Throttle potentiometer",
       "decimals": 0,
-      "id": "$05",
+      "id": "0x05",
       "lsb": 1,
       "zero": 0
     },
     {
       "name": "Hydraulic circuit pressure (bar)",
       "decimals": 1,
-      "id": "$06",
+      "id": "0x06",
       "lsb": 0.1,
       "zero": 0
     },
     {
       "name": "Water temperature",
       "decimals": 1,
-      "id": "$07",
+      "id": "0x07",
       "lsb": 0,
       "zero": 0,
       "comment": "TODO: BCD value, e.g. 0x1253 is 125.3 deg"
@@ -62,7 +62,7 @@
     {
       "name": "Battery voltage",
       "decimals": 1,
-      "id": "$08",
+      "id": "0x08",
       "lsb": 2.44,
       "zero": 0
     },
@@ -75,26 +75,26 @@
         "3": "Down",
         "4": "Neutral"
       },
-      "id": "$09"
+      "id": "0x09"
     },
     {
       "name": "Engine speed (RPM)",
       "decimals": 0,
-      "id": "$0A",
+      "id": "0x0A",
       "lsb": 1,
       "zero": 0
     },
     {
       "name": "Gearbox primary angle speed (RPM)",
       "decimals": 0,
-      "id": "$0B",
+      "id": "0x0B",
       "lsb": 1,
       "zero": 0
     },
     {
       "name": "VEHICLE SPEED",
       "decimals": 0,
-      "id": "$0C",
+      "id": "0x0C",
       "lsb": 0,
       "zero": 0
     },
@@ -110,7 +110,7 @@
         "6": "SIXTH",
         "7": "REVERSE"
       },
-      "id": "$0D"
+      "id": "0x0D"
     },
     {
       "name": "BRAKE SW STATUS",
@@ -118,7 +118,7 @@
         "0": "ON",
         "1": "OFF"
       },
-      "address": "$0E $01",
+      "address": "0x0E 0x01",
       "numbytes": 1
     },
     {
@@ -127,7 +127,7 @@
         "0": "OFF",
         "1": "ON"
       },
-      "address": "$0E $02",
+      "address": "0x0E 0x02",
       "numbytes": 1
     },
     {
@@ -136,7 +136,7 @@
         "0": "OFF",
         "1": "ON"
       },
-      "address": "$0E $04",
+      "address": "0x0E 0x04",
       "numbytes": 1
     },
     {
@@ -145,7 +145,7 @@
         "0": "OFF",
         "1": "ON"
       },
-      "address": "$0E $08",
+      "address": "0x0E 0x08",
       "numbytes": 1
     },
     {
@@ -154,7 +154,7 @@
         "0": "OFF",
         "1": "ON"
       },
-      "address": "$0E $10",
+      "address": "0x0E 0x10",
       "numbytes": 1
     },
     {
@@ -163,7 +163,7 @@
         "0": "OFF",
         "1": "ON"
       },
-      "address": "$0E $20",
+      "address": "0x0E 0x20",
       "numbytes": 1
     },
     {
@@ -172,13 +172,13 @@
         "0": "OFF",
         "1": "ON"
       },
-      "address": "$0E $40",
+      "address": "0x0E 0x40",
       "numbytes": 1
     },
     {
       "name": "SV CURRENT CONTROL FOR UNEVEN GEAR ENGAGEMENT",
       "decimals": 1,
-      "address": "$0F",
+      "address": "0x0F",
       "numbytes": 1,
       "lsb": 0,
       "zero": 0
@@ -186,7 +186,7 @@
     {
       "name": "SV CURRENT CONTROL FOR EVEN GEAR ENGAGEMENT",
       "decimals": 1,
-      "address": "$10",
+      "address": "0x10",
       "numbytes": 1,
       "lsb": 0,
       "zero": 0
@@ -194,7 +194,7 @@
     {
       "name": "CLUTCH SV CURRENT CONTROL",
       "decimals": 2,
-      "address": "$11",
+      "address": "0x11",
       "numbytes": 1,
       "lsb": 0,
       "zero": 0
@@ -207,7 +207,7 @@
         "2": "RANG 5a-6a",
         "3": "REVERSE STATUS"
       },
-      "address": "$12 $13",
+      "address": "0x12 0x13",
       "numbytes": 1
     },
     {
@@ -216,13 +216,13 @@
         "0": "RELAY OFF",
         "1": "RELAY ON"
       },
-      "address": "$14",
+      "address": "0x14",
       "numbytes": 1
     },
     {
       "name": "EFFECTIVE TORQUE MOTRONIC",
       "decimals": 0,
-      "address": "$15",
+      "address": "0x15",
       "numbytes": 1,
       "lsb": 0,
       "zero": 0
@@ -230,7 +230,7 @@
     {
       "name": "THRESHOLDS FOR SURE MINIMUM SHIFT TO NEUTRAL",
       "decimals": 0,
-      "address": "$01",
+      "address": "0x01",
       "numbytes": 1,
       "lsb": 0,
       "zero": 0
@@ -238,7 +238,7 @@
     {
       "name": "THRESHOLDS FOR SURE MINIMUM SHIFT TO FIRST SPEED",
       "decimals": 0,
-      "address": "$01",
+      "address": "0x01",
       "numbytes": 1,
       "lsb": 0,
       "zero": 0
@@ -246,7 +246,7 @@
     {
       "name": "THRESHOLD FOR SURE MAXIMUM SHIFT TO SECOND SPEED",
       "decimals": 0,
-      "address": "$01",
+      "address": "0x01",
       "numbytes": 1,
       "lsb": 0,
       "zero": 0
@@ -254,7 +254,7 @@
     {
       "name": "THRESHOLDS FOR SURE MAXIMUM SHIFT TO THIRD SPEED",
       "decimals": 0,
-      "address": "$01",
+      "address": "0x01",
       "numbytes": 1,
       "lsb": 0,
       "zero": 0
@@ -262,7 +262,7 @@
     {
       "name": "THRESHOLDS FOR SURE MAXIMUM SHIFT TO FOURTH SPEED",
       "decimals": 0,
-      "address": "$01",
+      "address": "0x01",
       "numbytes": 1,
       "lsb": 0,
       "zero": 0
@@ -270,7 +270,7 @@
     {
       "name": "THRESHOLDS FOR SURE MAXIMUM SHIFT TO FIFTH SPEED",
       "decimals": 0,
-      "address": "$01",
+      "address": "0x01",
       "numbytes": 1,
       "lsb": 0,
       "zero": 0
@@ -278,7 +278,7 @@
     {
       "name": "THRESHOLDS FOR SURE MAXIMUM SHIFT TO SIXTH SPEED",
       "decimals": 0,
-      "address": "$01",
+      "address": "0x01",
       "numbytes": 1,
       "lsb": 0,
       "zero": 0
@@ -286,7 +286,7 @@
     {
       "name": "THRESHOLDS FOR SURE MINIMUM SHIFT TO REVERSE",
       "decimals": 0,
-      "address": "$01",
+      "address": "0x01",
       "numbytes": 1,
       "lsb": 0,
       "zero": 0
@@ -294,7 +294,7 @@
     {
       "name": "THRESHOLDS FOR SURE MAXIMUM SHIFT TO NEUTRAL",
       "decimals": 0,
-      "address": "$02",
+      "address": "0x02",
       "numbytes": 1,
       "lsb": 0,
       "zero": 0
@@ -302,7 +302,7 @@
     {
       "name": "THRESHOLDS FOR SURE MAXIMUM SHIFT TO FIRST SPEED",
       "decimals": 0,
-      "address": "$02",
+      "address": "0x02",
       "numbytes": 1,
       "lsb": 0,
       "zero": 0
@@ -310,7 +310,7 @@
     {
       "name": "THRESHOLDS FOR SURE MAXIMUM SHIFT TO SECOND SPEED",
       "decimals": 0,
-      "address": "$02",
+      "address": "0x02",
       "numbytes": 1,
       "lsb": 0,
       "zero": 0
@@ -318,7 +318,7 @@
     {
       "name": "THRESHOLDS FOR SURE MAXIMUM SHIFT TO THIRD SPEED",
       "decimals": 0,
-      "address": "$02",
+      "address": "0x02",
       "numbytes": 1,
       "lsb": 0,
       "zero": 0
@@ -326,7 +326,7 @@
     {
       "name": "THRESHOLDS FOR SURE MAXIMUM SHIFT TO FOURTH SPEED",
       "decimals": 0,
-      "address": "$02",
+      "address": "0x02",
       "numbytes": 1,
       "lsb": 0,
       "zero": 0
@@ -334,7 +334,7 @@
     {
       "name": "THRESHOLDS FOR SURE MAXIMUM SHIFT TO FIFTH SPEED",
       "decimals": 0,
-      "address": "$02",
+      "address": "0x02",
       "numbytes": 1,
       "lsb": 0,
       "zero": 0
@@ -342,7 +342,7 @@
     {
       "name": "THRESHOLDS FOR SURE MAXIMUM SHIFT TO SIXTH SPEED",
       "decimals": 0,
-      "address": "$02",
+      "address": "0x02",
       "numbytes": 1,
       "lsb": 0,
       "zero": 0
@@ -350,7 +350,7 @@
     {
       "name": "THRESHOLDS FOR SURE MAXIMUM SHIFT TO REVERSE",
       "decimals": 0,
-      "address": "$02",
+      "address": "0x02",
       "numbytes": 1,
       "lsb": 0,
       "zero": 0
@@ -358,7 +358,7 @@
     {
       "name": "THRESHOLDS FOR MINIMUM SURE NEUTRAL SELECTION",
       "decimals": 0,
-      "address": "$03",
+      "address": "0x03",
       "numbytes": 1,
       "lsb": 0,
       "zero": 0
@@ -366,7 +366,7 @@
     {
       "name": "THRESHOLDS FOR MINIMUM SURE FIRST SPEED SELECTION",
       "decimals": 0,
-      "address": "$03",
+      "address": "0x03",
       "numbytes": 1,
       "lsb": 0,
       "zero": 0
@@ -374,7 +374,7 @@
     {
       "name": "THRESHOLDS FOR MINIMUM SURE SECOND SPEED SELECTION",
       "decimals": 0,
-      "address": "$03",
+      "address": "0x03",
       "numbytes": 1,
       "lsb": 0,
       "zero": 0
@@ -382,7 +382,7 @@
     {
       "name": "THRESHOLDS FOR MINIMUM SURE THIRD SPEED SELECTION",
       "decimals": 0,
-      "address": "$03",
+      "address": "0x03",
       "numbytes": 1,
       "lsb": 0,
       "zero": 0
@@ -390,7 +390,7 @@
     {
       "name": "THRESHOLDS FOR MINIMUM SURE FOURTH SPEED SELECTION",
       "decimals": 0,
-      "address": "$03",
+      "address": "0x03",
       "numbytes": 1,
       "lsb": 0,
       "zero": 0
@@ -398,7 +398,7 @@
     {
       "name": "THRESHOLDS FOR MINIMUM SURE FIFTH SPEED SELECTION",
       "decimals": 0,
-      "address": "$03",
+      "address": "0x03",
       "numbytes": 1,
       "lsb": 0,
       "zero": 0
@@ -406,7 +406,7 @@
     {
       "name": "THRESHOLDS FOR MINIMUM SURE SIXTH SPEED SELECTION",
       "decimals": 0,
-      "address": "$03",
+      "address": "0x03",
       "numbytes": 1,
       "lsb": 0,
       "zero": 0
@@ -414,7 +414,7 @@
     {
       "name": "THRESHOLDS FOR MINIMUM SURE REVERSE GEAR SELECTION",
       "decimals": 0,
-      "address": "$03",
+      "address": "0x03",
       "numbytes": 1,
       "lsb": 0,
       "zero": 0
@@ -422,7 +422,7 @@
     {
       "name": "THRESHOLDS FOR MAX. SURE NEUTRAL SELECTION",
       "decimals": 0,
-      "address": "$04",
+      "address": "0x04",
       "numbytes": 1,
       "lsb": 0,
       "zero": 0
@@ -430,7 +430,7 @@
     {
       "name": "THRESHOLDS FOR MAX. SURE FIRST GEAR SELECTION",
       "decimals": 0,
-      "address": "$04",
+      "address": "0x04",
       "numbytes": 1,
       "lsb": 0,
       "zero": 0
@@ -438,7 +438,7 @@
     {
       "name": "THRESHOLDS FOR MAX. SURE SECOND GEAR SELECTION",
       "decimals": 0,
-      "address": "$04",
+      "address": "0x04",
       "numbytes": 1,
       "lsb": 0,
       "zero": 0
@@ -446,7 +446,7 @@
     {
       "name": "THRESHOLDS FOR MAX. SURE THIRD GEAR SELECTION",
       "decimals": 0,
-      "address": "$04",
+      "address": "0x04",
       "numbytes": 1,
       "lsb": 0,
       "zero": 0
@@ -454,7 +454,7 @@
     {
       "name": "THRESHOLDS FOR MAX. SURE FOURTH GEAR SELECTION",
       "decimals": 0,
-      "address": "$04",
+      "address": "0x04",
       "numbytes": 1,
       "lsb": 0,
       "zero": 0
@@ -462,7 +462,7 @@
     {
       "name": "THRESHOLDS FOR MAX. SURE FIFTH GEAR SELECTION",
       "decimals": 0,
-      "address": "$04",
+      "address": "0x04",
       "numbytes": 1,
       "lsb": 0,
       "zero": 0
@@ -470,7 +470,7 @@
     {
       "name": "THRESHOLDS FOR MAX. SURE SIXTH GEAR SELECTION",
       "decimals": 0,
-      "address": "$04",
+      "address": "0x04",
       "numbytes": 1,
       "lsb": 0,
       "zero": 0
@@ -478,7 +478,7 @@
     {
       "name": "THRESHOLDS FOR MAX. SURE REVERSE GEAR SELECTION",
       "decimals": 0,
-      "address": "$04",
+      "address": "0x04",
       "numbytes": 1,
       "lsb": 0,
       "zero": 0
@@ -486,7 +486,7 @@
     {
       "name": "SELF-CALIBRATED CLOSED CLUTCH POSITION",
       "decimals": 2,
-      "address": "$16",
+      "address": "0x16",
       "numbytes": 1,
       "lsb": 0,
       "zero": 0
@@ -494,7 +494,7 @@
     {
       "name": "P.I.. DISTANCE POSITION - CLOSED SELF-CALIBRATED",
       "decimals": 2,
-      "address": "$17",
+      "address": "0x17",
       "numbytes": 1,
       "lsb": 0,
       "zero": 0
@@ -502,7 +502,7 @@
     {
       "name": "SELF-CALIBRATED MIN. ACCELERATOR POSITION",
       "decimals": 2,
-      "address": "$18",
+      "address": "0x18",
       "numbytes": 1,
       "lsb": 0,
       "zero": 0
@@ -510,7 +510,7 @@
     {
       "name": "CLOSED POTENT.CURRENT AT SYSTEM CENTRE, SELF-CALIBRATED CLUTCH SOLENOID VALVE",
       "decimals": 2,
-      "address": "$19",
+      "address": "0x19",
       "numbytes": 1,
       "lsb": 0,
       "zero": 0
@@ -518,7 +518,7 @@
     {
       "name": "WIDE THRESHOLDS FOR MIN. NEUTRAL SELECTION",
       "decimals": 0,
-      "address": "$07",
+      "address": "0x07",
       "numbytes": 1,
       "lsb": 0,
       "zero": 0
@@ -526,7 +526,7 @@
     {
       "name": "WIDE THRESHOLDS FOR MIN. FIRST GEAR SELECTION",
       "decimals": 0,
-      "address": "$07",
+      "address": "0x07",
       "numbytes": 1,
       "lsb": 0,
       "zero": 0
@@ -534,7 +534,7 @@
     {
       "name": "WIDE THRESHOLDS FOR MIN. SECOND GEAR SELECTION",
       "decimals": 0,
-      "address": "$07",
+      "address": "0x07",
       "numbytes": 1,
       "lsb": 0,
       "zero": 0
@@ -542,7 +542,7 @@
     {
       "name": "WIDE THRESHOLDS FOR MIN. THIRD GEAR SELECTION",
       "decimals": 0,
-      "address": "$07",
+      "address": "0x07",
       "numbytes": 1,
       "lsb": 0,
       "zero": 0
@@ -550,7 +550,7 @@
     {
       "name": "WIDE THRESHOLDS FOR MIN. FOURTH GEAR SELECTION",
       "decimals": 0,
-      "address": "$07",
+      "address": "0x07",
       "numbytes": 1,
       "lsb": 0,
       "zero": 0
@@ -558,7 +558,7 @@
     {
       "name": "WIDE THRESHOLDS FOR MIN. FIFTH GEAR SELECTION",
       "decimals": 0,
-      "address": "$07",
+      "address": "0x07",
       "numbytes": 1,
       "lsb": 0,
       "zero": 0
@@ -566,7 +566,7 @@
     {
       "name": "WIDE THRESHOLDS FOR MIN. SIXTH GEAR SELECTION",
       "decimals": 0,
-      "address": "$07",
+      "address": "0x07",
       "numbytes": 1,
       "lsb": 0,
       "zero": 0
@@ -574,7 +574,7 @@
     {
       "name": "WIDE THRESHOLDS FOR MIN. REVERSE GEAR SELECTION",
       "decimals": 0,
-      "address": "$07",
+      "address": "0x07",
       "numbytes": 1,
       "lsb": 0,
       "zero": 0
@@ -582,7 +582,7 @@
     {
       "name": "WIDE THRESHOLDS FOR MAX. NEUTRAL SELECTION",
       "decimals": 0,
-      "address": "$08",
+      "address": "0x08",
       "numbytes": 1,
       "lsb": 0,
       "zero": 0
@@ -590,7 +590,7 @@
     {
       "name": "WIDE THRESHOLDS FOR MAX. FIRST GEAR SELECTION",
       "decimals": 0,
-      "address": "$08",
+      "address": "0x08",
       "numbytes": 1,
       "lsb": 0,
       "zero": 0
@@ -598,7 +598,7 @@
     {
       "name": "WIDE THRESHOLDS FOR MAX. SECOND GEAR SELECTION",
       "decimals": 0,
-      "address": "$08",
+      "address": "0x08",
       "numbytes": 1,
       "lsb": 0,
       "zero": 0
@@ -606,7 +606,7 @@
     {
       "name": "WIDE THRESHOLDS FOR MAX. THIRD GEAR SELECTION",
       "decimals": 0,
-      "address": "$08",
+      "address": "0x08",
       "numbytes": 1,
       "lsb": 0,
       "zero": 0
@@ -614,7 +614,7 @@
     {
       "name": "WIDE THRESHOLDS FOR MAX. FOURTH GEAR SELECTION",
       "decimals": 0,
-      "address": "$08",
+      "address": "0x08",
       "numbytes": 1,
       "lsb": 0,
       "zero": 0
@@ -622,7 +622,7 @@
     {
       "name": "WIDE THRESHOLDS FOR MAX. FIFTH GEAR SELECTION",
       "decimals": 0,
-      "address": "$08",
+      "address": "0x08",
       "numbytes": 1,
       "lsb": 0,
       "zero": 0
@@ -630,7 +630,7 @@
     {
       "name": "WIDE THRESHOLDS FOR MAX. SIXTH GEAR SELECTION",
       "decimals": 0,
-      "address": "$08",
+      "address": "0x08",
       "numbytes": 1,
       "lsb": 0,
       "zero": 0
@@ -638,7 +638,7 @@
     {
       "name": "WIDE THRESHOLDS FOR MAX. REVERSE GEAR SELECTION",
       "decimals": 0,
-      "address": "$08",
+      "address": "0x08",
       "numbytes": 1,
       "lsb": 0,
       "zero": 0
@@ -649,13 +649,13 @@
         "0": "OFF",
         "1": "ON"
       },
-      "address": "$0E $80",
+      "address": "0x0E 0x80",
       "numbytes": 1
     },
     {
       "name": "ENGAGEMENT POTENTIOMETER TRAVEL: PURE VALUE",
       "decimals": 0,
-      "address": "$01",
+      "address": "0x01",
       "numbytes": 1,
       "lsb": 0,
       "zero": 0
@@ -663,7 +663,7 @@
     {
       "name": "SELECTION POTENTIOMETER TRAVEL: PURE VALUE",
       "decimals": 0,
-      "address": "$02",
+      "address": "0x02",
       "numbytes": 1,
       "lsb": 0,
       "zero": 0
@@ -679,7 +679,7 @@
     {
       "name": "CLUTCH POSITION AS NEW",
       "decimals": 2,
-      "address": "$1F",
+      "address": "0x1F",
       "numbytes": 1,
       "lsb": 0,
       "zero": 0
@@ -687,7 +687,7 @@
     {
       "name": "CLUTCH WEAR",
       "decimals": 2,
-      "address": "$03",
+      "address": "0x03",
       "numbytes": 1,
       "lsb": 0,
       "zero": 0
@@ -695,7 +695,7 @@
     {
       "name": "GEAR ENGAGEMENTS WITH WRONG SHIFTS",
       "decimals": 0,
-      "address": "$00",
+      "address": "0x00",
       "numbytes": 1,
       "lsb": 0,
       "zero": 0
@@ -703,7 +703,7 @@
     {
       "name": "GEARBOX INPUT HIGH RPM",
       "decimals": 0,
-      "address": "$01",
+      "address": "0x01",
       "numbytes": 1,
       "lsb": 0,
       "zero": 0
@@ -711,7 +711,7 @@
     {
       "name": "OPPOSITE GEARS ENGAGEMENTS",
       "decimals": 0,
-      "address": "$02",
+      "address": "0x02",
       "numbytes": 1,
       "lsb": 0,
       "zero": 0
@@ -719,7 +719,7 @@
     {
       "name": "CLUTCH BEYOND PIS",
       "decimals": 0,
-      "address": "$03",
+      "address": "0x03",
       "numbytes": 1,
       "lsb": 0,
       "zero": 0
@@ -727,250 +727,250 @@
     {
       "name": "CLUTCH HYDRAULIC FAILURE",
       "decimals": 0,
-      "address": "$04",
+      "address": "0x04",
       "numbytes": 1,
       "lsb": 0,
       "zero": 0
     },
     {
       "name": "Pump activation counter",
-      "id": "$1A",
+      "id": "0x1A",
       "comment": "TODO: Ensure consistency in the use of 'address' versus 'id' fields to indicate type of request."
     },
     {
       "name": "Pump time on (mins)",
-      "id": "$1B"
+      "id": "0x1B"
     },
     {
       "name": "System time on (mins)",
-      "id": "$1C"
+      "id": "0x1C"
     },
     {
       "name": "Clutch overheat time",
-      "id": "$1D",
+      "id": "0x1D",
       "comment": "TODO: Determine type of request"
     },
     {
       "name" : "Neutral engagement counter",
       "snapshot": 5,
-      "offset" : "$00",
+      "offset" : "0x00",
       "numbytes" : 2
     },
     {
       "name" : "1st gear engagement counter",
       "snapshot": 5,
-      "offset" : "$02",
+      "offset" : "0x02",
       "numbytes" : 2
     },
     {
       "name" : "2nd gear engagement counter",
       "snapshot": 5,
-      "offset" : "$04",
+      "offset" : "0x04",
       "numbytes" : 2
     },
     {
       "name" : "3rd gear engagement counter",
       "snapshot": 5,
-      "offset" : "$06",
+      "offset" : "0x06",
       "numbytes" : 2
     },
     {
       "name" : "4th gear engagement counter",
       "snapshot": 5,
-      "offset" : "$08",
+      "offset" : "0x08",
       "numbytes" : 2
     },
     {
       "name" : "5th gear engagement counter",
       "snapshot": 5,
-      "offset" : "$0A",
+      "offset" : "0x0A",
       "numbytes" : 2
     },
     {
       "name" : "6th gear engagement counter",
       "snapshot": 5,
-      "offset" : "$0C",
+      "offset" : "0x0C",
       "numbytes" : 2
     },
     {
       "name" : "Reverse gear engagement counter",
       "snapshot": 5,
-      "offset" : "$0E",
+      "offset" : "0x0E",
       "numbytes" : 2
     },
     {
       "name" : "Distance run in neutral (km)",
       "snapshot": 6,
-      "offset" : "$00",
+      "offset" : "0x00",
       "numbytes" : 2
     },
     {
       "name" : "Distance run in 1st gear (km)",
       "snapshot": 6,
-      "offset" : "$02",
+      "offset" : "0x02",
       "numbytes" : 2
     },
     {
       "name" : "Distance run in 2nd gear (km)",
       "snapshot": 6,
-      "offset" : "$04",
+      "offset" : "0x04",
       "numbytes" : 2
     },
     {
       "name" : "Distance run in 3rd gear (km)",
       "snapshot": 6,
-      "offset" : "$06",
+      "offset" : "0x06",
       "numbytes" : 2
     },
     {
       "name" : "Distance run in 4th gear (km)",
       "snapshot": 6,
-      "offset" : "$08",
+      "offset" : "0x08",
       "numbytes" : 2
     },
     {
       "name" : "Distance run in 5th gear (km)",
       "snapshot": 6,
-      "offset" : "$0A",
+      "offset" : "0x0A",
       "numbytes" : 2
     },
     {
       "name" : "Distance run in 6th gear (km)",
       "snapshot": 6,
-      "offset" : "$0C",
+      "offset" : "0x0C",
       "numbytes" : 2
     },
     {
       "name" : "Distance run in reverse (km)",
       "snapshot": 6,
-      "offset" : "$0E",
+      "offset" : "0x0E",
       "numbytes" : 2
     }
   ],
   "faultcodes": [
     {
       "name": "REVERSE SWITCH ERROR",
-      "address": "$00 $01"
+      "address": "0x00 0x01"
     },
     {
       "name": "STAND-BY SWITCH ERROR",
-      "address": "$00 $02"
+      "address": "0x00 0x02"
     },
     {
       "name": "SWITCH DOWN: ERROR",
-      "address": "$00 $04"
+      "address": "0x00 0x04"
     },
     {
       "name": "SWITCH UP: ERROR",
-      "address": "$00 $08"
+      "address": "0x00 0x08"
     },
     {
       "name": "CLUTCH POTENTIOMETER ERROR",
-      "address": "$00 $10"
+      "address": "0x00 0x10"
     },
     {
       "name": "SELECTION POTENTIOMETER ERROR",
-      "address": "$00 $20"
+      "address": "0x00 0x20"
     },
     {
       "name": "ENGAGEMENT POTENTIOMETER ERROR",
-      "address": "$00 $40"
+      "address": "0x00 0x40"
     },
     {
       "name": "ACCELERATOR POTENTIOMETER ERROR",
-      "address": "$01 $00"
+      "address": "0x01 0x00"
     },
     {
       "name": "OIL PRESSURE SENSOR ERROR",
-      "address": "$02 $00"
+      "address": "0x02 0x00"
     },
     {
       "name": "BATTERY VOLTAGE ERROR",
-      "address": "$08 $00"
+      "address": "0x08 0x00"
     },
     {
       "name": "CAN LINE ERROR",
-      "address": "$80 $00"
+      "address": "0x80 0x00"
     },
     {
       "name": "ENGINE REVOLUTIONS ERROR",
-      "address": "$00 $04"
+      "address": "0x00 0x04"
     },
     {
       "name": "GEARBOX OUTPUT REVOLUTIONS ERROR",
-      "address": "$00 $08"
+      "address": "0x00 0x08"
     },
     {
       "name": "GEARBOX INPUT REVOLUTIONS ERROR",
-      "address": "$00 $10"
+      "address": "0x00 0x10"
     },
     {
       "name": "ERROR ON THE SECOND MICROPROCESSOR",
-      "address": "$00 $20"
+      "address": "0x00 0x20"
     },
     {
       "name": "RESET ECU ERROR",
-      "address": "$00 $40"
+      "address": "0x00 0x40"
     },
     {
       "name": "GROUND DETACHMENT ERROR",
-      "address": "$00 $80"
+      "address": "0x00 0x80"
     },
     {
       "name": "DISPLAY CONTROL ERROR",
-      "address": "$00 $01"
+      "address": "0x00 0x01"
     },
     {
       "name": "BUZZER CONTROL ERROR",
-      "address": "$00 $02"
+      "address": "0x00 0x02"
     },
     {
       "name": "PUMP RELAY ERROR",
-      "address": "$00 $08"
+      "address": "0x00 0x08"
     },
     {
       "name": "MOTOR IGNITION RELAY ERROR",
-      "address": "$00 $10"
+      "address": "0x00 0x10"
     },
     {
       "name": "SELF-SUPPLY RELAY ERROR",
-      "address": "$00 $20"
+      "address": "0x00 0x20"
     },
     {
       "name": "SEL.1 SOLENOID VALVE ERROR",
-      "address": "$02 $00"
+      "address": "0x02 0x00"
     },
     {
       "name": "SEL.2 SOLENOID VALVE ERROR",
-      "address": "$04 $00"
+      "address": "0x04 0x00"
     },
     {
       "name": "SEL.4 SOLENOID VALVE ERROR",
-      "address": "$08 $00"
+      "address": "0x08 0x00"
     },
     {
       "name": "REVERSE LIGHT RELAY ERROR",
-      "address": "$10 $00"
+      "address": "0x10 0x00"
     },
     {
       "name": "CLUTCH SOLENOID VALVE ERROR",
-      "address": "$20 $00"
+      "address": "0x20 0x00"
     },
     {
       "name": "SOLENOID VALVE FOR UNEVEN GEARS ENGAGEMENT: ERROR",
-      "address": "$40 $00"
+      "address": "0x40 0x00"
     },
     {
       "name": "SOLENOID VALVE FOR EVEN GEARS ENGAGEMENT: ERROR",
-      "address": "$80 $00"
+      "address": "0x80 0x00"
     },
     {
       "name": "SELECTION POSITIONING ERROR",
-      "address": "$00 $01"
+      "address": "0x00 0x01"
     },
     {
       "name": "ENGAGEMENT POSITIONING ERROR",
-      "address": "$00 $02"
+      "address": "0x00 0x02"
     }
   ],
   "actuators": [
