@@ -734,8 +734,7 @@
     },
     {
       "name": "Pump activation counter",
-      "id": "0x1A",
-      "comment": "TODO: Ensure consistency in the use of 'address' versus 'id' fields to indicate type of request."
+      "id": "0x1A"
     },
     {
       "name": "Pump time on (mins)",
@@ -747,8 +746,7 @@
     },
     {
       "name": "Clutch overheat time",
-      "id": "0x1D",
-      "comment": "TODO: Determine type of request"
+      "id": "0x1D"
     },
     {
       "name" : "Neutral engagement counter",
