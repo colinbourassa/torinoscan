@@ -21,7 +21,8 @@
       "decimals": 2,
       "id": "0x02",
       "lsb": 0.07,
-      "zero": -41.75 
+      "zero": -41.75,
+      "comment": "16-bit value"
     },
     {
       "name": "Clutch travel (mm)",
@@ -92,112 +93,113 @@
       "zero": 0
     },
     {
-      "name": "VEHICLE SPEED",
+      "name": "Vehicle speed (km/h)",
       "decimals": 0,
       "id": "0x0C",
-      "lsb": 0,
+      "lsb": 3.068493151,
       "zero": 0
     },
     {
-      "name": "GEAR ENGAGED",
+      "name": "Gear engaged",
       "enumvals": {
-        "0": "NEUTRAL",
-        "1": "FIRST",
-        "2": "SECOND",
-        "3": "THIRD",
-        "4": "FOURTH",
-        "5": "FIFTH",
-        "6": "SIXTH",
-        "7": "REVERSE"
+        "0": "Neutral",
+        "1": "First",
+        "2": "Second",
+        "3": "Third",
+        "4": "Fourth",
+        "5": "Fifth",
+        "6": "Sixth",
+        "7": "Reverse"
       },
-      "id": "0x0D"
+      "id": "0x0D",
+      "comment": "8-bit value"
     },
     {
-      "name": "BRAKE SW STATUS",
+      "name": "Brake SW status",
       "enumvals": {
         "0": "ON",
         "1": "OFF"
       },
-      "address": "0x0E 0x01",
-      "numbytes": 1
+      "id": "0x0E",
+      "mask": "0x01"
     },
     {
-      "name": "DRIVER SIDE DOOR STATUS",
+      "name": "Driver side door status",
       "enumvals": {
         "0": "OFF",
         "1": "ON"
       },
-      "address": "0x0E 0x02",
-      "numbytes": 1
+      "id": "0x0E",
+      "mask": "0x02"
     },
     {
-      "name": "KEY INPUT CONDITION",
+      "name": "Key input condition",
       "enumvals": {
         "0": "OFF",
         "1": "ON"
       },
-      "address": "0x0E 0x04",
-      "numbytes": 1
+      "address": "0x0E",
+      "mask": "0x04"
     },
     {
-      "name": "START-UP INPUT STATUS",
+      "name": "Start-up input status",
       "enumvals": {
         "0": "OFF",
         "1": "ON"
       },
-      "address": "0x0E 0x08",
-      "numbytes": 1
+      "address": "0x0E",
+      "mask": "0x08"
     },
     {
-      "name": "AUTO SW STATUS",
+      "name": "Auto SW status",
       "enumvals": {
         "0": "OFF",
         "1": "ON"
       },
-      "address": "0x0E 0x10",
-      "numbytes": 1
+      "address": "0x0E",
+      "mask": "0x10"
     },
     {
-      "name": "SPORT SW STATUS",
+      "name": "Sport SW status",
       "enumvals": {
         "0": "OFF",
         "1": "ON"
       },
-      "address": "0x0E 0x20",
-      "numbytes": 1
+      "address": "0x0E",
+      "mask": "0x20"
     },
     {
-      "name": "LOW GRIP SW STATUS",
+      "name": "Low grip SW status",
       "enumvals": {
         "0": "OFF",
         "1": "ON"
       },
-      "address": "0x0E 0x40",
-      "numbytes": 1
+      "address": "0x0E",
+      "mask": "0x40"
     },
     {
-      "name": "SV CURRENT CONTROL FOR UNEVEN GEAR ENGAGEMENT",
+      "name": "SV current control for uneven gear engagement (mA)",
       "decimals": 1,
-      "address": "0x0F",
-      "numbytes": 1,
-      "lsb": 0,
-      "zero": 0
+      "id": "0x0F",
+      "lsb": 9.8,
+      "zero": 0,
+      "comment": "8-bit value"
     },
     {
-      "name": "SV CURRENT CONTROL FOR EVEN GEAR ENGAGEMENT",
+      "name": "SV current control for even gear engagement (mA)",
       "decimals": 1,
-      "address": "0x10",
-      "numbytes": 1,
-      "lsb": 0,
-      "zero": 0
+      "id": "0x10",
+      "lsb": 9.8,
+      "zero": 0,
+      "comment": "8-bit value"
     },
     {
-      "name": "CLUTCH SV CURRENT CONTROL",
+      "name": "Clutch SV current control (A)",
       "decimals": 2,
-      "address": "0x11",
-      "numbytes": 1,
-      "lsb": 0,
-      "zero": 0
+      "id": "0x11",
+      "lsb": 78.4,
+      "zero": 0,
+      "comment": "8-bit value"
     },
     {
       "name": "1-2-3 SELECTION SV CONTROL",
@@ -207,25 +209,24 @@
         "2": "RANG 5a-6a",
         "3": "REVERSE STATUS"
       },
-      "address": "0x12 0x13",
-      "numbytes": 1
+      "id": "0x12 0x13"
+      "comment": "TODO"
     },
     {
-      "name": "PUMP RELAY CONTROL",
+      "name": "Pump relay control",
       "enumvals": {
-        "0": "RELAY OFF",
-        "1": "RELAY ON"
+        "0": "Relay OFF",
+        "1": "Relay ON"
       },
-      "address": "0x14",
-      "numbytes": 1
+      "id": "0x14"
     },
     {
-      "name": "EFFECTIVE TORQUE MOTRONIC",
+      "name": "Effective torque Motronic (Nm)",
       "decimals": 0,
-      "address": "0x15",
-      "numbytes": 1,
-      "lsb": 0,
-      "zero": 0
+      "id": "0x15",
+      "lsb": 1,
+      "zero": 0,
+      "comment": "16-bit value"
     },
     {
       "name": "THRESHOLDS FOR SURE MINIMUM SHIFT TO NEUTRAL",
