@@ -70,11 +70,11 @@
           },
           "decimals": {
             "type": "number",
-            "description": "Number of digits to appear after the decimal point when the value of this parameter is being displayed"
+            "description": "Number of digits to appear after the decimal point when the value of this parameter is being displayed."
           },
           "address": {
             "type": "string",
-            "description": "Used together with numbytes to describe a memory location in RAM/ROM"
+            "description": "Used together with numbytes to describe a memory location in RAM/ROM."
           },
           "numbytes": {
             "type": "number"
@@ -88,18 +88,25 @@
             "description": "Number of the snapshot page in which this parameter is stored."
           },
           "offset": {
-            "type": "string"
+            "type": "string",
+            "description": "The byte offset within a snapshot data frame at which this field's data begins."
           },
           "enumvals": {
-            "type": "object"
+            "type": "object",
+            "description": "Collection of fields that describe the names assigned to each raw numeric value for this parameter. Each field name within this object must be a parseable string representing a number. The value for each field shall contain the name of that enum value."
           },
           "lsb": {
             "type": "number",
-            "description": "Value (in target units) of the least significant bit of the raw data."
+            "description": "Value (in target units) of the least significant bit of the raw data.",
+            "default": 1
+          },
+          "bcd": {
+            "type": "boolean"
           },
           "zero": {
             "type": "number",
-            "description": "Offset (in target units) that is applied to a raw value of zero. May be either positive or negative."
+            "description": "Offset (in target units) that is applied to a raw value of zero. May be either positive or negative.",
+            "default": 0
           },
           "units": {
             "type": "string",
@@ -118,27 +125,29 @@
           }
         },
         "additionalProperties": false,
-        "oneOf": [
+        "allOf": [
           {
-            "required": [
-              "address",
-              "numbytes"
-            ],
-            "description": "Used for memory locations (RAM/ROM)"
+            "oneOf": [
+              { "required": ["lsb"] },
+              { "required": ["bcd"] },
+              { "required": ["enumvals"] }
+            ]
           },
           {
-            "required": [
-              "id"
-            ],
-            "description": "Used for sampled values stored by the ECU. The ECU is expected to return the appropriate number of bytes to properly express the stored value."
-          },
-          {
-            "required": [
-              "snapshot",
-              "offset",
-              "numbytes"
-            ],
-            "description": "Used for a location within snapshot data"
+            "oneOf": [
+              {
+                "required": ["address","numbytes"],
+                "description": "Used for memory locations (RAM/ROM)"
+              },
+              {
+                "required": ["id"],
+                "description": "Used for indexed sampled values stored by the ECU. The ECU is expected to return the appropriate number of bytes to properly express the stored value."
+              },
+              {
+                "required": ["snapshot","offset","numbytes"],
+                "description": "Used for a location within snapshot data"
+              }
+            ]
           }
         ]
       }
@@ -174,7 +183,8 @@
             "description": "Identifies the actuator to trigger. Note that some actuators may require parameter data, in which case the 'parameter' property must also be used."
           },
           "parameter": {
-            "type": "string"
+            "type": "string",
+            "description": "Additional parameter data that accompanies the actuator ID."
           },
           "comment": {
             "type": "string"
