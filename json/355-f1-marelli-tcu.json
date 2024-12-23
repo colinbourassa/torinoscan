@@ -56,9 +56,9 @@
       "name": "Water temperature",
       "decimals": 1,
       "id": "0x07",
-      "lsb": 0,
       "zero": 0,
-      "comment": "TODO: BCD value, e.g. 0x1253 is 125.3 deg"
+      "bcd": true,
+      "comment": "Example: 0x1253 is 125.3 deg"
     },
     {
       "name": "Battery voltage",
@@ -138,7 +138,7 @@
         "0": "OFF",
         "1": "ON"
       },
-      "address": "0x0E",
+      "id": "0x0E",
       "mask": "0x04"
     },
     {
@@ -147,7 +147,7 @@
         "0": "OFF",
         "1": "ON"
       },
-      "address": "0x0E",
+      "id": "0x0E",
       "mask": "0x08"
     },
     {
@@ -156,7 +156,7 @@
         "0": "OFF",
         "1": "ON"
       },
-      "address": "0x0E",
+      "id": "0x0E",
       "mask": "0x10"
     },
     {
@@ -165,7 +165,7 @@
         "0": "OFF",
         "1": "ON"
       },
-      "address": "0x0E",
+      "id": "0x0E",
       "mask": "0x20"
     },
     {
@@ -174,7 +174,7 @@
         "0": "OFF",
         "1": "ON"
       },
-      "address": "0x0E",
+      "id": "0x0E",
       "mask": "0x40"
     },
     {
@@ -209,7 +209,7 @@
         "2": "RANG 5a-6a",
         "3": "REVERSE STATUS"
       },
-      "id": "0x12 0x13"
+      "id": "0x12 0x13",
       "comment": "TODO"
     },
     {
@@ -750,100 +750,116 @@
       "id": "0x1D"
     },
     {
-      "name" : "Neutral engagement counter",
+      "name": "Neutral engagement counter",
       "snapshot": 5,
-      "offset" : "0x00",
-      "numbytes" : 2
+      "offset": "0x00",
+      "numbytes": 2,
+      "lsb": 1
     },
     {
-      "name" : "1st gear engagement counter",
+      "name": "1st gear engagement counter",
       "snapshot": 5,
-      "offset" : "0x02",
-      "numbytes" : 2
+      "offset": "0x02",
+      "numbytes": 2,
+      "lsb": 1
     },
     {
-      "name" : "2nd gear engagement counter",
+      "name": "2nd gear engagement counter",
       "snapshot": 5,
-      "offset" : "0x04",
-      "numbytes" : 2
+      "offset": "0x04",
+      "numbytes" : 2,
+      "lsb": 1
     },
     {
-      "name" : "3rd gear engagement counter",
+      "name": "3rd gear engagement counter",
       "snapshot": 5,
-      "offset" : "0x06",
-      "numbytes" : 2
+      "offset": "0x06",
+      "numbytes": 2,
+      "lsb": 1
     },
     {
-      "name" : "4th gear engagement counter",
+      "name": "4th gear engagement counter",
       "snapshot": 5,
-      "offset" : "0x08",
-      "numbytes" : 2
+      "offset": "0x08",
+      "numbytes": 2,
+      "lsb": 1
     },
     {
-      "name" : "5th gear engagement counter",
+      "name": "5th gear engagement counter",
       "snapshot": 5,
-      "offset" : "0x0A",
-      "numbytes" : 2
+      "offset": "0x0A",
+      "numbytes": 2,
+      "lsb": 1
     },
     {
-      "name" : "6th gear engagement counter",
+      "name": "6th gear engagement counter",
       "snapshot": 5,
-      "offset" : "0x0C",
-      "numbytes" : 2
+      "offset": "0x0C",
+      "numbytes": 2,
+      "lsb": 1
     },
     {
-      "name" : "Reverse gear engagement counter",
+      "name": "Reverse gear engagement counter",
       "snapshot": 5,
-      "offset" : "0x0E",
-      "numbytes" : 2
+      "offset": "0x0E",
+      "numbytes": 2,
+      "lsb": 1
     },
     {
-      "name" : "Distance run in neutral (km)",
+      "name": "Distance run in neutral (km)",
       "snapshot": 6,
-      "offset" : "0x00",
-      "numbytes" : 2
+      "offset": "0x00",
+      "numbytes": 2,
+      "lsb": 1
     },
     {
-      "name" : "Distance run in 1st gear (km)",
+      "name": "Distance run in 1st gear (km)",
       "snapshot": 6,
-      "offset" : "0x02",
-      "numbytes" : 2
+      "offset": "0x02",
+      "numbytes": 2,
+      "lsb": 1
     },
     {
-      "name" : "Distance run in 2nd gear (km)",
+      "name": "Distance run in 2nd gear (km)",
       "snapshot": 6,
-      "offset" : "0x04",
-      "numbytes" : 2
+      "offset": "0x04",
+      "numbytes": 2,
+      "lsb": 1
     },
     {
-      "name" : "Distance run in 3rd gear (km)",
+      "name": "Distance run in 3rd gear (km)",
       "snapshot": 6,
-      "offset" : "0x06",
-      "numbytes" : 2
+      "offset": "0x06",
+      "numbytes": 2,
+      "lsb": 1
     },
     {
-      "name" : "Distance run in 4th gear (km)",
+      "name": "Distance run in 4th gear (km)",
       "snapshot": 6,
-      "offset" : "0x08",
-      "numbytes" : 2
+      "offset": "0x08",
+      "numbytes": 2,
+      "lsb": 1
     },
     {
-      "name" : "Distance run in 5th gear (km)",
+      "name": "Distance run in 5th gear (km)",
       "snapshot": 6,
-      "offset" : "0x0A",
-      "numbytes" : 2
+      "offset": "0x0A",
+      "numbytes": 2,
+      "lsb": 1
     },
     {
-      "name" : "Distance run in 6th gear (km)",
+      "name": "Distance run in 6th gear (km)",
       "snapshot": 6,
-      "offset" : "0x0C",
-      "numbytes" : 2
+      "offset": "0x0C",
+      "numbytes": 2,
+      "lsb": 1
     },
     {
-      "name" : "Distance run in reverse (km)",
+      "name": "Distance run in reverse (km)",
       "snapshot": 6,
-      "offset" : "0x0E",
-      "numbytes" : 2
+      "offset": "0x0E",
+      "numbytes": 2,
+      "lsb": 1
     }
   ],
   "faultcodes": [
