@@ -13,6 +13,7 @@ set(MAIN_EXEC_NAME ${CMAKE_PROJECT_NAME})
 
 find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Widgets)
 find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets)
+find_package(yaml-cpp)
 
 set(PROJECT_SOURCES
         main.cpp
@@ -36,7 +37,10 @@ else()
     )
 endif()
 
-target_link_libraries(${MAIN_EXEC_NAME} PRIVATE Qt${QT_VERSION_MAJOR}::Widgets)
+target_link_libraries(${MAIN_EXEC_NAME} PRIVATE
+    Qt${QT_VERSION_MAJOR}::Widgets
+    yaml-cpp
+    )
 
 set_target_properties(${MAIN_EXEC_NAME} PROPERTIES
     #MACOSX_BUNDLE_GUI_IDENTIFIER my.example.com

@@ -1,5 +1,4 @@
 {
-  "$schema": "https://json-schema.org/draft/2020-12/schema",
   "type": "object",
   "description": "Note that some of the numeric value fields in this schema are actually typed as strings; this is to allow expressing addresses and offsets in hexadecimal by using the convention of prefixing with '0x'.",
   "properties": {
@@ -47,7 +46,7 @@
           "description": "Speed of the serial communication. This is specified in its own field because it often differs between modules, even for modules that have otherwise adhered to the official specification of a protocol."
         },
         "address": {
-          "type": "string",
+          "type": "number",
           "description": "Single-byte address of the target module that is sent in the slow-init sequence."
         },
         "comment": {
@@ -73,14 +72,14 @@
             "description": "Number of digits to appear after the decimal point when the value of this parameter is being displayed."
           },
           "address": {
-            "type": "string",
+            "type": "number",
             "description": "Used together with numbytes to describe a memory location in RAM/ROM."
           },
           "numbytes": {
             "type": "number"
           },
           "id": {
-            "type": "string",
+            "type": "number",
             "description": "Describes a value identified by the ECU with an index rather than a memory address."
           },
           "snapshot": {
@@ -88,7 +87,7 @@
             "description": "Number of the snapshot page in which this parameter is stored."
           },
           "offset": {
-            "type": "string",
+            "type": "number",
             "description": "The byte offset within a snapshot data frame at which this field's data begins."
           },
           "enumvals": {
@@ -117,7 +116,7 @@
             ]
           },
           "mask": {
-            "type": "string",
+            "type": "number",
             "description": "Bitmask that is applied to the raw value (via a bitwise AND) before any further processing is done."
           },
           "comment": {
@@ -179,11 +178,11 @@
             "type": "string"
           },
           "id": {
-            "type": "string",
+            "type": "number",
             "description": "Identifies the actuator to trigger. Note that some actuators may require parameter data, in which case the 'parameter' property must also be used."
           },
           "parameter": {
-            "type": "string",
+            "type": "number",
             "description": "Additional parameter data that accompanies the actuator ID."
           },
           "comment": {

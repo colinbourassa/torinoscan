@@ -1,0 +1,214 @@
+vehicle: 512TR
+ecu: Motronic
+position: left
+protocol:
+  family: KWP71
+  variant: standard
+  baud: 4800
+  address: 0x10
+parameters:
+  - name: ENGINE REVOL.
+    decimals: 0
+    address: 0x02 0x00 0x3B
+    numbytes: 1
+    lsb: 0
+    zero: 0
+  - name: LOAD
+    decimals: 1
+    address: 0x01 0x00 0x40
+    numbytes: 1
+    lsb: 0
+    zero: 0
+  - name: INJECTION TIME
+    decimals: 1
+    address: 0x02 0x00 0x60
+    numbytes: 1
+    lsb: 0
+    zero: 0
+  - name: IGNITION ADVANCE
+    decimals: 1
+    address: 0x01 0x00 0x55
+    numbytes: 1
+    lsb: 0
+    zero: 0
+  - name: ENGINE TEMPERATURE
+    decimals: 1
+    address: 0x01 0x00 0x38
+    numbytes: 1
+    lsb: 0
+    zero: 0
+  - name: AIR FLOW
+    decimals: 1
+    address: 0x02 0x00 0x9B
+    numbytes: 1
+    lsb: 0
+    zero: 0
+  - name: VEHICLE SPEED
+    decimals: 0
+    address: 0x01 0x00 0x8C
+    numbytes: 1
+    lsb: 0
+    zero: 0
+  - name: COMPRESSOR STATUS
+    enumvals:
+      '0': 'OFF'
+      '1': 'ON'
+    address: 0x01 0x00 0x20 0x80
+    numbytes: 1
+  - name: AIR TEMPERAT. CONTROL SYSTEM STATUS
+    enumvals:
+      '0': 'OFF'
+      '1': 'ON'
+    address: 0x01 0x00 0x20 0x40
+    numbytes: 1
+  - name: SECONDARY AIR VALVE CONDIT.
+    enumvals:
+      '0': 'OFF'
+      '1': 'ON'
+    address: 0x01 0x00 0x21 0x08
+    numbytes: 1
+  - name: THROTTLE ABSOL.ANGLE
+    decimals: 1
+    address: 0x08 0x00
+    numbytes: 1
+    lsb: 0
+    zero: 0
+  - name: THROTTLE RELAT.ANGLE
+    decimals: 1
+    address: 0x01 0x03 0x42
+    numbytes: 1
+    lsb: 0
+    zero: 0
+  - name: THROTTLE OFF SET ANGLE
+    decimals: 1
+    address: 0x01 0x03 0x45
+    numbytes: 1
+    lsb: 0
+    zero: 0
+  - name: BATTERY VOLTAGE
+    decimals: 2
+    address: 0x08 0x01
+    numbytes: 1
+    lsb: 0
+    zero: 0
+  - name: OXY. SENS.VOLTAGE
+    decimals: 0
+    address: 0x08 0x07
+    numbytes: 1
+    lsb: 0
+    zero: 0
+  - name: CATALYTIC CONVER.TEMP.
+    decimals: 0
+    address: 0x08 0x02
+    numbytes: 1
+    lsb: 0
+    zero: 0
+  - name: FUNCTIONING MODE
+    enumvals:
+      '0': CLOSED LOOP
+      '1': OPEN LOOP
+    address: 0x01 0x00 0x29 0x20
+    numbytes: 1
+  - name: TJ CORRECTION
+    decimals: 3
+    address: 0x01 0x02 0x0F
+    numbytes: 1
+    lsb: 0
+    zero: 0
+  - name: ADDITIVE VALUE
+    decimals: 3
+    address: 0x01 0x02 0x07
+    numbytes: 1
+    lsb: 0
+    zero: 0
+  - name: MULTIPLIER VALUE
+    decimals: 3
+    address: 0x01 0x02 0x01
+    numbytes: 1
+    lsb: 0
+    zero: 0
+  - name: MOTOR CONDITION
+    enumvals:
+      '0': IDLING
+      '1': OUT OF IDLE
+      '2': FULL OPEN
+      '3': 'OFF'
+    address: 0x01 0x00 0x20 0x03
+    numbytes: 1
+faultcodes:
+  - name: Revolution sensor
+    address: '0x2F'
+  - name: Stroke sensor
+    address: '0x08'
+  - name: Secondary air valve
+    address: '0x20'
+  - name: Idle actuator (open circuit)
+    address: '0x04'
+  - name: Idle actuator (short circuit)
+    address: '0x16'
+  - name: Warning light
+    address: '0x02'
+  - name: Slow-down light
+    address: '0x1F'
+  - name: Injector no. 7
+    address: '0x22'
+  - name: Injector no. 8
+    address: '0x10'
+  - name: Injector no. 9
+    address: '0x21'
+  - name: Injector no. 10
+    address: '0x23'
+  - name: Injector no. 11
+    address: '0x0F'
+  - name: Injector no. 12
+    address: '0x11'
+  - name: ADditive value out of range
+    address: '0x67'
+  - name: Multiplicative value out of range
+    address: '0x66'
+  - name: Lambda regulation out of range
+    address: '0x65'
+  - name: Throttle potentiometer
+    address: '0x35'
+  - name: Air flow meter
+    address: '0x07'
+  - name: Canister purge valve
+    address: '0x05'
+  - name: Water temperature
+    address: '0x2D'
+  - name: Battery voltage
+    address: '0x25'
+  - name: Lambda sensor
+    address: '0x1C'
+  - name: Thermocouple control unit
+    address: '0x2C'
+  - name: Catalytic convertor temp. too high
+    address: '0x6A'
+  - name: Tachometer signal
+    address: '0x09'
+  - name: TDC acknowledgment
+    address: '0x6B'
+  - name: A/C compressor
+    address: '0x28'
+  - name: ECU self diagnosis
+    address: '0x64'
+actuators:
+  - name: Injector no. 7
+    id: 0x22
+  - name: Injector no. 8
+    id: 0x10
+  - name: Injector no. 9
+    id: 0x21
+  - name: Injector no. 10
+    id: 0x23
+  - name: Injector no. 11
+    id: 0x0F
+  - name: Injector no. 12
+    id: 0x11
+  - name: Idle actuator
+    id: 0x04
+  - name: Anti-evaporation valve
+    id: 0x05
+  - name: Secondary air valve
+    id: 0x20
+
