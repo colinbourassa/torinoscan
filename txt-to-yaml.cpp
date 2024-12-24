@@ -174,7 +174,7 @@ int main(int argc, char** argv)
           if (curArrayActive)
           {
             const int nextIndex = curArray.size();
-            curArray[nextIndex]["name"] = matches[1];
+            curArray[nextIndex]["name"] = matches.str(1);
           }
           else
           {
@@ -189,7 +189,7 @@ int main(int argc, char** argv)
           const int lastIndex = curArray.size() - 1;
           if (lastIndex >= 0)
           {
-            curArray[lastIndex]["units"] = matches[1];
+            curArray[lastIndex]["units"] = matches.str(1);
           }
         }
         else
@@ -230,7 +230,7 @@ int main(int argc, char** argv)
           const int lastIndex = curArray.size() - 1;
           if (lastIndex >= 0)
           {
-            curArray[lastIndex]["address"] = matches[1];
+            curArray[lastIndex]["address"] = matches.str(1);
           }
         }
         else
@@ -245,7 +245,7 @@ int main(int argc, char** argv)
           const int lastIndex = curArray.size() - 1;
           if (lastIndex >= 0)
           {
-            curArray[lastIndex]["enum"][matches[1]] = matches[2];
+            curArray[lastIndex]["enum"][matches.str(1)] = matches.str(2);
           }
         }
         else
