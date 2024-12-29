@@ -1,3 +1,4 @@
 CMakeLists.txt.user
 txt-to-json
+txt-to-yaml
 build/

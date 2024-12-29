@@ -8,13 +8,107 @@
 /**
  * Describes the known types of sections from the input file.
  */
-enum class ProcMode
+enum class SectionType
 {
   None,
   Param,
   FaultCode,
   Actuator
 };
+
+/**
+ * Returns the string used to identify one of the three main sections in the YAML data structure.
+ */
+std::string getSectionName(SectionType section)
+{
+  std::string name;
+  if (section == SectionType::Param)
+  {
+    name = "parameters";
+  }
+  else if (section == SectionType::FaultCode)
+  {
+    name = "faultcodes";
+  }
+  else if (section == SectionType::Actuator)
+  {
+    name = "actuators";
+  }
+  return name;
+}
+
+/**
+ * Adds a field (with a numeric/integer value) to the YAML data.
+ */
+bool addYAMLField(YAML::Node parentNode, SectionType section, bool createNewIndex, const std::string& fieldName, int fieldValue)
+{
+  bool status = false;
+  std::string sectionName = getSectionName(section);
+
+  if (!sectionName.empty())
+  {
+    const int index = parentNode[sectionName].size();
+    if (createNewIndex)
+    {
+      parentNode[sectionName][index][fieldName] = fieldValue;
+      status = true;
+    }
+    else if (index > 0)
+    {
+      parentNode[sectionName][index - 1][fieldName] = fieldValue;
+      status = true;
+    }
+  }
+
+  return status;
+}
+
+/**
+ * Adds a field (with a string value) to the YAML data.
+ */
+bool addYAMLField(YAML::Node parentNode, SectionType section, bool createNewIndex, const std::string& fieldName, const std::string& fieldValue)
+{
+  bool status = false;
+  std::string sectionName = getSectionName(section);
+
+  if (!sectionName.empty())
+  {
+    const int index = parentNode[sectionName].size();
+    if (createNewIndex)
+    {
+      parentNode[sectionName][index][fieldName] = fieldValue;
+      status = true;
+    }
+    else if (index > 0)
+    {
+      parentNode[sectionName][index - 1][fieldName] = fieldValue;
+      status = true;
+    }
+  }
+
+  return status;
+}
+
+/**
+ * Adds an enum value to the last of the existing nodes in the specified sequence node.
+ */
+bool addYAMLEnumValue(YAML::Node parentNode, SectionType section, const std::string& enumVal, const std::string& enumStr)
+{
+  bool status = false;
+  const std::string sectionName = getSectionName(section);
+
+  if (!sectionName.empty())
+  {
+    const int index = parentNode[sectionName].size();
+    if (index > 0)
+    {
+      parentNode[sectionName][index - 1]["enum"][enumVal] = enumStr;
+      status = true;
+    }
+  }
+
+  return status;
+}
 
 /**
  * Determines the ECU position based on a substring regex match from a section title.
@@ -101,10 +195,10 @@ int main(int argc, char** argv)
 
   if (infile.is_open())
   {
+    int curECUPos = 0;
     bool foundRightBank = false;
     std::map<int,YAML::Node> ecuYamls;
-    YAML::Node curArray;
-    bool curArrayActive = false;
+    SectionType curSection = SectionType::None;
     bool excludeCurrent = false;
 
     std::cout << "Setting up defaults..." << std::endl;
@@ -117,7 +211,6 @@ int main(int argc, char** argv)
       ecuYamls[index]["protocol"].push_back("variant");
       ecuYamls[index]["protocol"].push_back("baud");
       ecuYamls[index]["protocol"].push_back("address");
-      //ecuYamls[index]["protocol"] = { { "family", "" }, { "variant", "" }, { "baud", 0 }, { "address", "" } };
       ecuYamls[index]["parameters"] = { };
       ecuYamls[index]["faultcodes"] = { };
       ecuYamls[index]["actuators"] = { };
@@ -136,32 +229,29 @@ int main(int argc, char** argv)
       line = trim(line);
       if (std::regex_search(line, matches, paramSectionPattern))
       {
-        const int pos = getPosition(matches[1]);
-        foundRightBank = (foundRightBank || (pos == 1));
+        curECUPos = getPosition(matches[1]);
+        foundRightBank = (foundRightBank || (curECUPos == 1));
         excludeCurrent = false;
-        curArray = ecuYamls[pos]["parameters"];
-        curArrayActive = true;
+        curSection = SectionType::Param;
       }
       else if (std::regex_search(line, matches, errorSectionPattern))
       {
-        const int pos = getPosition(matches[1]);
-        foundRightBank = (foundRightBank || (pos == 1));
+        curECUPos = getPosition(matches[1]);
+        foundRightBank = (foundRightBank || (curECUPos == 1));
         excludeCurrent = false;
-        curArray = ecuYamls[pos]["faultcodes"];
-        curArrayActive = true;
+        curSection = SectionType::FaultCode;
       }
       else if (std::regex_search(line, matches, actuatorSectionPattern))
       {
-        const int pos = getPosition(matches[1]);
-        foundRightBank = (foundRightBank || (pos == 1));
+        curECUPos = getPosition(matches[1]);
+        foundRightBank = (foundRightBank || (curECUPos == 1));
         excludeCurrent = false;
-        curArray = ecuYamls[pos]["actuators"];
-        curArrayActive = true;
+        curSection = SectionType::Actuator;
       }
       else if (std::regex_search(line, matches, genericSectionPattern))
       {
         std::cout << "Found unknown section ('" << matches[0] << "'), skipping." << std::endl;
-        curArrayActive = false;
+        curSection = SectionType::None;
       }
       else if (std::regex_search(line, matches, namePattern) && (matches.size() >= 2))
       {
@@ -171,87 +261,37 @@ int main(int argc, char** argv)
         }
         else
         {
-          if (curArrayActive)
-          {
-            const int nextIndex = curArray.size();
-            curArray[nextIndex]["name"] = matches.str(1);
-          }
-          else
-          {
-            std::cerr << "Matched name line (" << line << ") outside of known section, ignoring..." << std::endl;
-          }
+          addYAMLField(ecuYamls[curECUPos], curSection, true, "name", matches.str(1));
         }
       }
       else if (std::regex_search(line, matches, unitsPattern) && (matches.size() >= 2) && !excludeCurrent)
       {
-        if (curArrayActive)
-        {
-          const int lastIndex = curArray.size() - 1;
-          if (lastIndex >= 0)
-          {
-            curArray[lastIndex]["units"] = matches.str(1);
-          }
-        }
-        else
-        {
-          std::cerr << "Matched units line (" << line << ") outside of known section, ignoring..." << std::endl;
-        }
+        addYAMLField(ecuYamls[curECUPos], curSection, false, "units", matches.str(1));
       }
       else if (std::regex_search(line, matches, decimalsPattern) && (matches.size() >= 2) && !excludeCurrent)
       {
-        if (curArrayActive)
+        try
         {
-          const int lastIndex = curArray.size() - 1;
-          if (lastIndex >= 0)
-          {
-            try
-            {
-              curArray[lastIndex]["decimals"] = std::stoi(matches[1]);
-            }
-            catch (std::invalid_argument const& ex)
-            {
-              std::cerr << "Failed to parse 'decimals' string (" << line << ")" << std::endl;
-            }
-            catch (std::out_of_range const& ex)
-            {
-              std::cerr << "'decimals' string out of range (" << line << ")" << std::endl;
-            }
-          }
+          addYAMLField(ecuYamls[curECUPos], curSection, false, "decimals", std::stoi(matches.str(1)));
         }
-        else
+        catch (std::invalid_argument const& ex)
         {
-          std::cerr << "Matched decimals line (" << line << ") outside of known section, ignoring..." << std::endl;
+          std::cerr << "Failed to parse 'decimals' string (" << line << ")" << std::endl;
+        }
+        catch (std::out_of_range const& ex)
+        {
+          std::cerr << "'decimals' string out of range (" << line << ")" << std::endl;
         }
       }
       else if (std::regex_search(line, matches, generalPattern) && (matches.size() >= 2) && !excludeCurrent)
       {
-        if (curArrayActive)
-        {
-          const int lastIndex = curArray.size() - 1;
-          if (lastIndex >= 0)
-          {
-            curArray[lastIndex]["address"] = matches.str(1);
-          }
-        }
-        else
-        {
-          std::cerr << "Matched general/address line (" << line << ") outside of known section, ignoring..." << std::endl;
-        }
+        addYAMLField(ecuYamls[curECUPos], curSection, false, "address", matches.str(1));
       }
       else if (std::regex_search(line, matches, enumPattern) && (matches.size() >= 3) && !excludeCurrent)
       {
-        if (curArrayActive)
-        {
-          const int lastIndex = curArray.size() - 1;
-          if (lastIndex >= 0)
-          {
-            curArray[lastIndex]["enum"][matches.str(1)] = matches.str(2);
-          }
-        }
-        else
-        {
-          std::cerr << "Matched enum line (" << line << ") outside of known section, ignoring..." << std::endl;
-        }
+        // matches.str(1) is the enum value
+        // matches.str(2) is the enum string
+        addYAMLEnumValue(ecuYamls[curECUPos], curSection, matches.str(1), matches.str(2));
       }
     }
     std::cout << "Reached end of input file." << std::endl;
