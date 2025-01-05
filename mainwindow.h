@@ -3,8 +3,7 @@
 
 #include <QMainWindow>
 #include <map>
-#include <nlohmann/json.hpp>
-using json = nlohmann::json;
+#include <yaml-cpp/yaml.h>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -28,10 +27,10 @@ private slots:
 private:
   Ui::MainWindow* ui;
   std::map<std::string,std::map<std::string,std::string>> m_carConfigFilenames;
-  json m_currentJson;
+  YAML::Node m_currentYAML;
 
   void setParamCheckboxStates(bool checked);
-  void scanJSONDir();
+  bool scanDefinitionDir(std::string& errorMsgs);
   void populateCarPickList();
 
   void populateParamWidgets();
@@ -40,3 +39,4 @@ private:
   void clearActuatorWidgets();
 };
 #endif // MAINWINDOW_H
+
