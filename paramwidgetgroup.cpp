@@ -1,14 +1,44 @@
 #include "paramwidgetgroup.h"
 
 ParamWidgetGroup::ParamWidgetGroup(const QString& name,
-                                   unsigned int address,
+                                   ParamType type,
+                                   unsigned int location,
                                    const QString& units,
                                    const QMap<int,QString>& enumVals,
                                    QWidget* parent) :
   QWidget(parent),
-  m_address(address),
+  m_location(location),
+  m_type(type),
   m_enumVals(enumVals),
   m_units(units)
+{
+  setupContainedWidgets(name);
+  clearValue();
+}
+
+ParamWidgetGroup::ParamWidgetGroup(const QString& name,
+                                   unsigned int snapshotPage,
+                                   unsigned int offsetInPage,
+                                   const QString& units,
+                                   const QMap<int,QString>& enumVals,
+                                   QWidget* parent) :
+  QWidget(parent),
+  m_location(offsetInPage),
+  m_snapshotPage(snapshotPage),
+  m_type(ParamType::SnapshotLocation),
+  m_enumVals(enumVals),
+  m_units(units)
+{
+  setupContainedWidgets(name);
+  clearValue();
+}
+
+ParamType ParamWidgetGroup::type() const
+{
+  return m_type;
+}
+
+void ParamWidgetGroup::setupContainedWidgets(const QString& name)
 {
   m_hlayout = new QHBoxLayout(this);
   m_checkbox = new QCheckBox(name, this);
@@ -17,8 +47,6 @@ ParamWidgetGroup::ParamWidgetGroup(const QString& name,
 
   m_hlayout->addWidget(m_checkbox);
   m_hlayout->addWidget(m_valLabel);
-
-  clearValue();
 }
 
 void ParamWidgetGroup::setValue(int val)
@@ -38,9 +66,14 @@ void ParamWidgetGroup::clearValue()
   m_valLabel->setText("--- " + m_units);
 }
 
-unsigned int ParamWidgetGroup::address() const
+unsigned int ParamWidgetGroup::location() const
 {
-  return m_address;
+  return m_location;
+}
+
+unsigned int ParamWidgetGroup::snapshotPage() const
+{
+  return m_snapshotPage;
 }
 
 bool ParamWidgetGroup::isChecked() const

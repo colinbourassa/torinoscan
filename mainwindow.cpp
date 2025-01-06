@@ -118,6 +118,26 @@ void MainWindow::on_disconnectButton_clicked()
   ui->disconnectButton->setEnabled(false);
 }
 
+QMap<int,QString> MainWindow::getEnumVals(YAML::Node node) const
+{
+  QMap<int,QString> enumVals;
+  if (node["enumvals"].IsSequence())
+  {
+    YAML::Node enumNode = node["enumvals"];
+    for (YAML::const_iterator it = enumNode.begin(); it != enumNode.end(); it++)
+    {
+      const QString keyStr = QString::fromStdString(it->first.as<std::string>());
+      bool ok = false;
+      const int key = keyStr.toInt(&ok, 0);
+      if (ok)
+      {
+        enumVals[key] = QString::fromStdString(it->second.as<std::string>());
+      }
+    }
+  }
+  return enumVals;
+}
+
 void MainWindow::populateParamWidgets()
 {
   int row = 0;
@@ -125,41 +145,64 @@ void MainWindow::populateParamWidgets()
 
   clearParamWidgets();
 
-  // TODO: Some protocols provided different mechanisms to read parameter data
-  // out of the ECU. This code needs to determine whether a parameters is, for
-  // example, a RAM location read versus a "value read" (which is available
-  // with the Marelli 1AF protocol). There are also parameters that are read
-  // cohesively with their entire snapshot page (another 1AF feature), so we
-  // would most likely want to display such parameters together in a group.
-
   for (auto paramEntry : m_currentYAML["parameters"])
   {
-    if (paramEntry["name"] && paramEntry["address"])
+    if (paramEntry["name"])
     {
       bool ok = false;
+      const QString name = QString::fromStdString(paramEntry["name"].as<std::string>());
+      const QString units = paramEntry["units"] ? QString::fromStdString(paramEntry["units"].as<std::string>()) : QString();
+      QMap<int,QString> enumVals = getEnumVals(paramEntry);
+      ParamWidgetGroup* paramWidget = nullptr;
 
-      const QString paramName = QString::fromStdString(paramEntry["name"].as<std::string>());
-      const unsigned int paramAddr = QString::fromStdString(paramEntry["address"].as<std::string>()).toUInt(&ok, 0);
-      const QString paramUnits = paramEntry["units"] ? QString::fromStdString(paramEntry["units"].as<std::string>()) : QString();
-
-      QMap<int,QString> enumVals;
-      if (paramEntry["enumvals"].IsSequence())
+      if (paramEntry["address"])
       {
-        YAML::Node enumNode = paramEntry["enumvals"];
-        for (YAML::const_iterator it = enumNode.begin(); it != enumNode.end(); it++)
+        // parameter is a memory address
+        const unsigned int addr = QString::fromStdString(paramEntry["address"].as<std::string>()).toUInt(&ok, 0);
+        if (ok)
         {
-          const int key = it->first.as<int>();
-          enumVals[key] = QString::fromStdString(it->second.as<std::string>());
+          paramWidget = new ParamWidgetGroup(name, ParamType::MemoryAddress, addr, units, enumVals, this);
+        }
+        else
+        {
+        }
+      }
+      else if (paramEntry["id"])
+      {
+        // parameter is a stored value with a unique ID
+        const unsigned int id = QString::fromStdString(paramEntry["id"].as<std::string>()).toUInt(&ok, 0);
+        if (ok)
+        {
+          paramWidget = new ParamWidgetGroup(name, ParamType::StoredValue, id, units, enumVals, this);
+        }
+        else
+        {
+        }
+      }
+      else if (paramEntry["snapshot"] && paramEntry["offset"])
+      {
+        // parameter is an offset within a snapshot page
+        const unsigned int page = QString::fromStdString(paramEntry["snapshot"].as<std::string>()).toUInt(&ok, 0);
+        bool offsetOk = false;
+        const unsigned int offset = QString::fromStdString(paramEntry["offset"].as<std::string>()).toUInt(&ok, 0);
+        if (ok && offsetOk)
+        {
+          paramWidget = new ParamWidgetGroup(name, page, offset, units, enumVals, this);
+        }
+        else
+        {
         }
       }
 
-      ParamWidgetGroup* paramWidget = new ParamWidgetGroup(paramName, paramAddr, paramUnits, enumVals, this);
-      ui->parametersGrid->addWidget(paramWidget, row, col);
-
-      if (++col > 1)
+      if (paramWidget)
       {
-        col = 0;
-        row++;
+        ui->parametersGrid->addWidget(paramWidget, row, col);
+
+        if (++col > 1)
+        {
+          col = 0;
+          row++;
+        }
       }
     }
   }

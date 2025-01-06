@@ -29,6 +29,7 @@ private:
   std::map<std::string,std::map<std::string,std::string>> m_carConfigFilenames;
   YAML::Node m_currentYAML;
 
+  QMap<int,QString> getEnumVals(YAML::Node node) const;
   void setParamCheckboxStates(bool checked);
   bool scanDefinitionDir(std::string& errorMsgs);
   void populateCarPickList();
