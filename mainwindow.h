@@ -4,6 +4,9 @@
 #include <QMainWindow>
 #include <map>
 #include <yaml-cpp/yaml.h>
+#include <iceblock/KWP71.h>
+#include <iceblock/Fiat9141.h>
+#include <iceblock/Marelli1AF.h>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }

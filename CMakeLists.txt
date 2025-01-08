@@ -14,6 +14,12 @@ set(MAIN_EXEC_NAME ${CMAKE_PROJECT_NAME})
 find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Widgets)
 find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets)
 find_package(yaml-cpp)
+find_package(PkgConfig)
+pkg_check_modules(LIBRARY_ICEBLOCK libiceblock IMPORTED_TARGET)
+
+if (NOT LIBRARY_ICEBLOCK_FOUND)
+  message(FATAL_ERROR "libiceblock required to build.")
+endif()
 
 set(PROJECT_SOURCES
         main.cpp
@@ -40,6 +46,7 @@ endif()
 target_link_libraries(${MAIN_EXEC_NAME} PRIVATE
     Qt${QT_VERSION_MAJOR}::Widgets
     yaml-cpp
+    iceblock
     )
 
 set_target_properties(${MAIN_EXEC_NAME} PROPERTIES
@@ -57,3 +64,4 @@ install(TARGETS ${MAIN_EXEC_NAME}
 if(QT_VERSION_MAJOR EQUAL 6)
     qt_finalize_executable(${MAIN_EXEC_NAME})
 endif()
+
