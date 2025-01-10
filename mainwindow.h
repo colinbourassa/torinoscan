@@ -4,9 +4,7 @@
 #include <QMainWindow>
 #include <map>
 #include <yaml-cpp/yaml.h>
-#include <iceblock/KWP71.h>
-#include <iceblock/Fiat9141.h>
-#include <iceblock/Marelli1AF.h>
+#include "protocoliface.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -31,6 +29,7 @@ private:
   Ui::MainWindow* ui;
   std::map<std::string,std::map<std::string,std::string>> m_carConfigFilenames;
   YAML::Node m_currentYAML;
+  ProtocolIface m_iface;
 
   QMap<int,QString> getEnumVals(YAML::Node node) const;
   void setParamCheckboxStates(bool checked);
