@@ -1,8 +1,6 @@
 #pragma once
 
-#include <iceblock/KWP71.h>
-#include <iceblock/Fiat9141.h>
-#include <iceblock/Marelli1AF.h>
+#include <iceblock/BlockExchangeProtocol.h>
 
 enum class ProtocolType
 {
@@ -23,10 +21,6 @@ public:
 private:
   ProtocolType m_currentType = ProtocolType::None;
   std::string m_currentVariant;
-
-  BlockExchangeProtocol* m_baseIface = nullptr;
-  std::shared_ptr<KWP71> m_kwp71 = nullptr;
-  std::shared_ptr<Fiat9141> m_fiat9141 = nullptr;
-  std::shared_ptr<Marelli1AF> m_marelli1AF = nullptr;
+  std::shared_ptr<BlockExchangeProtocol> m_iface = nullptr;
 };
 

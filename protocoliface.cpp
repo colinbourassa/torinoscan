@@ -1,4 +1,7 @@
 #include "protocoliface.h"
+#include "iceblock/KWP71.h"
+#include "iceblock/Fiat9141.h"
+#include "iceblock/Marelli1AF.h"
 
 ProtocolIface::ProtocolIface()
 {
@@ -13,31 +16,19 @@ void ProtocolIface::setProtocol(ProtocolType type, int baud, LineType initLine, 
     m_currentType = type;
     if (m_currentType == ProtocolType::KWP71)
     {
-      m_fiat9141 = nullptr;
-      m_marelli1AF = nullptr;
-      m_kwp71 = std::make_shared<KWP71>(baud, initLine, false);
-      m_baseIface = m_kwp71.get();
+      m_iface = std::make_shared<KWP71>(baud, initLine, false);
     }
     else if (m_currentType == ProtocolType::FIAT9141)
     {
-      m_kwp71 = nullptr;
-      m_marelli1AF = nullptr;
-      m_fiat9141 = std::make_shared<Fiat9141>(baud, initLine, false);
-      m_baseIface = m_fiat9141.get();
+      m_iface = std::make_shared<Fiat9141>(baud, initLine, false);
     }
     else if (m_currentType == ProtocolType::Marelli1AF)
     {
-      m_kwp71 = nullptr;
-      m_fiat9141 = nullptr;
-      m_marelli1AF = std::make_shared<Marelli1AF>(baud, initLine, false);
-      m_baseIface = m_marelli1AF.get();
+      m_iface = std::make_shared<Marelli1AF>(baud, initLine, false);
     }
     else
     {
-      m_kwp71 = nullptr;
-      m_fiat9141 = nullptr;
-      m_marelli1AF = nullptr;
-      m_baseIface = nullptr;
+      m_iface = nullptr;
     }
   }
 
@@ -47,18 +38,18 @@ void ProtocolIface::setProtocol(ProtocolType type, int baud, LineType initLine, 
 bool ProtocolIface::connect(uint8_t bus, uint8_t addr, uint8_t ecuAddr)
 {
   bool status = false;
-  if (m_baseIface)
+  if (m_iface)
   {
-    status = m_baseIface->connectByBusAddr(bus, addr, ecuAddr);
+    status = m_iface->connectByBusAddr(bus, addr, ecuAddr);
   }
   return status;
 }
 
 void ProtocolIface::disconnect()
 {
-  if (m_baseIface)
+  if (m_iface)
   {
-    m_baseIface->disconnect();
+    m_iface->disconnect();
   }
 }
 
