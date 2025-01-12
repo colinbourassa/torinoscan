@@ -1,14 +1,22 @@
 #include "paramwidgetgroup.h"
 
+/**
+ * Constructor used for parameters read from a memory location.
+ */
 ParamWidgetGroup::ParamWidgetGroup(const QString& name,
-                                   ParamType type,
-                                   unsigned int location,
-                                   const QString& units,
+                                   MemoryType memoryType,
+                                   unsigned int address,
+                                   int lsb,
+                                   int offset,
                                    const QMap<int,QString>& enumVals,
+                                   const QString& units,
                                    QWidget* parent) :
   QWidget(parent),
+  m_paramType(ParamType::MemoryAddress),
+  m_memoryType(memoryType),
   m_location(location),
-  m_type(type),
+  m_lsb(lsb),
+  m_offset(offset),
   m_enumVals(enumVals),
   m_units(units)
 {
@@ -16,26 +24,61 @@ ParamWidgetGroup::ParamWidgetGroup(const QString& name,
   clearValue();
 }
 
+/**
+ * Constructor used for parameters that are stored values, accessed by index.
+ */
+ParamWidgetGroup::ParamWidgetGroup(const QString& name,
+                                   unsigned int valueId,
+                                   int lsb,
+                                   int offset,
+                                   const QMap<int,QString>& enumVals,
+                                   const QString& units,
+                                   QWidget* parent) :
+  QWidget(parent),
+  m_paramType(ParamType::StoredValue),
+  m_memoryType(MemoryType::Unspecified),
+  m_address(valueId),
+  m_lsb(lsb),
+  m_offset(offset),
+  m_enumVals(enumVals),
+  m_units(units)
+{
+  setupContainedWidgets(name);
+  clearValue();
+}
+
+/**
+ * Constructor used for parameters that are on a snapshot data page.
+ */
 ParamWidgetGroup::ParamWidgetGroup(const QString& name,
                                    unsigned int snapshotPage,
                                    unsigned int offsetInPage,
+                                   int lsb,
+                                   int offset,
                                    const QString& units,
                                    const QMap<int,QString>& enumVals,
                                    QWidget* parent) :
   QWidget(parent),
-  m_location(offsetInPage),
+  m_paramType(ParamType::SnapshotLocation),
+  m_address(offsetInPage),
   m_snapshotPage(snapshotPage),
-  m_type(ParamType::SnapshotLocation),
+  m_lsb(lsb),
+  m_offset(offset),
   m_enumVals(enumVals),
   m_units(units)
 {
   setupContainedWidgets(name);
   clearValue();
 }
-
-ParamType ParamWidgetGroup::type() const
+                       
+ParamType ParamWidgetGroup::paramType() const
 {
-  return m_type;
+  return m_paramType;
+}
+
+MemoryType ParamWidgetGroup::memoryType() const
+{
+  return m_memoryType;
 }
 
 void ParamWidgetGroup::setupContainedWidgets(const QString& name)
@@ -85,3 +128,4 @@ void ParamWidgetGroup::setChecked(bool checked)
 {
   m_checkbox->setChecked(checked);
 }
+

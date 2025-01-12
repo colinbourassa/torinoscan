@@ -2,9 +2,11 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include <QList>
 #include <map>
 #include <yaml-cpp/yaml.h>
 #include "protocoliface.h"
+#include "paramwidgetgroup.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -36,10 +38,14 @@ private:
   bool scanDefinitionDir(std::string& errorMsgs);
   void populateCarPickList();
 
+  bool createWidgetForMemoryParam(YAML::Node node, ParamWidgetGroup*& widget);
+  bool createWidgetForStoredValueParam(YAML::Node node, ParamWidgetGroup*& widget);
+  bool createWidgetForSnapshotParam(YAML::Node node, ParamWidgetGroup*& widget);
   void populateParamWidgets();
   void clearParamWidgets();
   void populateActuatorWidgets();
   void clearActuatorWidgets();
+  void updateParamData(const QList<ParamWidgetGroup*>& paramWidgets);
 };
 #endif // MAINWINDOW_H
 
