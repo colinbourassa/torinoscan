@@ -12,43 +12,43 @@ parameters:
     address: 0x02 0x00 0x3B
     numbytes: 1
     lsb: 0
-    zero: 0
+    offset: 0
   - name: LOAD
     decimals: 1
     address: 0x01 0x00 0x40
     numbytes: 1
     lsb: 0
-    zero: 0
+    offset: 0
   - name: INJECTION TIME
     decimals: 1
     address: 0x02 0x00 0x60
     numbytes: 1
     lsb: 0
-    zero: 0
+    offset: 0
   - name: IGNITION ADVANCE
     decimals: 1
     address: 0x01 0x00 0x55
     numbytes: 1
     lsb: 0
-    zero: 0
+    offset: 0
   - name: ENGINE TEMPERATURE
     decimals: 1
     address: 0x01 0x00 0x38
     numbytes: 1
     lsb: 0
-    zero: 0
+    offset: 0
   - name: AIR FLOW
     decimals: 1
     address: 0x02 0x00 0x9B
     numbytes: 1
     lsb: 0
-    zero: 0
+    offset: 0
   - name: VEHICLE SPEED
     decimals: 0
     address: 0x01 0x00 0x8C
     numbytes: 1
     lsb: 0
-    zero: 0
+    offset: 0
   - name: COMPRESSOR STATUS
     enumvals:
       '0': 'OFF'
@@ -72,37 +72,37 @@ parameters:
     address: 0x08 0x00
     numbytes: 1
     lsb: 0
-    zero: 0
+    offset: 0
   - name: THROTTLE RELAT.ANGLE
     decimals: 1
     address: 0x01 0x03 0x42
     numbytes: 1
     lsb: 0
-    zero: 0
+    offset: 0
   - name: THROTTLE OFF SET ANGLE
     decimals: 1
     address: 0x01 0x03 0x45
     numbytes: 1
     lsb: 0
-    zero: 0
+    offset: 0
   - name: BATTERY VOLTAGE
     decimals: 2
     address: 0x08 0x01
     numbytes: 1
     lsb: 0
-    zero: 0
+    offset: 0
   - name: OXY. SENS.VOLTAGE
     decimals: 0
     address: 0x08 0x07
     numbytes: 1
     lsb: 0
-    zero: 0
+    offset: 0
   - name: CATALYTIC CONVER.TEMP.
     decimals: 0
     address: 0x08 0x02
     numbytes: 1
     lsb: 0
-    zero: 0
+    offset: 0
   - name: FUNCTIONING MODE
     enumvals:
       '0': CLOSED LOOP
@@ -114,19 +114,19 @@ parameters:
     address: 0x01 0x02 0x0F
     numbytes: 1
     lsb: 0
-    zero: 0
+    offset: 0
   - name: ADDITIVE VALUE
     decimals: 3
     address: 0x01 0x02 0x07
     numbytes: 1
     lsb: 0
-    zero: 0
+    offset: 0
   - name: MULTIPLIER VALUE
     decimals: 3
     address: 0x01 0x02 0x01
     numbytes: 1
     lsb: 0
-    zero: 0
+    offset: 0
   - name: MOTOR CONDITION
     enumvals:
       '0': IDLING

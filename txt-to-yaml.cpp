@@ -307,7 +307,7 @@ int main(int argc, char** argv)
         if (!ecuYamls[ecuIndex]["parameters"][paramIndex]["enum"])
         {
           ecuYamls[ecuIndex]["parameters"][paramIndex]["lsb"] = 0;
-          ecuYamls[ecuIndex]["parameters"][paramIndex]["zero"] = 0;
+          ecuYamls[ecuIndex]["parameters"][paramIndex]["offset"] = 0;
         }
       }
     }

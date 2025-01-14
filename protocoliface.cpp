@@ -61,3 +61,7 @@ void ProtocolIface::disconnect()
   m_connectionActive = false;
 }
 
+void ProtocolIface::updateParamData(const QList<ParamWidgetGroup*>& paramWidgets)
+{
+  // TODO
+}

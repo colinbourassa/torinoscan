@@ -32,6 +32,8 @@ set(PROJECT_SOURCES
         actuatorwidgetgroup.h
         protocoliface.cpp
         protocoliface.h
+        utils.cpp
+        utils.h
 )
 
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)

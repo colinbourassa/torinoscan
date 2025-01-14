@@ -6,15 +6,15 @@
 ParamWidgetGroup::ParamWidgetGroup(const QString& name,
                                    MemoryType memoryType,
                                    unsigned int address,
-                                   int lsb,
-                                   int offset,
-                                   const QMap<int,QString>& enumVals,
+                                   float lsb,
+                                   float offset,
                                    const QString& units,
+                                   const QMap<int,QString>& enumVals,
                                    QWidget* parent) :
   QWidget(parent),
   m_paramType(ParamType::MemoryAddress),
   m_memoryType(memoryType),
-  m_location(location),
+  m_address(address),
   m_lsb(lsb),
   m_offset(offset),
   m_enumVals(enumVals),
@@ -29,10 +29,10 @@ ParamWidgetGroup::ParamWidgetGroup(const QString& name,
  */
 ParamWidgetGroup::ParamWidgetGroup(const QString& name,
                                    unsigned int valueId,
-                                   int lsb,
-                                   int offset,
-                                   const QMap<int,QString>& enumVals,
+                                   float lsb,
+                                   float offset,
                                    const QString& units,
+                                   const QMap<int,QString>& enumVals,
                                    QWidget* parent) :
   QWidget(parent),
   m_paramType(ParamType::StoredValue),
@@ -52,15 +52,15 @@ ParamWidgetGroup::ParamWidgetGroup(const QString& name,
  */
 ParamWidgetGroup::ParamWidgetGroup(const QString& name,
                                    unsigned int snapshotPage,
-                                   unsigned int offsetInPage,
-                                   int lsb,
-                                   int offset,
+                                   unsigned int addrInPage,
+                                   float lsb,
+                                   float offset,
                                    const QString& units,
                                    const QMap<int,QString>& enumVals,
                                    QWidget* parent) :
   QWidget(parent),
   m_paramType(ParamType::SnapshotLocation),
-  m_address(offsetInPage),
+  m_address(addrInPage),
   m_snapshotPage(snapshotPage),
   m_lsb(lsb),
   m_offset(offset),
@@ -92,7 +92,7 @@ void ParamWidgetGroup::setupContainedWidgets(const QString& name)
   m_hlayout->addWidget(m_valLabel);
 }
 
-void ParamWidgetGroup::setValue(int val)
+void ParamWidgetGroup::setRawValue(int val)
 {
   if (m_enumVals.contains(val))
   {
@@ -109,9 +109,9 @@ void ParamWidgetGroup::clearValue()
   m_valLabel->setText("--- " + m_units);
 }
 
-unsigned int ParamWidgetGroup::location() const
+unsigned int ParamWidgetGroup::address() const
 {
-  return m_location;
+  return m_address;
 }
 
 unsigned int ParamWidgetGroup::snapshotPage() const

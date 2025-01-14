@@ -11,77 +11,77 @@ parameters:
     address: 0x2001
     numbytes: 1
     lsb: 40
-    zero: 0
+    offset: 0
     units: rpm
   - name: Injection time (TJ) LH
     decimals: 1
     address: 0x2060
     numbytes: 1
     lsb: 0.2392
-    zero: 0
+    offset: 0
     units: ms
   - name: Injection time (TJ) RH
     decimals: 1
     address: 0x2070
     numbytes: 1
     lsb: 0.2392
-    zero: 0
+    offset: 0
     units: ms
   - name: Load (TL)
     decimals: 1
     address: 0x2005
     numbytes: 1
     lsb: 0.05
-    zero: 0
+    offset: 0
     units: ms
   - name: Ignition advance
     decimals: 1
     address: 0x2004
     numbytes: 1
     lsb: -0.075
-    zero: 5.4
+    offset: 5.4
     units: degrees
   - name: Engine temperature
     decimals: 1
     address: 0x2008
     numbytes: 1
     lsb: 0.75
-    zero: -48
+    offset: -48
     units: degrees C
   - name: Air flow
     decimals: 1
     address: 0x2064
     numbytes: 1
     lsb: 0.25
-    zero: 0
+    offset: 0
     units: kg/h
   - name: Intake air temperature
     decimals: 1
     address: 0x2007
     numbytes: 1
     lsb: 0.75
-    zero: -48
+    offset: -48
     units: degrees C
   - name: Throttle absolute angle
     decimals: 1
     address: 0x2058
     numbytes: 1
     lsb: 0.5
-    zero: -12.8
+    offset: -12.8
     units: '%'
   - name: Relative throttle angle
     decimals: 1
     address: 0x201E
     numbytes: 1
     lsb: 0.5
-    zero: 0
+    offset: 0
     units: '%'
   - name: Offset throttle angle
     decimals: 1
     address: 0x2059
     numbytes: 1
     lsb: 0.5
-    zero: -12.8
+    offset: -12.8
     units: '%'
   - name: Supplementary fan relay status
     enumvals:
@@ -123,21 +123,21 @@ parameters:
     address: 0x2023
     numbytes: 1
     lsb: 1.25
-    zero: 0
+    offset: 0
     units: km/h
   - name: Battery voltage
     decimals: 1
     address: 0x2006
     numbytes: 1
     lsb: 0.95
-    zero: 0
+    offset: 0
     units: V
   - name: Front oxygen sensor voltage (LH)
     decimals: 0
     address: 0x2026
     numbytes: 1
     lsb: 6
-    zero: -406
+    offset: -406
     units: mV
     comment: >-
       SD2 does not accept any values lower than 0x44 as valid. 0x44 translates
@@ -147,7 +147,7 @@ parameters:
     address: 0x2027
     numbytes: 1
     lsb: 6
-    zero: -406
+    offset: -406
     units: mV
     comment: >-
       SD2 does not accept any values lower than 0x44 as valid. 0x44 translates
@@ -157,7 +157,7 @@ parameters:
     address: 0x2016
     numbytes: 1
     lsb: 3.90625
-    zero: 200
+    offset: 200
     units: degrees C
   - name: Operating mode (LH)
     enumvals:
@@ -171,14 +171,14 @@ parameters:
     address: 0x2066
     numbytes: 1
     lsb: 0.03125
-    zero: 0
+    offset: 0
     comment: SD2 displays ----- for values greater than 0x41 (2.0)
   - name: Additive value (LH)
     decimals: 3
     address: 0x2015
     numbytes: 1
     lsb: 0.016
-    zero: 0
+    offset: 0
     comment: >-
       Original .txt file shows range as -2.050 to +2.050, but the SW seems to
       only accept values in the range [0x00,0x80] as valid, with them
@@ -188,7 +188,7 @@ parameters:
     address: 0x2014
     numbytes: 1
     lsb: 0
-    zero: 0
+    offset: 0
     units: ''
     comment: >-
       .TXT shows range as 0.000 to 2.000, but SW only ever seems to show values
@@ -198,7 +198,7 @@ parameters:
     address: 0x2028
     numbytes: 1
     lsb: 6
-    zero: -406
+    offset: -406
     units: mV
     comment: >-
       SD2 does not accept any values lower than 0x44 as valid. 0x44 translates
@@ -208,7 +208,7 @@ parameters:
     address: 0x2029
     numbytes: 1
     lsb: 6
-    zero: -406
+    offset: -406
     units: mV
     comment: >-
       SD2 does not accept any values lower than 0x44 as valid. 0x44 translates
@@ -218,7 +218,7 @@ parameters:
     address: 0x2019
     numbytes: 1
     lsb: 3.90625
-    zero: 200
+    offset: 200
     units: degrees C
   - name: Operating mode (RH)
     enumvals:
@@ -232,7 +232,7 @@ parameters:
     address: 0x2068
     numbytes: 1
     lsb: 0.03125
-    zero: 0
+    offset: 0
     units: ''
     comment: SD2 displays ----- for values greater than 0x41 (2.0)
   - name: Additive value (RH)
@@ -240,7 +240,7 @@ parameters:
     address: 0x2018
     numbytes: 1
     lsb: 0.016
-    zero: 0
+    offset: 0
     units: ''
     comment: SD2 displays ----- for values greater than 128 (2.048)
   - name: Multiplicative value (RH)
@@ -248,7 +248,7 @@ parameters:
     address: 0x2017
     numbytes: 1
     lsb: 0
-    zero: 0
+    offset: 0
     units: ''
     comment: >-
       .TXT shows range as 0.000 to 2.000, but SW only ever seems to show values

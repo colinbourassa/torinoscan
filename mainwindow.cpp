@@ -12,6 +12,7 @@
 #include <QList>
 #include "paramwidgetgroup.h"
 #include "actuatorwidgetgroup.h"
+#include "utils.h"
 
 MainWindow::MainWindow(QWidget *parent) :
   QMainWindow(parent),
@@ -143,19 +144,33 @@ bool MainWindow::createWidgetForMemoryParam(YAML::Node node, ParamWidgetGroup*& 
   bool status = false;
   if (node["name"] && node["address"])
   {
-    bool ok = false;
     const QString name = QString::fromStdString(node["name"].as<std::string>());
-    const MemoryType memType; // TODO
+    const MemoryType memType = node["memtype"] ? memTypeFromString(node["memtype"].as<std::string>()) : MemoryType::Unspecified;
     const QString units = node["units"] ? QString::fromStdString(node["units"].as<std::string>()) : QString();
     const QMap<int,QString> enumVals = getEnumVals(node);
-    const unsigned int addr = QString::fromStdString(node["address"].as<std::string>()).toUInt(&ok, 0);
+    unsigned int addr = 0;
+    float lsb = 1.0f;
+    float offset = 0.0f;
 
-    if (ok)
+    try
     {
       status = true;
+      addr = node["address"].as<unsigned int>();
+      lsb = node["lsb"] ? node["lsb"].as<float>() : 1.0f;
+      offset = node["offset"] ? node["offset"].as<float>() : 0.0f;
+    }
+    catch (const YAML::Exception& e)
+    {
+      // TODO: Add to string collection describing parse errors
+      status = false;
+    }
+
+    if (status)
+    {
       widget = new ParamWidgetGroup(name, memType, addr, lsb, offset, units, enumVals, this);
     }
   }
+
   return status;
 }
 
@@ -164,40 +179,68 @@ bool MainWindow::createWidgetForStoredValueParam(YAML::Node node, ParamWidgetGro
   bool status = false;
   if (node["name"] && node["id"])
   {
-    bool ok = false;
     const QString name = QString::fromStdString(node["name"].as<std::string>());
     const QString units = node["units"] ? QString::fromStdString(node["units"].as<std::string>()) : QString();
     const QMap<int,QString> enumVals = getEnumVals(node);
-    const unsigned int id = QString::fromStdString(node["id"].as<std::string>()).toUInt(&ok, 0);
+    unsigned int id = 0;
+    float lsb = 1.0f;
+    float offset = 0.0f;
 
-    if (ok)
+    try
     {
       status = true;
+      id = node["id"].as<unsigned int>();
+      lsb = node["lsb"] ? node["lsb"].as<float>() : 1.0f;
+      offset = node["offset"] ? node["offset"].as<float>() : 0.0f;
+    }
+    catch (const YAML::Exception& e)
+    {
+      // TODO: Add to string collection describing parse errors
+      status = false;
+    }
+
+    if (status)
+    {
       widget = new ParamWidgetGroup(name, id, lsb, offset, units, enumVals, this);
     }
   }
+
   return status;
 }
 
 bool MainWindow::createWidgetForSnapshotParam(YAML::Node node, ParamWidgetGroup*& widget)
 {
   bool status = false;
-  if (node["name"] && node["snapshot"] && node["offset"])
+  if (node["name"] && node["snapshot"] && node["address"])
   {
     const QString name = QString::fromStdString(node["name"].as<std::string>());
     const QString units = node["units"] ? QString::fromStdString(node["units"].as<std::string>()) : QString();
     const QMap<int,QString> enumVals = getEnumVals(node);
-    bool pageOk = false;
-    bool offsetOk = false;
-    const unsigned int page = QString::fromStdString(node["snapshot"].as<std::string>()).toUInt(&pageOk, 0);
-    const unsigned int offset = QString::fromStdString(node["offset"].as<std::string>()).toUInt(&offsetOk, 0);
+    unsigned int snapshot = 0;
+    unsigned int addr = 0;
+    float lsb = 1.0f;
+    float offset = 0.0f;
 
-    if (pageOk && offsetOk)
+    try
     {
       status = true;
-      widget = new ParamWidgetGroup(name, page, offset, lsb, offset, units, enumVals, this);
+      snapshot = node["snapshot"].as<unsigned int>();
+      addr = node["address"].as<unsigned int>();
+      lsb = node["lsb"] ? node["lsb"].as<float>() : 1.0f;
+      offset = node["offset"] ? node["offset"].as<float>() : 0.0f;
+    }
+    catch (const YAML::Exception& e)
+    {
+      // TODO: Add to string collection describing parse errors
+      status = false;
+    }
+
+    if (status)
+    {
+      widget = new ParamWidgetGroup(name, snapshot, addr, lsb, offset, units, enumVals, this);
     }
   }
+
   return status;
 }
 

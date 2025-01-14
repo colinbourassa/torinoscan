@@ -24,8 +24,8 @@ public:
   explicit ParamWidgetGroup(const QString& name,
                             MemoryType memoryType,
                             unsigned int address,
-                            int lsb,
-                            int offset,
+                            float lsb,
+                            float offset,
                             const QString& units,
                             const QMap<int,QString>& enumVals,
                             QWidget* parent = nullptr);
@@ -33,8 +33,8 @@ public:
   // Parameter is a value stored by index
   explicit ParamWidgetGroup(const QString& name,
                             unsigned int valueId,
-                            int lsb,
-                            int offset,
+                            float lsb,
+                            float offset,
                             const QString& units,
                             const QMap<int,QString>& enumVals,
                             QWidget* parent = nullptr);
@@ -42,9 +42,9 @@ public:
   // Parameter is on a snapshot page
   explicit ParamWidgetGroup(const QString& name,
                             unsigned int snapshotPage,
-                            unsigned int offsetInPage,
-                            int lsb,
-                            int offset,
+                            unsigned int addrInPage,
+                            float lsb,
+                            float offset,
                             const QString& units,
                             const QMap<int,QString>& enumVals,
                             QWidget* parent = nullptr);
@@ -55,7 +55,7 @@ public:
 
   ParamType paramType() const;
   MemoryType memoryType() const;
-  unsigned int location() const;
+  unsigned int address() const;
   unsigned int snapshotPage() const;
   bool isChecked() const;
 
@@ -70,10 +70,10 @@ private:
   unsigned int m_snapshotPage = 0;
 
   /// Value of each LSB in the target units
-  int m_lsb = 0;
+  float m_lsb = 0;
 
   /// Offset in target units for a raw value of zero
-  int m_offset = 0;
+  float m_offset = 0;
 
   QMap<int,QString> m_enumVals;
   QHBoxLayout* m_hlayout = nullptr;
