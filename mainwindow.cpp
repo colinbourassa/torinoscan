@@ -142,13 +142,14 @@ QMap<int,QString> MainWindow::getEnumVals(YAML::Node node) const
 bool MainWindow::createWidgetForMemoryParam(YAML::Node node, ParamWidgetGroup*& widget)
 {
   bool status = false;
-  if (node["name"] && node["address"])
+  if (node["name"] && node["address"] && node["numbytes"])
   {
     const QString name = QString::fromStdString(node["name"].as<std::string>());
     const MemoryType memType = node["memtype"] ? memTypeFromString(node["memtype"].as<std::string>()) : MemoryType::Unspecified;
     const QString units = node["units"] ? QString::fromStdString(node["units"].as<std::string>()) : QString();
     const QMap<int,QString> enumVals = getEnumVals(node);
     unsigned int addr = 0;
+    unsigned int numBytes = 1;
     float lsb = 1.0f;
     float offset = 0.0f;
 
@@ -156,6 +157,7 @@ bool MainWindow::createWidgetForMemoryParam(YAML::Node node, ParamWidgetGroup*& 
     {
       status = true;
       addr = node["address"].as<unsigned int>();
+      numBytes = node["numbytes"].as<unsigned int>();
       lsb = node["lsb"] ? node["lsb"].as<float>() : 1.0f;
       offset = node["offset"] ? node["offset"].as<float>() : 0.0f;
     }
@@ -167,7 +169,7 @@ bool MainWindow::createWidgetForMemoryParam(YAML::Node node, ParamWidgetGroup*& 
 
     if (status)
     {
-      widget = new ParamWidgetGroup(name, memType, addr, lsb, offset, units, enumVals, this);
+      widget = new ParamWidgetGroup(name, memType, addr, numBytes, lsb, offset, units, enumVals, this);
     }
   }
 
@@ -211,13 +213,14 @@ bool MainWindow::createWidgetForStoredValueParam(YAML::Node node, ParamWidgetGro
 bool MainWindow::createWidgetForSnapshotParam(YAML::Node node, ParamWidgetGroup*& widget)
 {
   bool status = false;
-  if (node["name"] && node["snapshot"] && node["address"])
+  if (node["name"] && node["snapshot"] && node["address"] && node["numbytes"])
   {
     const QString name = QString::fromStdString(node["name"].as<std::string>());
     const QString units = node["units"] ? QString::fromStdString(node["units"].as<std::string>()) : QString();
     const QMap<int,QString> enumVals = getEnumVals(node);
     unsigned int snapshot = 0;
     unsigned int addr = 0;
+    unsigned int numBytes = 1;
     float lsb = 1.0f;
     float offset = 0.0f;
 
@@ -226,6 +229,7 @@ bool MainWindow::createWidgetForSnapshotParam(YAML::Node node, ParamWidgetGroup*
       status = true;
       snapshot = node["snapshot"].as<unsigned int>();
       addr = node["address"].as<unsigned int>();
+      numBytes = node["numbytes"].as<unsigned int>();
       lsb = node["lsb"] ? node["lsb"].as<float>() : 1.0f;
       offset = node["offset"] ? node["offset"].as<float>() : 0.0f;
     }
@@ -237,7 +241,7 @@ bool MainWindow::createWidgetForSnapshotParam(YAML::Node node, ParamWidgetGroup*
 
     if (status)
     {
-      widget = new ParamWidgetGroup(name, snapshot, addr, lsb, offset, units, enumVals, this);
+      widget = new ParamWidgetGroup(name, snapshot, addr, numBytes, lsb, offset, units, enumVals, this);
     }
   }
 

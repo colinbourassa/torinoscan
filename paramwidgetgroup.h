@@ -24,6 +24,7 @@ public:
   explicit ParamWidgetGroup(const QString& name,
                             MemoryType memoryType,
                             unsigned int address,
+                            unsigned int numBytes,
                             float lsb,
                             float offset,
                             const QString& units,
@@ -43,6 +44,7 @@ public:
   explicit ParamWidgetGroup(const QString& name,
                             unsigned int snapshotPage,
                             unsigned int addrInPage,
+                            unsigned int numBytes,
                             float lsb,
                             float offset,
                             const QString& units,
@@ -50,13 +52,14 @@ public:
                             QWidget* parent = nullptr);
 
   void setChecked(bool checked);
-  void setRawValue(int val);
+  void setRawValue(unsigned int val);
   void clearValue();
 
   ParamType paramType() const;
   MemoryType memoryType() const;
   unsigned int address() const;
   unsigned int snapshotPage() const;
+  unsigned int numBytes() const;
   bool isChecked() const;
 
 private:
@@ -65,6 +68,8 @@ private:
 
   /// A memory address, ID of a stored value, or offset within a snapshot page
   unsigned int m_address = 0;
+
+  unsigned int m_numBytes = 0;
 
   /// Page number (for snapshot parameter data only)
   unsigned int m_snapshotPage = 0;

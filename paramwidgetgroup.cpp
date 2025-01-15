@@ -6,6 +6,7 @@
 ParamWidgetGroup::ParamWidgetGroup(const QString& name,
                                    MemoryType memoryType,
                                    unsigned int address,
+                                   unsigned int numBytes,
                                    float lsb,
                                    float offset,
                                    const QString& units,
@@ -15,6 +16,7 @@ ParamWidgetGroup::ParamWidgetGroup(const QString& name,
   m_paramType(ParamType::MemoryAddress),
   m_memoryType(memoryType),
   m_address(address),
+  m_numBytes(numBytes),
   m_lsb(lsb),
   m_offset(offset),
   m_enumVals(enumVals),
@@ -53,6 +55,7 @@ ParamWidgetGroup::ParamWidgetGroup(const QString& name,
 ParamWidgetGroup::ParamWidgetGroup(const QString& name,
                                    unsigned int snapshotPage,
                                    unsigned int addrInPage,
+                                   unsigned int numBytes,
                                    float lsb,
                                    float offset,
                                    const QString& units,
@@ -61,6 +64,7 @@ ParamWidgetGroup::ParamWidgetGroup(const QString& name,
   QWidget(parent),
   m_paramType(ParamType::SnapshotLocation),
   m_address(addrInPage),
+  m_numBytes(numBytes),
   m_snapshotPage(snapshotPage),
   m_lsb(lsb),
   m_offset(offset),
@@ -92,7 +96,7 @@ void ParamWidgetGroup::setupContainedWidgets(const QString& name)
   m_hlayout->addWidget(m_valLabel);
 }
 
-void ParamWidgetGroup::setRawValue(int val)
+void ParamWidgetGroup::setRawValue(unsigned int val)
 {
   if (m_enumVals.contains(val))
   {
@@ -100,7 +104,8 @@ void ParamWidgetGroup::setRawValue(int val)
   }
   else
   {
-    m_valLabel->setText(QString("%1 %2").arg(val).arg(m_units));
+    const float converted = (val * m_lsb) + m_offset;
+    m_valLabel->setText(QString("%1 %2").arg(converted).arg(m_units));
   }
 }
 
@@ -112,6 +117,11 @@ void ParamWidgetGroup::clearValue()
 unsigned int ParamWidgetGroup::address() const
 {
   return m_address;
+}
+
+unsigned int ParamWidgetGroup::numBytes() const
+{
+  return m_numBytes;
 }
 
 unsigned int ParamWidgetGroup::snapshotPage() const
