@@ -1,3 +1,4 @@
+#include <QThread>
 #include <iceblock/KWP71.h>
 #include <iceblock/Fiat9141.h>
 #include <iceblock/Marelli1AF.h>
@@ -6,6 +7,13 @@
 
 ProtocolIface::ProtocolIface()
 {
+}
+
+void ProtocolIface::onShutdownRequest()
+{
+  m_shutdownFlag = true;
+  std::lock_guard<std::mutex> lock(m_shutdownMutex);
+  QThread::currentThread()->quit();
 }
 
 void ProtocolIface::setProtocol(ProtocolType type, int baud, LineType initLine, const std::string& variant)
@@ -64,27 +72,29 @@ void ProtocolIface::disconnect()
 
 void ProtocolIface::updateParamData(const QList<ParamWidgetGroup*>& paramWidgets)
 {
+  std::lock_guard<std::mutex> lock(m_shutdownMutex);
   std::map<unsigned int,std::vector<uint8_t>> cachedSnapshotPages;
 
-  for (ParamWidgetGroup* widget : paramWidgets)
+  QList<ParamWidgetGroup*>::const_iterator widget = paramWidgets.begin();
+  while (!m_shutdownFlag && (widget != paramWidgets.end()))
   {
-    const ParamType pType = widget->paramType();
+    const ParamType pType = (*widget)->paramType();
 
     if (std::vector<uint8_t> data;
         (pType == ParamType::MemoryAddress) &&
-        m_iface->readMemory(widget->memoryType(), widget->address(), widget->numBytes(), data))
+        m_iface->readMemory((*widget)->memoryType(), (*widget)->address(), (*widget)->numBytes(), data))
     {
-      widget->setRawValue(vectorToUint(data));
+      (*widget)->setRawValue(vectorToUint(data));
     }
     else if (std::vector<uint8_t> data;
              (pType == ParamType::StoredValue) &&
-             m_iface->readStoredValue(widget->address(), data))
+             m_iface->readStoredValue((*widget)->address(), data))
     {
-      widget->setRawValue(vectorToUint(data));
+      (*widget)->setRawValue(vectorToUint(data));
     }
     else if (pType == ParamType::SnapshotLocation)
     {
-      const unsigned int pageNumber = widget->snapshotPage();
+      const unsigned int pageNumber = (*widget)->snapshotPage();
 
       if (!cachedSnapshotPages.count(pageNumber))
       {
@@ -96,14 +106,16 @@ void ProtocolIface::updateParamData(const QList<ParamWidgetGroup*>& paramWidgets
       }
 
       if (cachedSnapshotPages.count(pageNumber) &&
-          ((widget->address() + widget->numBytes()) < cachedSnapshotPages.at(pageNumber).size()))
+          (((*widget)->address() + (*widget)->numBytes()) < cachedSnapshotPages.at(pageNumber).size()))
       {
         const uint8_t* const dataPtr =
-          cachedSnapshotPages.at(pageNumber).data() + widget->numBytes();
+          cachedSnapshotPages.at(pageNumber).data() + (*widget)->numBytes();
 
-        widget->setRawValue(vectorToUint(dataPtr, widget->numBytes()));
+        (*widget)->setRawValue(vectorToUint(dataPtr, (*widget)->numBytes()));
       }
     }
+
+    widget++;
   }
 }
 

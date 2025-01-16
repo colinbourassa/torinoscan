@@ -1,7 +1,3 @@
-#include "mainwindow.h"
-#include "./ui_mainwindow.h"
-#include <nlohmann/json.hpp>
-#include <fstream>
 #include <QDir>
 #include <QFileInfo>
 #include <QString>
@@ -10,19 +6,35 @@
 #include <QLabel>
 #include <QCheckBox>
 #include <QList>
+#include "mainwindow.h"
+#include "./ui_mainwindow.h"
 #include "paramwidgetgroup.h"
 #include "actuatorwidgetgroup.h"
 #include "utils.h"
 
 MainWindow::MainWindow(QWidget *parent) :
   QMainWindow(parent),
-  ui(new Ui::MainWindow)
+  ui(new Ui::MainWindow),
+  m_ifaceThread(this)
 {
   ui->setupUi(this);
+  m_iface.moveToThread(&m_ifaceThread);
+  connect(this, &MainWindow::requestThreadShutdown, &m_iface, &ProtocolIface::onShutdownRequest);
+  m_ifaceThread.start();
 
   std::string scanErrors;
   scanDefinitionDir(scanErrors);
   populateCarPickList();
+}
+
+void MainWindow::closeEvent(QCloseEvent* event)
+{
+  if (m_ifaceThread.isRunning())
+  {
+    emit requestThreadShutdown();
+    m_ifaceThread.wait(3000);
+  }
+  event->accept();
 }
 
 MainWindow::~MainWindow()

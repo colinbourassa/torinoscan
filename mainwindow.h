@@ -2,7 +2,9 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include <QCloseEvent>
 #include <QList>
+#include <QThread>
 #include <map>
 #include <yaml-cpp/yaml.h>
 #include "protocoliface.h"
@@ -27,11 +29,15 @@ private slots:
   void on_enableAllParamButton_clicked();
   void on_disableAllParamButton_clicked();
 
+protected:
+  void closeEvent(QCloseEvent* event) override;
+
 private:
   Ui::MainWindow* ui;
   std::map<std::string,std::map<std::string,std::string>> m_carConfigFilenames;
   YAML::Node m_currentYAML;
   ProtocolIface m_iface;
+  QThread m_ifaceThread;
 
   QMap<int,QString> getEnumVals(YAML::Node node) const;
   void setParamCheckboxStates(bool checked);
@@ -46,6 +52,9 @@ private:
   void populateActuatorWidgets();
   void clearActuatorWidgets();
   void updateParamData(const QList<ParamWidgetGroup*>& paramWidgets);
+
+signals:
+  void requestThreadShutdown();
 };
 #endif // MAINWINDOW_H
 

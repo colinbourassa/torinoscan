@@ -1,7 +1,8 @@
 #pragma once
 
-#include <iceblock/BlockExchangeProtocol.h>
+#include <QObject>
 #include <QList>
+#include <iceblock/BlockExchangeProtocol.h>
 #include "paramwidgetgroup.h"
 
 enum class ProtocolType
@@ -12,8 +13,10 @@ enum class ProtocolType
   Marelli1AF
 };
 
-class ProtocolIface
+class ProtocolIface : public QObject
 {
+  Q_OBJECT
+
 public:
   ProtocolIface();
   void setProtocol(ProtocolType type, int baud, LineType initLine, const std::string& variant = "");
@@ -21,11 +24,16 @@ public:
   void disconnect();
   void updateParamData(const QList<ParamWidgetGroup*>& paramWidgets);
 
+public slots:
+  void onShutdownRequest();
+
 private:
   ProtocolType m_currentType = ProtocolType::None;
   std::string m_currentVariant;
   std::shared_ptr<BlockExchangeProtocol> m_iface = nullptr;
   std::mutex m_connectMutex;
+  std::mutex m_shutdownMutex;;
   bool m_connectionActive = false;
+  bool m_shutdownFlag = false;
 };
 
