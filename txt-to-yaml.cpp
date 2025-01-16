@@ -151,11 +151,11 @@ std::string trim(const std::string& line)
     result = line.substr(start, end - start + 1);
   }
 
-  // Replace the CP1252 symbols with a short description "deg" so that the JSON
+  // Replace the CP1252 symbols with a short description so that the YAML
   // processor doesn't complain. Note that there may be other examples of >0x80
   // chars that we will need to address.
-  result = std::regex_replace(result, std::regex("\xB0"), "deg");
-  result = std::regex_replace(result, std::regex("\x85"), "...");
+  result = std::regex_replace(result, std::regex("\xB0"), "deg"); // degree symbol
+  result = std::regex_replace(result, std::regex("\x85"), "..."); // ellipsis dots
   return result;
 }
 
