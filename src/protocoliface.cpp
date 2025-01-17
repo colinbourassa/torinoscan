@@ -9,57 +9,28 @@ ProtocolIface::ProtocolIface()
 {
 }
 
-void ProtocolIface::onShutdownRequest()
-{
-  m_shutdownFlag = true;
-  std::lock_guard<std::mutex> lock(m_shutdownMutex);
-  QThread::currentThread()->quit();
-}
-
-void ProtocolIface::setProtocol(ProtocolType type, int baud, LineType initLine, const std::string& variant)
+void ProtocolIface::onConnectRequest(uint8_t ecuAddr)
 {
   std::lock_guard<std::mutex> lock(m_connectMutex);
 
-  if (!m_connectionActive)
+  if (m_protocolParamsSet && m_ftdiDeviceSet)
   {
-    if (m_currentType != type)
+    if (m_iface &&
+        !m_connectionActive &&
+        m_iface->connectByBusAddr(m_ftdiUSBBusID, m_ftdiUSBDeviceID, ecuAddr))
     {
-      m_currentType = type;
-      if (m_currentType == ProtocolType::KWP71)
-      {
-        m_iface = std::make_shared<KWP71>(baud, initLine, false);
-      }
-      else if (m_currentType == ProtocolType::FIAT9141)
-      {
-        m_iface = std::make_shared<Fiat9141>(baud, initLine, false);
-      }
-      else if (m_currentType == ProtocolType::Marelli1AF)
-      {
-        m_iface = std::make_shared<Marelli1AF>(baud, initLine, false);
-      }
-      else
-      {
-        m_iface = nullptr;
-      }
+      m_connectionActive = true;
+      emit connected();
     }
-    m_currentVariant = variant;
   }
-}
-
-bool ProtocolIface::connect(uint8_t bus, uint8_t addr, uint8_t ecuAddr)
-{
-  std::lock_guard<std::mutex> lock(m_connectMutex);
-
-  bool status = false;
-  if (m_iface && !m_connectionActive)
+  else
   {
-    status = m_iface->connectByBusAddr(bus, addr, ecuAddr);
-    m_connectionActive = status;
+    emit protocolParamsNotSet();
   }
-  return status;
+
 }
 
-void ProtocolIface::disconnect()
+void ProtocolIface::onDisconnectRequest()
 {
   std::lock_guard<std::mutex> lock(m_connectMutex);
 
@@ -68,6 +39,66 @@ void ProtocolIface::disconnect()
     m_iface->disconnect();
   }
   m_connectionActive = false;
+}
+
+void ProtocolIface::onStartParamRead()
+{
+}
+
+void ProtocolIface::onStopParamRead()
+{
+}
+
+void ProtocolIface::onRequestFaultCodes()
+{
+}
+
+void ProtocolIface::onShutdownRequest()
+{
+  m_shutdownFlag = true;
+  std::lock_guard<std::mutex> lock(m_shutdownMutex);
+  QThread::currentThread()->quit();
+}
+
+bool ProtocolIface::setFTDIDevice(uint8_t ftdiUSBBusID, uint8_t ftdiUSBDeviceID)
+{
+  bool status = false;
+  if (!m_connectionActive)
+  {
+    m_ftdiUSBBusID = ftdiUSBBusID;
+    m_ftdiUSBDeviceID = ftdiUSBDeviceID;
+    m_ftdiDeviceSet = true;
+    status = true;
+  }
+  return status;
+}
+
+bool ProtocolIface::setProtocol(ProtocolType type, int baud, LineType initLine, const std::string& variant)
+{
+  bool status = false;
+  if (!m_connectionActive)
+  {
+    if (type == ProtocolType::KWP71)
+    {
+      m_iface = std::make_shared<KWP71>(baud, initLine, false);
+    }
+    else if (type == ProtocolType::FIAT9141)
+    {
+      m_iface = std::make_shared<Fiat9141>(baud, initLine, false);
+    }
+    else if (type == ProtocolType::Marelli1AF)
+    {
+      m_iface = std::make_shared<Marelli1AF>(baud, initLine, false);
+    }
+    else
+    {
+      m_iface = nullptr;
+    }
+    status = (m_iface != nullptr);
+    m_protocolParamsSet = status;
+    m_currentVariant = variant;
+  }
+  return status;
 }
 
 void ProtocolIface::updateParamData(const QList<ParamWidgetGroup*>& paramWidgets)

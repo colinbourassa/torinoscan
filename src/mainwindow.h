@@ -28,6 +28,12 @@ private slots:
   void on_disconnectButton_clicked();
   void on_enableAllParamButton_clicked();
   void on_disableAllParamButton_clicked();
+  void on_tabWidget_currentChanged(int index);
+
+  void onInterfaceConnected();
+  void onInterfaceConnectionError();
+  void onInterfaceDisconnected();
+  void onProtocolParamsNotSet();
 
 protected:
   void closeEvent(QCloseEvent* event) override;
@@ -39,11 +45,12 @@ private:
   ProtocolIface m_iface;
   QThread m_ifaceThread;
 
+  void setupThreadsAndSignals();
   QMap<int,QString> getEnumVals(YAML::Node node) const;
   void setParamCheckboxStates(bool checked);
   bool scanDefinitionDir(std::string& errorMsgs);
   void populateCarPickList();
-
+  bool parseProtocolNode(YAML::Node protocolNode, uint8_t& ecuAddr);
   bool createWidgetForMemoryParam(YAML::Node node, ParamWidgetGroup*& widget);
   bool createWidgetForStoredValueParam(YAML::Node node, ParamWidgetGroup*& widget);
   bool createWidgetForSnapshotParam(YAML::Node node, ParamWidgetGroup*& widget);
@@ -54,7 +61,13 @@ private:
   void updateParamData(const QList<ParamWidgetGroup*>& paramWidgets);
 
 signals:
+  void connectInterface(uint8_t ecuAddr);
+  void disconnectInterface();
   void requestThreadShutdown();
+  void startParameterReading();
+  void stopParameterReading();
+  void requestFaultCodes();
+  void activateAcuator(unsigned int index);
 };
 #endif // MAINWINDOW_H
 

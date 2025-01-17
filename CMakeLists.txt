@@ -22,18 +22,18 @@ if (NOT LIBRARY_ICEBLOCK_FOUND)
 endif()
 
 set(PROJECT_SOURCES
-        main.cpp
-        mainwindow.cpp
-        mainwindow.h
-        mainwindow.ui
-        paramwidgetgroup.cpp
-        paramwidgetgroup.h
-        actuatorwidgetgroup.cpp
-        actuatorwidgetgroup.h
-        protocoliface.cpp
-        protocoliface.h
-        utils.cpp
-        utils.h
+      src/main.cpp
+      src/mainwindow.cpp
+      src/mainwindow.h
+      src/mainwindow.ui
+      src/paramwidgetgroup.cpp
+      src/paramwidgetgroup.h
+      src/actuatorwidgetgroup.cpp
+      src/actuatorwidgetgroup.h
+      src/protocoliface.cpp
+      src/protocoliface.h
+      src/utils.cpp
+      src/utils.h
 )
 
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)

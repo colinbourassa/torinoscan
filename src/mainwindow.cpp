@@ -18,13 +18,30 @@ MainWindow::MainWindow(QWidget *parent) :
   m_ifaceThread(this)
 {
   ui->setupUi(this);
-  m_iface.moveToThread(&m_ifaceThread);
-  connect(this, &MainWindow::requestThreadShutdown, &m_iface, &ProtocolIface::onShutdownRequest);
-  m_ifaceThread.start();
-
+  setupThreadsAndSignals();
   std::string scanErrors;
   scanDefinitionDir(scanErrors);
   populateCarPickList();
+}
+
+MainWindow::~MainWindow()
+{
+  delete ui;
+}
+
+void MainWindow::setupThreadsAndSignals()
+{
+  m_iface.moveToThread(&m_ifaceThread);
+  connect(this, &MainWindow::connectInterface, &m_iface, &ProtocolIface::onConnectRequest);
+  connect(this, &MainWindow::requestThreadShutdown, &m_iface, &ProtocolIface::onShutdownRequest);
+  connect(this, &MainWindow::startParameterReading, &m_iface, &ProtocolIface::onStartParamRead);
+  connect(this, &MainWindow::stopParameterReading, &m_iface, &ProtocolIface::onStopParamRead);
+  connect(this, &MainWindow::requestFaultCodes, &m_iface, &ProtocolIface::onRequestFaultCodes);
+  connect(&m_iface, &ProtocolIface::connected, this, &MainWindow::onInterfaceConnected);
+  connect(&m_iface, &ProtocolIface::connectionFailed, this, &MainWindow::onInterfaceConnectionError);
+  connect(&m_iface, &ProtocolIface::disconnected, this, &MainWindow::onInterfaceDisconnected);
+  connect(&m_iface, &ProtocolIface::protocolParamsNotSet, this, &MainWindow::onProtocolParamsNotSet);
+  m_ifaceThread.start();
 }
 
 void MainWindow::closeEvent(QCloseEvent* event)
@@ -37,9 +54,28 @@ void MainWindow::closeEvent(QCloseEvent* event)
   event->accept();
 }
 
-MainWindow::~MainWindow()
+void MainWindow::onInterfaceConnected()
 {
-  delete ui;
+  ui->connectButton->setEnabled(false);
+  ui->disconnectButton->setEnabled(true);
+}
+
+void MainWindow::onInterfaceConnectionError()
+{
+  QMessageBox::warning(this, "Error", "Failed to connect.", QMessageBox::Ok);
+  ui->connectButton->setEnabled(true);
+  ui->disconnectButton->setEnabled(false);
+}
+
+void MainWindow::onInterfaceDisconnected()
+{
+  ui->connectButton->setEnabled(true);
+  ui->disconnectButton->setEnabled(false);
+}
+
+void MainWindow::onProtocolParamsNotSet()
+{
+  QMessageBox::warning(this, "Error", "Protocol parameters not set.", QMessageBox::Ok);
 }
 
 bool MainWindow::scanDefinitionDir(std::string& errorMsgs)
@@ -111,24 +147,90 @@ void MainWindow::on_connectButton_clicked()
 {
   const std::string carName = ui->carComboBox->currentText().toStdString();
   const std::string ecuName = ui->ecuComboBox->currentText().toStdString();
+
   if (m_carConfigFilenames.count(carName) && m_carConfigFilenames.at(carName).count(ecuName))
   {
     const std::string yamlFilepath = m_carConfigFilenames.at(carName).at(ecuName);
     m_currentYAML = YAML::LoadFile(yamlFilepath);
 
-    // TODO: clear out any old widgets
     populateParamWidgets();
     populateActuatorWidgets();
-    ui->connectButton->setEnabled(false);
-    ui->disconnectButton->setEnabled(true);
+
+    uint8_t ecuAddr = 0;
+    if (m_currentYAML["protocol"] &&
+        parseProtocolNode(m_currentYAML["protocol"], ecuAddr))
+    {
+      emit connectInterface(ecuAddr);
+    }
+    else
+    {
+      QMessageBox::warning(this, "Error", "Failed parsing protocol node in config file.", QMessageBox::Ok);
+    }
   }
+}
+
+bool MainWindow::parseProtocolNode(YAML::Node protocolNode, uint8_t& ecuAddr)
+{
+  bool status = false;
+  ProtocolType protocol = ProtocolType::None;
+  std::string variant;
+  int baud;
+
+  if (protocolNode["family"])
+  {
+    const std::string familyStr = protocolNode["family"].as<std::string>();
+    if (familyStr == "KWP71")
+    {
+      protocol = ProtocolType::KWP71;
+      status = true;
+    }
+    else if (familyStr == "FIAT9141")
+    {
+      protocol = ProtocolType::FIAT9141;
+      status = true;
+    }
+    else if (familyStr == "Marelli1AF")
+    {
+      protocol = ProtocolType::Marelli1AF;
+      status = true;
+    }
+  }
+
+  if (status && protocolNode["variant"])
+  {
+    variant = protocolNode["variant"].as<std::string>();
+  }
+
+  if (status && protocolNode["baud"])
+  {
+    try
+    {
+      baud = protocolNode["baud"].as<int>();
+    }
+    catch (const YAML::Exception& e)
+    {
+      status = false;
+    }
+  }
+
+  if (status && protocolNode["address"])
+  {
+    try
+    {
+      baud = protocolNode["address"].as<int>();
+    }
+    catch (const YAML::Exception& e)
+    {
+      status = false;
+    }
+  }
+
+  return status;
 }
 
 void MainWindow::on_disconnectButton_clicked()
 {
-  // TODO: disconnect via the ECU interface
-  ui->connectButton->setEnabled(true);
-  ui->disconnectButton->setEnabled(false);
+  emit disconnectInterface();
 }
 
 QMap<int,QString> MainWindow::getEnumVals(YAML::Node node) const
@@ -344,6 +446,14 @@ void MainWindow::on_enableAllParamButton_clicked()
 void MainWindow::on_disableAllParamButton_clicked()
 {
   setParamCheckboxStates(false);
+}
+
+void MainWindow::on_tabWidget_currentChanged(int index)
+{
+  if (index != 0)
+  {
+    emit stopParameterReading();
+  }
 }
 
 void MainWindow::setParamCheckboxStates(bool checked)
