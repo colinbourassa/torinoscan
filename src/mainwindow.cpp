@@ -56,7 +56,6 @@ void MainWindow::closeEvent(QCloseEvent* event)
 
 void MainWindow::onInterfaceConnected()
 {
-  ui->connectButton->setEnabled(false);
   ui->disconnectButton->setEnabled(true);
 }
 
@@ -64,18 +63,17 @@ void MainWindow::onInterfaceConnectionError()
 {
   QMessageBox::warning(this, "Error", "Failed to connect.", QMessageBox::Ok);
   ui->connectButton->setEnabled(true);
-  ui->disconnectButton->setEnabled(false);
 }
 
 void MainWindow::onInterfaceDisconnected()
 {
   ui->connectButton->setEnabled(true);
-  ui->disconnectButton->setEnabled(false);
 }
 
 void MainWindow::onProtocolParamsNotSet()
 {
   QMessageBox::warning(this, "Error", "Protocol parameters not set.", QMessageBox::Ok);
+  ui->connectButton->setEnabled(true);
 }
 
 bool MainWindow::scanDefinitionDir(std::string& errorMsgs)
@@ -167,6 +165,14 @@ void MainWindow::on_connectButton_clicked()
       QMessageBox::warning(this, "Error", "Failed parsing protocol node in config file.", QMessageBox::Ok);
     }
   }
+
+  ui->connectButton->setEnabled(false);
+}
+
+void MainWindow::on_disconnectButton_clicked()
+{
+  ui->disconnectButton->setEnabled(false);
+  emit disconnectInterface();
 }
 
 bool MainWindow::parseProtocolNode(YAML::Node protocolNode, uint8_t& ecuAddr)
@@ -178,22 +184,8 @@ bool MainWindow::parseProtocolNode(YAML::Node protocolNode, uint8_t& ecuAddr)
 
   if (protocolNode["family"])
   {
-    const std::string familyStr = protocolNode["family"].as<std::string>();
-    if (familyStr == "KWP71")
-    {
-      protocol = ProtocolType::KWP71;
-      status = true;
-    }
-    else if (familyStr == "FIAT9141")
-    {
-      protocol = ProtocolType::FIAT9141;
-      status = true;
-    }
-    else if (familyStr == "Marelli1AF")
-    {
-      protocol = ProtocolType::Marelli1AF;
-      status = true;
-    }
+    protocol = protocolTypeFromString(protocolNode["family"].as<std::string>());
+    status = (protocol != ProtocolType::None);
   }
 
   if (status && protocolNode["variant"])
@@ -226,11 +218,6 @@ bool MainWindow::parseProtocolNode(YAML::Node protocolNode, uint8_t& ecuAddr)
   }
 
   return status;
-}
-
-void MainWindow::on_disconnectButton_clicked()
-{
-  emit disconnectInterface();
 }
 
 QMap<int,QString> MainWindow::getEnumVals(YAML::Node node) const
@@ -277,7 +264,6 @@ bool MainWindow::createWidgetForMemoryParam(YAML::Node node, ParamWidgetGroup*& 
     }
     catch (const YAML::Exception& e)
     {
-      // TODO: Add to string collection describing parse errors
       status = false;
     }
 
@@ -311,7 +297,6 @@ bool MainWindow::createWidgetForStoredValueParam(YAML::Node node, ParamWidgetGro
     }
     catch (const YAML::Exception& e)
     {
-      // TODO: Add to string collection describing parse errors
       status = false;
     }
 
@@ -349,7 +334,6 @@ bool MainWindow::createWidgetForSnapshotParam(YAML::Node node, ParamWidgetGroup*
     }
     catch (const YAML::Exception& e)
     {
-      // TODO: Add to string collection describing parse errors
       status = false;
     }
 

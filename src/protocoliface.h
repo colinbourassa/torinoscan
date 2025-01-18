@@ -4,14 +4,7 @@
 #include <QList>
 #include <iceblock/BlockExchangeProtocol.h>
 #include "paramwidgetgroup.h"
-
-enum class ProtocolType
-{
-  None,
-  KWP71,
-  FIAT9141,
-  Marelli1AF
-};
+#include "protocoltype.h"
 
 class ProtocolIface : public QObject
 {

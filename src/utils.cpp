@@ -28,6 +28,29 @@ MemoryType memTypeFromString(const std::string& s)
   return type;
 }
 
+ProtocolType protocolTypeFromString(const std::string& s)
+{
+  std::string ls = s;
+  std::transform(ls.begin(), ls.end(), ls.begin(),
+    [](unsigned char c){ return std::tolower(c); });
+  ProtocolType type = ProtocolType::None;
+
+  if (ls == "kwp71")
+  {
+    type = ProtocolType::KWP71;
+  }
+  else if (ls == "fiat9141")
+  {
+    type = ProtocolType::FIAT9141;
+  }
+  else if (ls == "marelli1af")
+  {
+    type = ProtocolType::Marelli1AF;
+  }
+
+  return type;
+}
+
 unsigned int vectorToUint(const std::vector<uint8_t>& v)
 {
   return vectorToUint(v.data(), v.size());
