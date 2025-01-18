@@ -40,6 +40,7 @@ protected:
 
 private:
   Ui::MainWindow* ui;
+  QList<ParamWidgetGroup*> m_paramWidgets;
   std::map<std::string,std::map<std::string,std::string>> m_carConfigFilenames;
   YAML::Node m_currentYAML;
   ProtocolIface m_iface;

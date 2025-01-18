@@ -27,7 +27,6 @@ void ProtocolIface::onConnectRequest(uint8_t ecuAddr)
   {
     emit protocolParamsNotSet();
   }
-
 }
 
 void ProtocolIface::onDisconnectRequest()
@@ -43,10 +42,16 @@ void ProtocolIface::onDisconnectRequest()
 
 void ProtocolIface::onStartParamRead()
 {
+  if (m_paramWidgetList)
+  {
+    m_stopParamRead = false;
+    updateParamData();
+  }
 }
 
 void ProtocolIface::onStopParamRead()
 {
+  m_stopParamRead = true;
 }
 
 void ProtocolIface::onRequestFaultCodes()
@@ -101,13 +106,19 @@ bool ProtocolIface::setProtocol(ProtocolType type, int baud, LineType initLine, 
   return status;
 }
 
-void ProtocolIface::updateParamData(const QList<ParamWidgetGroup*>& paramWidgets)
+void ProtocolIface::setParamWidgetList(const QList<ParamWidgetGroup*>& paramWidgets)
+{
+  // TODO: mutex protect access to m_paramWidgetList
+  m_paramWidgetList = &paramWidgets;
+}
+
+void ProtocolIface::updateParamData()
 {
   std::lock_guard<std::mutex> lock(m_shutdownMutex);
   std::map<unsigned int,std::vector<uint8_t>> cachedSnapshotPages;
 
-  QList<ParamWidgetGroup*>::const_iterator widget = paramWidgets.begin();
-  while (!m_shutdownFlag && (widget != paramWidgets.end()))
+  QList<ParamWidgetGroup*>::const_iterator widget = m_paramWidgetList->begin();
+  while (!m_shutdownFlag && !m_stopParamRead && (widget != m_paramWidgetList->end()))
   {
     const ParamType pType = (*widget)->paramType();
 

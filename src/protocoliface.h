@@ -14,7 +14,8 @@ public:
   ProtocolIface();
   bool setFTDIDevice(uint8_t usbBusID, uint8_t usbDeviceID);
   bool setProtocol(ProtocolType type, int baud, LineType initLine, const std::string& variant = "");
-  void updateParamData(const QList<ParamWidgetGroup*>& paramWidgets);
+  void updateParamData();
+  void setParamWidgetList(const QList<ParamWidgetGroup*>& paramWidgets);
 
 public slots:
   void onShutdownRequest();
@@ -32,6 +33,7 @@ signals:
 
 private:
   std::shared_ptr<BlockExchangeProtocol> m_iface = nullptr;
+  const QList<ParamWidgetGroup*>* m_paramWidgetList = nullptr;
   int m_baud = 0;
   std::string m_currentVariant;
   uint8_t m_ftdiUSBBusID = 0;
@@ -42,5 +44,6 @@ private:
   std::mutex m_shutdownMutex;;
   bool m_connectionActive = false;
   bool m_shutdownFlag = false;
+  std::atomic<bool> m_stopParamRead = false;
 };
 

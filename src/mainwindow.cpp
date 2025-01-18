@@ -57,6 +57,11 @@ void MainWindow::closeEvent(QCloseEvent* event)
 void MainWindow::onInterfaceConnected()
 {
   ui->disconnectButton->setEnabled(true);
+  if (ui->tabWidget->currentIndex() == 0)
+  {
+    m_iface.setParamWidgetList(m_paramWidgets);
+    emit startParameterReading();
+  }
 }
 
 void MainWindow::onInterfaceConnectionError()
@@ -370,6 +375,8 @@ void MainWindow::populateParamWidgets()
       }
     }
   }
+
+  m_paramWidgets = ui->parametersScrollArea->findChildren<ParamWidgetGroup*>();
 }
 
 void MainWindow::clearParamWidgets()
@@ -434,7 +441,11 @@ void MainWindow::on_disableAllParamButton_clicked()
 
 void MainWindow::on_tabWidget_currentChanged(int index)
 {
-  if (index != 0)
+  if (index == 0)
+  {
+    // TODO: emit startParameterReading if the interface is connected
+  }
+  else
   {
     emit stopParameterReading();
   }
@@ -447,10 +458,5 @@ void MainWindow::setParamCheckboxStates(bool checked)
   {
     widget->setChecked(checked);
   }
-}
-
-void MainWindow::updateParamData(const QList<ParamWidgetGroup*>& paramWidgets)
-{
-  m_iface.updateParamData(paramWidgets);
 }
 
