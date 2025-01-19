@@ -9,6 +9,11 @@ ProtocolIface::ProtocolIface()
 {
 }
 
+bool ProtocolIface::isConnected() const
+{
+  return m_connectionActive;
+}
+
 void ProtocolIface::onConnectRequest(uint8_t ecuAddr)
 {
   std::lock_guard<std::mutex> lock(m_connectMutex);
@@ -42,7 +47,7 @@ void ProtocolIface::onDisconnectRequest()
 
 void ProtocolIface::onStartParamRead()
 {
-  if (m_paramWidgetList)
+  if (m_connectionActive && m_paramWidgetList)
   {
     m_stopParamRead = false;
     updateParamData();
@@ -61,19 +66,26 @@ void ProtocolIface::onRequestFaultCodes()
 void ProtocolIface::onShutdownRequest()
 {
   m_shutdownFlag = true;
+
+  // Wait until updateParamData() finishes
   std::lock_guard<std::mutex> lock(m_shutdownMutex);
+
   QThread::currentThread()->quit();
 }
 
 bool ProtocolIface::setFTDIDevice(uint8_t ftdiUSBBusID, uint8_t ftdiUSBDeviceID)
 {
   bool status = false;
-  if (!m_connectionActive)
+  if (m_connectMutex.try_lock())
   {
-    m_ftdiUSBBusID = ftdiUSBBusID;
-    m_ftdiUSBDeviceID = ftdiUSBDeviceID;
-    m_ftdiDeviceSet = true;
-    status = true;
+    if (!m_connectionActive)
+    {
+      m_ftdiUSBBusID = ftdiUSBBusID;
+      m_ftdiUSBDeviceID = ftdiUSBDeviceID;
+      m_ftdiDeviceSet = true;
+      status = true;
+    }
+    m_connectMutex.unlock();
   }
   return status;
 }
@@ -81,44 +93,57 @@ bool ProtocolIface::setFTDIDevice(uint8_t ftdiUSBBusID, uint8_t ftdiUSBDeviceID)
 bool ProtocolIface::setProtocol(ProtocolType type, int baud, LineType initLine, const std::string& variant)
 {
   bool status = false;
-  if (!m_connectionActive)
+
+  if (m_connectMutex.try_lock())
   {
-    if (type == ProtocolType::KWP71)
+    if (!m_connectionActive)
     {
-      m_iface = std::make_shared<KWP71>(baud, initLine, false);
+      if (type == ProtocolType::KWP71)
+      {
+        m_iface = std::make_shared<KWP71>(baud, initLine, false);
+      }
+      else if (type == ProtocolType::FIAT9141)
+      {
+        m_iface = std::make_shared<Fiat9141>(baud, initLine, false);
+      }
+      else if (type == ProtocolType::Marelli1AF)
+      {
+        m_iface = std::make_shared<Marelli1AF>(baud, initLine, false);
+      }
+      else
+      {
+        m_iface = nullptr;
+      }
+      status = (m_iface != nullptr);
+      m_protocolParamsSet = status;
+      m_currentVariant = variant;
     }
-    else if (type == ProtocolType::FIAT9141)
-    {
-      m_iface = std::make_shared<Fiat9141>(baud, initLine, false);
-    }
-    else if (type == ProtocolType::Marelli1AF)
-    {
-      m_iface = std::make_shared<Marelli1AF>(baud, initLine, false);
-    }
-    else
-    {
-      m_iface = nullptr;
-    }
-    status = (m_iface != nullptr);
-    m_protocolParamsSet = status;
-    m_currentVariant = variant;
+    m_connectMutex.unlock();
   }
   return status;
 }
 
 void ProtocolIface::setParamWidgetList(const QList<ParamWidgetGroup*>& paramWidgets)
 {
-  // TODO: mutex protect access to m_paramWidgetList
-  m_paramWidgetList = &paramWidgets;
+  if (m_paramWidgetMutex.try_lock())
+  {
+    m_paramWidgetList = &paramWidgets;
+    m_paramWidgetMutex.unlock();
+  }
 }
 
 void ProtocolIface::updateParamData()
 {
-  std::lock_guard<std::mutex> lock(m_shutdownMutex);
-  std::map<unsigned int,std::vector<uint8_t>> cachedSnapshotPages;
+  std::lock_guard<std::mutex> shutdownLock(m_shutdownMutex);
+  std::lock_guard<std::mutex> paramWidgetLock(m_paramWidgetMutex);
 
+  std::map<unsigned int,std::vector<uint8_t>> cachedSnapshotPages;
   QList<ParamWidgetGroup*>::const_iterator widget = m_paramWidgetList->begin();
-  while (!m_shutdownFlag && !m_stopParamRead && (widget != m_paramWidgetList->end()))
+
+  while (!m_shutdownFlag &&
+         !m_stopParamRead &&
+         (widget != m_paramWidgetList->end()) &&
+         ((*widget)->isChecked()))
   {
     const ParamType pType = (*widget)->paramType();
 

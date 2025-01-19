@@ -417,7 +417,6 @@ void MainWindow::populateActuatorWidgets()
       }
     }
   }
-
 }
 
 void MainWindow::clearActuatorWidgets()
@@ -441,9 +440,9 @@ void MainWindow::on_disableAllParamButton_clicked()
 
 void MainWindow::on_tabWidget_currentChanged(int index)
 {
-  if (index == 0)
+  if ((index == 0) && m_iface.isConnected())
   {
-    // TODO: emit startParameterReading if the interface is connected
+    emit startParameterReading();
   }
   else
   {

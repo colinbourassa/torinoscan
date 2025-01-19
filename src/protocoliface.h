@@ -16,6 +16,7 @@ public:
   bool setProtocol(ProtocolType type, int baud, LineType initLine, const std::string& variant = "");
   void updateParamData();
   void setParamWidgetList(const QList<ParamWidgetGroup*>& paramWidgets);
+  bool isConnected() const;
 
 public slots:
   void onShutdownRequest();
@@ -41,7 +42,8 @@ private:
   bool m_protocolParamsSet = false;
   bool m_ftdiDeviceSet = false;
   std::mutex m_connectMutex;
-  std::mutex m_shutdownMutex;;
+  std::mutex m_shutdownMutex;
+  std::mutex m_paramWidgetMutex;
   bool m_connectionActive = false;
   bool m_shutdownFlag = false;
   std::atomic<bool> m_stopParamRead = false;
