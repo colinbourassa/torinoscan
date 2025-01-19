@@ -57,6 +57,7 @@ void MainWindow::closeEvent(QCloseEvent* event)
 void MainWindow::onInterfaceConnected()
 {
   ui->disconnectButton->setEnabled(true);
+  ui->statusLabel->setText("Status: connected");
   if (ui->tabWidget->currentIndex() == 0)
   {
     m_iface.setParamWidgetList(m_paramWidgets);
@@ -66,6 +67,7 @@ void MainWindow::onInterfaceConnected()
 
 void MainWindow::onInterfaceConnectionError()
 {
+  ui->statusLabel->setText("Status: not connected");
   QMessageBox::warning(this, "Error", "Failed to connect.", QMessageBox::Ok);
   ui->connectButton->setEnabled(true);
 }
@@ -73,12 +75,14 @@ void MainWindow::onInterfaceConnectionError()
 void MainWindow::onInterfaceDisconnected()
 {
   ui->connectButton->setEnabled(true);
+  ui->statusLabel->setText("Status: not connected");
 }
 
 void MainWindow::onProtocolParamsNotSet()
 {
   QMessageBox::warning(this, "Error", "Protocol parameters not set.", QMessageBox::Ok);
   ui->connectButton->setEnabled(true);
+  ui->statusLabel->setText("Status: not connected");
 }
 
 bool MainWindow::scanDefinitionDir(std::string& errorMsgs)
@@ -163,6 +167,7 @@ void MainWindow::on_connectButton_clicked()
     if (m_currentYAML["protocol"] &&
         parseProtocolNode(m_currentYAML["protocol"], ecuAddr))
     {
+      ui->statusLabel->setText("Status: connecting...");
       emit connectInterface(ecuAddr);
     }
     else
