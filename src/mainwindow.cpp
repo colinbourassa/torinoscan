@@ -22,6 +22,7 @@ MainWindow::MainWindow(QWidget *parent) :
   std::string scanErrors;
   scanDefinitionDir(scanErrors);
   populateCarPickList();
+  refreshFTDIDeviceList();
 }
 
 MainWindow::~MainWindow()
@@ -150,6 +151,18 @@ void MainWindow::on_carComboBox_currentTextChanged(const QString& arg1)
   }
 }
 
+bool MainWindow::setFTDIDeviceInfo()
+{
+  const int index = ui->ftdiDeviceComboBox->currentIndex();
+  if (index >= 0)
+  {
+    const FtdiDeviceInfo& device = m_ftdiDeviceInfo.at(index);
+    m_iface.setFTDIDevice(device.busNumber, device.deviceAddress);
+  }
+
+  return (index >= 0);
+}
+
 void MainWindow::on_connectButton_clicked()
 {
   const std::string carName = ui->carComboBox->currentText().toStdString();
@@ -157,6 +170,8 @@ void MainWindow::on_connectButton_clicked()
 
   if (m_carConfigFilenames.count(carName) && m_carConfigFilenames.at(carName).count(ecuName))
   {
+    setFTDIDeviceInfo();
+
     const std::string yamlFilepath = m_carConfigFilenames.at(carName).at(ecuName);
     m_currentYAML = YAML::LoadFile(yamlFilepath);
 
@@ -169,14 +184,13 @@ void MainWindow::on_connectButton_clicked()
     {
       ui->statusLabel->setText("Status: connecting...");
       emit connectInterface(ecuAddr);
+      ui->connectButton->setEnabled(false);
     }
     else
     {
       QMessageBox::warning(this, "Error", "Failed parsing protocol node in config file.", QMessageBox::Ok);
     }
   }
-
-  ui->connectButton->setEnabled(false);
 }
 
 void MainWindow::on_disconnectButton_clicked()
@@ -462,5 +476,25 @@ void MainWindow::setParamCheckboxStates(bool checked)
   {
     widget->setChecked(checked);
   }
+}
+
+void MainWindow::refreshFTDIDeviceList()
+{
+  m_ftdiDeviceInfo = enumerateFtdiDevices();
+  ui->ftdiDeviceComboBox->clear();
+  for (const FtdiDeviceInfo device : m_ftdiDeviceInfo)
+  {
+    const QString desc = QString("(%1:%2) %3 - %4")
+      .arg(device.busNumber, 3, 10, QChar('0'))
+      .arg(device.deviceAddress, 3, 10, QChar('0'))
+      .arg(QString::fromStdString(device.manufacturer))
+      .arg(QString::fromStdString(device.description));
+    ui->ftdiDeviceComboBox->addItem(desc);
+  }
+}
+
+void MainWindow::on_ftdiDeviceRefreshButton_clicked()
+{
+  refreshFTDIDeviceList();
 }
 

@@ -14,7 +14,14 @@
    <string>TorinoScan</string>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <layout class="QGridLayout" name="gridLayout" columnstretch="0,1,1,0,0">
+   <layout class="QGridLayout" name="gridLayout">
+    <item row="0" column="3" colspan="2">
+     <widget class="QPushButton" name="setDefinitionButton">
+      <property name="text">
+       <string>Set definition</string>
+      </property>
+     </widget>
+    </item>
     <item row="3" column="0" colspan="5">
      <widget class="QTabWidget" name="tabWidget">
       <property name="currentIndex">
@@ -63,7 +70,7 @@
              <x>0</x>
              <y>0</y>
              <width>700</width>
-             <height>209</height>
+             <height>203</height>
             </rect>
            </property>
            <layout class="QGridLayout" name="parametersGrid"/>
@@ -108,7 +115,7 @@
              <x>0</x>
              <y>0</y>
              <width>700</width>
-             <height>209</height>
+             <height>203</height>
             </rect>
            </property>
            <layout class="QGridLayout" name="faultCodesGrid"/>
@@ -133,7 +140,7 @@
              <x>0</x>
              <y>0</y>
              <width>700</width>
-             <height>241</height>
+             <height>235</height>
             </rect>
            </property>
            <layout class="QGridLayout" name="actuatorsGrid"/>
@@ -142,46 +149,6 @@
         </item>
        </layout>
       </widget>
-     </widget>
-    </item>
-    <item row="0" column="0">
-     <widget class="QLabel" name="ecuDefinitionLabel">
-      <property name="text">
-       <string>ECU definition:</string>
-      </property>
-     </widget>
-    </item>
-    <item row="1" column="0">
-     <widget class="QLabel" name="ftdiDevicesLabel">
-      <property name="text">
-       <string>FTDI devices:</string>
-      </property>
-     </widget>
-    </item>
-    <item row="0" column="1">
-     <widget class="QComboBox" name="carComboBox"/>
-    </item>
-    <item row="1" column="1" colspan="2">
-     <widget class="QComboBox" name="ftdiDeviceComboBox"/>
-    </item>
-    <item row="0" column="2">
-     <widget class="QComboBox" name="ecuComboBox"/>
-    </item>
-    <item row="1" column="4">
-     <widget class="QPushButton" name="disconnectButton">
-      <property name="enabled">
-       <bool>false</bool>
-      </property>
-      <property name="text">
-       <string>Disconnect</string>
-      </property>
-     </widget>
-    </item>
-    <item row="1" column="3">
-     <widget class="QPushButton" name="connectButton">
-      <property name="text">
-       <string>Connect</string>
-      </property>
      </widget>
     </item>
     <item row="2" column="3" colspan="2">
@@ -194,10 +161,56 @@
       </property>
      </widget>
     </item>
-    <item row="0" column="3" colspan="2">
-     <widget class="QPushButton" name="pushButton">
+    <item row="0" column="0">
+     <widget class="QLabel" name="ecuDefinitionLabel">
       <property name="text">
-       <string>Set definition</string>
+       <string>ECU definition:</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+      </property>
+     </widget>
+    </item>
+    <item row="1" column="0">
+     <widget class="QLabel" name="ftdiDevicesLabel">
+      <property name="text">
+       <string>FTDI devices:</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+      </property>
+     </widget>
+    </item>
+    <item row="0" column="2">
+     <widget class="QComboBox" name="ecuComboBox"/>
+    </item>
+    <item row="0" column="1">
+     <widget class="QComboBox" name="carComboBox"/>
+    </item>
+    <item row="1" column="1" colspan="2">
+     <widget class="QComboBox" name="ftdiDeviceComboBox"/>
+    </item>
+    <item row="2" column="1">
+     <widget class="QPushButton" name="connectButton">
+      <property name="text">
+       <string>Connect</string>
+      </property>
+     </widget>
+    </item>
+    <item row="2" column="2">
+     <widget class="QPushButton" name="disconnectButton">
+      <property name="enabled">
+       <bool>false</bool>
+      </property>
+      <property name="text">
+       <string>Disconnect</string>
+      </property>
+     </widget>
+    </item>
+    <item row="1" column="3" colspan="2">
+     <widget class="QPushButton" name="ftdiDeviceRefreshButton">
+      <property name="text">
+       <string>Refresh device list</string>
       </property>
      </widget>
     </item>

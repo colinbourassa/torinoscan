@@ -9,6 +9,7 @@
 #include <yaml-cpp/yaml.h>
 #include "protocoliface.h"
 #include "paramwidgetgroup.h"
+#include <iceblock/ftdi_enumerator.h>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -29,6 +30,7 @@ private slots:
   void on_enableAllParamButton_clicked();
   void on_disableAllParamButton_clicked();
   void on_tabWidget_currentChanged(int index);
+  void on_ftdiDeviceRefreshButton_clicked();
 
   void onInterfaceConnected();
   void onInterfaceConnectionError();
@@ -45,6 +47,7 @@ private:
   YAML::Node m_currentYAML;
   ProtocolIface m_iface;
   QThread m_ifaceThread;
+  std::vector<FtdiDeviceInfo> m_ftdiDeviceInfo;
 
   void setupThreadsAndSignals();
   QMap<int,QString> getEnumVals(YAML::Node node) const;
@@ -60,6 +63,8 @@ private:
   void populateActuatorWidgets();
   void clearActuatorWidgets();
   void updateParamData(const QList<ParamWidgetGroup*>& paramWidgets);
+  bool setFTDIDeviceInfo();
+  void refreshFTDIDeviceList();
 
 signals:
   void connectInterface(uint8_t ecuAddr);
