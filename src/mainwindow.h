@@ -31,11 +31,11 @@ private slots:
   void on_disableAllParamButton_clicked();
   void on_tabWidget_currentChanged(int index);
   void on_ftdiDeviceRefreshButton_clicked();
-
   void onInterfaceConnected();
   void onInterfaceConnectionError();
   void onInterfaceDisconnected();
   void onProtocolParamsNotSet();
+  void on_setDefinitionButton_clicked();
 
 protected:
   void closeEvent(QCloseEvent* event) override;
@@ -48,13 +48,14 @@ private:
   ProtocolIface m_iface;
   QThread m_ifaceThread;
   std::vector<FtdiDeviceInfo> m_ftdiDeviceInfo;
+  uint8_t m_ecuAddr;
 
   void setupThreadsAndSignals();
   QMap<int,QString> getEnumVals(YAML::Node node) const;
   void setParamCheckboxStates(bool checked);
   bool scanDefinitionDir(std::string& errorMsgs);
   void populateCarPickList();
-  bool parseProtocolNode(YAML::Node protocolNode, uint8_t& ecuAddr);
+  bool parseProtocolNode(YAML::Node protocolNode);//, uint8_t& ecuAddr);
   bool createWidgetForMemoryParam(YAML::Node node, ParamWidgetGroup*& widget);
   bool createWidgetForStoredValueParam(YAML::Node node, ParamWidgetGroup*& widget);
   bool createWidgetForSnapshotParam(YAML::Node node, ParamWidgetGroup*& widget);

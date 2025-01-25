@@ -136,21 +136,6 @@ void MainWindow::populateCarPickList()
   }
 }
 
-void MainWindow::on_carComboBox_currentTextChanged(const QString& arg1)
-{
-  ui->ecuComboBox->clear();
-  const std::string carName = arg1.toStdString();
-
-  if (m_carConfigFilenames.count(carName))
-  {
-    for (auto it = m_carConfigFilenames.at(carName).begin();
-         it != m_carConfigFilenames.at(carName).end(); it++)
-    {
-      ui->ecuComboBox->addItem(QString::fromStdString(it->first));
-    }
-  }
-}
-
 bool MainWindow::setFTDIDeviceInfo()
 {
   const int index = ui->ftdiDeviceComboBox->currentIndex();
@@ -163,48 +148,13 @@ bool MainWindow::setFTDIDeviceInfo()
   return (index >= 0);
 }
 
-void MainWindow::on_connectButton_clicked()
-{
-  const std::string carName = ui->carComboBox->currentText().toStdString();
-  const std::string ecuName = ui->ecuComboBox->currentText().toStdString();
-
-  if (m_carConfigFilenames.count(carName) && m_carConfigFilenames.at(carName).count(ecuName))
-  {
-    setFTDIDeviceInfo();
-
-    const std::string yamlFilepath = m_carConfigFilenames.at(carName).at(ecuName);
-    m_currentYAML = YAML::LoadFile(yamlFilepath);
-
-    populateParamWidgets();
-    populateActuatorWidgets();
-
-    uint8_t ecuAddr = 0;
-    if (m_currentYAML["protocol"] &&
-        parseProtocolNode(m_currentYAML["protocol"], ecuAddr))
-    {
-      ui->statusLabel->setText("Status: connecting...");
-      emit connectInterface(ecuAddr);
-      ui->connectButton->setEnabled(false);
-    }
-    else
-    {
-      QMessageBox::warning(this, "Error", "Failed parsing protocol node in config file.", QMessageBox::Ok);
-    }
-  }
-}
-
-void MainWindow::on_disconnectButton_clicked()
-{
-  ui->disconnectButton->setEnabled(false);
-  emit disconnectInterface();
-}
-
-bool MainWindow::parseProtocolNode(YAML::Node protocolNode, uint8_t& ecuAddr)
+bool MainWindow::parseProtocolNode(YAML::Node protocolNode)
 {
   bool status = false;
   ProtocolType protocol = ProtocolType::None;
+  LineType initLine = LineType::None;
   std::string variant;
-  int baud;
+  int baud = 0;
 
   if (protocolNode["family"])
   {
@@ -233,12 +183,24 @@ bool MainWindow::parseProtocolNode(YAML::Node protocolNode, uint8_t& ecuAddr)
   {
     try
     {
-      baud = protocolNode["address"].as<int>();
+      m_ecuAddr = protocolNode["address"].as<int>();
     }
     catch (const YAML::Exception& e)
     {
       status = false;
     }
+  }
+
+  if (status)
+  {
+    if (!m_iface.setProtocol(protocol, baud, initLine, variant))
+    {
+      QMessageBox::warning(this, "Error", "Failed setting up protocol interface.", QMessageBox::Ok);
+    }
+  }
+  else
+  {
+    QMessageBox::warning(this, "Error", "Failed parsing protocol node in config file.", QMessageBox::Ok);
   }
 
   return status;
@@ -447,28 +409,6 @@ void MainWindow::clearActuatorWidgets()
   }
 }
 
-void MainWindow::on_enableAllParamButton_clicked()
-{
-  setParamCheckboxStates(true);
-}
-
-void MainWindow::on_disableAllParamButton_clicked()
-{
-  setParamCheckboxStates(false);
-}
-
-void MainWindow::on_tabWidget_currentChanged(int index)
-{
-  if ((index == 0) && m_iface.isConnected())
-  {
-    emit startParameterReading();
-  }
-  else
-  {
-    emit stopParameterReading();
-  }
-}
-
 void MainWindow::setParamCheckboxStates(bool checked)
 {
   QList<ParamWidgetGroup*> childWidgets = ui->parametersScrollArea->findChildren<ParamWidgetGroup*>();
@@ -491,6 +431,8 @@ void MainWindow::refreshFTDIDeviceList()
       .arg(QString::fromStdString(device.description));
     ui->ftdiDeviceComboBox->addItem(desc);
   }
+
+  ui->connectButton->setEnabled(ui->ftdiDeviceComboBox->count() > 0);
 }
 
 void MainWindow::on_ftdiDeviceRefreshButton_clicked()
@@ -498,3 +440,77 @@ void MainWindow::on_ftdiDeviceRefreshButton_clicked()
   refreshFTDIDeviceList();
 }
 
+void MainWindow::on_setDefinitionButton_clicked()
+{
+  const std::string carName = ui->carComboBox->currentText().toStdString();
+  const std::string ecuName = ui->ecuComboBox->currentText().toStdString();
+
+  if (m_carConfigFilenames.count(carName) && m_carConfigFilenames.at(carName).count(ecuName))
+  {
+    const std::string yamlFilepath = m_carConfigFilenames.at(carName).at(ecuName);
+    m_currentYAML = YAML::LoadFile(yamlFilepath);
+
+    populateParamWidgets();
+    populateActuatorWidgets();
+
+    if (m_currentYAML["protocol"])
+    {
+      parseProtocolNode(m_currentYAML["protocol"]);
+    }
+    else
+    {
+      QMessageBox::warning(this, "Error", "Definition file does not contain valid protocol information.", QMessageBox::Ok);
+    }
+  }
+}
+
+void MainWindow::on_enableAllParamButton_clicked()
+{
+  setParamCheckboxStates(true);
+}
+
+void MainWindow::on_disableAllParamButton_clicked()
+{
+  setParamCheckboxStates(false);
+}
+
+void MainWindow::on_tabWidget_currentChanged(int index)
+{
+  if ((index == 0) && m_iface.isConnected())
+  {
+    emit startParameterReading();
+  }
+  else
+  {
+    emit stopParameterReading();
+  }
+}
+
+void MainWindow::on_carComboBox_currentTextChanged(const QString& arg1)
+{
+  ui->ecuComboBox->clear();
+  const std::string carName = arg1.toStdString();
+
+  if (m_carConfigFilenames.count(carName))
+  {
+    for (auto it = m_carConfigFilenames.at(carName).begin();
+         it != m_carConfigFilenames.at(carName).end(); it++)
+    {
+      ui->ecuComboBox->addItem(QString::fromStdString(it->first));
+    }
+  }
+}
+
+void MainWindow::on_connectButton_clicked()
+{
+  setFTDIDeviceInfo();
+  ui->statusLabel->setText("Status: connecting...");
+  emit connectInterface(m_ecuAddr);
+  ui->connectButton->setEnabled(false);
+}
+
+void MainWindow::on_disconnectButton_clicked()
+{
+  ui->disconnectButton->setEnabled(false);
+  emit disconnectInterface();
+}
