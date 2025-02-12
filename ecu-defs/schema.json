@@ -136,7 +136,7 @@
             "oneOf": [
               {
                 "required": ["address","numbytes"],
-                "description": "Used for memory locations (RAM/ROM)"
+                "description": "Used for memory locations (RAM/ROM)."
               },
               {
                 "required": ["id"],
@@ -144,7 +144,7 @@
               },
               {
                 "required": ["snapshot","offset","numbytes"],
-                "description": "Used for a location within snapshot data"
+                "description": "Used for a location within snapshot data."
               }
             ]
           }
@@ -157,16 +157,25 @@
         "type": "object",
         "properties": {
           "name": {
-            "type": "string"
+            "type": "string",
+            "description": "Description of the fault."
           },
           "address": {
-            "type": "string",
-            "$comment": "TODO: Determine the combination of property fields that will be required to uniquely identify a stored fault code. It may be a single scalar identifying the fault, or it may be an address and bitmask."
+            "type": "number",
+            "description": "This may be a memory address in the case of systems that store fault codes in the normally accessible memory map."
+          },
+          "numbytes": {
+            "type": "number"
+          },
+          "mask": {
+            "type": "number",
+            "description": "Bitmask that is applied to the raw value (via a bitwise AND) before any further processing is done."
           },
           "comment": {
             "type": "string"
           }
-        }
+        },
+        "additionalProperties": false
       }
     },
     "actuators": {
