@@ -158,8 +158,8 @@ parameters:
     comment: TODO - address/id was originally given as 0x12 0x13
   - name: Pump relay control
     enumvals:
-      '0': Relay OFF
-      '1': Relay ON
+      '0x00000000': Relay OFF
+      '0x01000000': Relay ON
     id: 0x14
   - name: Effective torque Motronic (Nm)
     decimals: 0
@@ -167,224 +167,159 @@ parameters:
     lsb: 1
     offset: 0
     comment: 16-bit value
-  - name: THRESHOLDS FOR SURE MINIMUM SHIFT TO NEUTRAL
-    decimals: 0
-    address: 0x01
-    numbytes: 1
-    lsb: 0
-    offset: 0
-  - name: THRESHOLDS FOR SURE MINIMUM SHIFT TO FIRST SPEED
-    decimals: 0
-    address: 0x01
-    numbytes: 1
-    lsb: 0
-    offset: 0
-  - name: THRESHOLD FOR SURE MAXIMUM SHIFT TO SECOND SPEED
-    decimals: 0
-    address: 0x01
-    numbytes: 1
-    lsb: 0
-    offset: 0
-  - name: THRESHOLDS FOR SURE MAXIMUM SHIFT TO THIRD SPEED
-    decimals: 0
-    address: 0x01
-    numbytes: 1
-    lsb: 0
-    offset: 0
-  - name: THRESHOLDS FOR SURE MAXIMUM SHIFT TO FOURTH SPEED
-    decimals: 0
-    address: 0x01
-    numbytes: 1
-    lsb: 0
-    offset: 0
-  - name: THRESHOLDS FOR SURE MAXIMUM SHIFT TO FIFTH SPEED
-    decimals: 0
-    address: 0x01
-    numbytes: 1
-    lsb: 0
-    offset: 0
-  - name: THRESHOLDS FOR SURE MAXIMUM SHIFT TO SIXTH SPEED
-    decimals: 0
-    address: 0x01
-    numbytes: 1
-    lsb: 0
-    offset: 0
-  - name: THRESHOLDS FOR SURE MINIMUM SHIFT TO REVERSE
-    decimals: 0
-    address: 0x01
-    numbytes: 1
-    lsb: 0
-    offset: 0
-  - name: THRESHOLDS FOR SURE MAXIMUM SHIFT TO NEUTRAL
-    decimals: 0
+  - name: Thresholds for sure minimum shift to neutral
+    snapshot: 1
+    address: 0x00
+    numbytes: 2
+  - name: Thresholds for sure minimum shift to first
+    snapshot: 1
     address: 0x02
-    numbytes: 1
-    lsb: 0
-    offset: 0
-  - name: THRESHOLDS FOR SURE MAXIMUM SHIFT TO FIRST SPEED
-    decimals: 0
+    numbytes: 2
+  - name: Thresholds for sure minimum shift to second
+    snapshot: 1
+    address: 0x04
+    numbytes: 2
+  - name: Thresholds for sure minimum shift to third
+    snapshot: 1
+    address: 0x06
+    numbytes: 2
+  - name: Thresholds for sure minimum shift to fourth
+    snapshot: 1
+    address: 0x08
+    numbytes: 2
+  - name: Thresholds for sure minimum shift to fifth
+    snapshot: 1
+    address: 0x0A
+    numbytes: 2
+  - name: Thresholds for sure minimum shift to sixth
+    snapshot: 1
+    address: 0x0C
+    numbytes: 2
+  - name: Thresholds for sure minimum shift to reverse
+    snapshot: 1
+    address: 0x0E
+    numbytes: 2
+  - name: Thresholds for sure maximum shift to neutral
+    snapshot: 2
+    address: 0x00
+    numbytes: 2
+  - name: Thresholds for sure maximum shift to first
+    snapshot: 2
     address: 0x02
-    numbytes: 1
-    lsb: 0
-    offset: 0
-  - name: THRESHOLDS FOR SURE MAXIMUM SHIFT TO SECOND SPEED
-    decimals: 0
+    numbytes: 2
+  - name: Thresholds for sure maximum shift to second
+    snapshot: 2
+    address: 0x04
+    numbytes: 2
+  - name: Thresholds for sure maximum shift to third
+    snapshot: 2
+    address: 0x06
+    numbytes: 2
+  - name: Thresholds for sure maximum shift to fourth
+    snapshot: 2
+    address: 0x08
+    numbytes: 2
+  - name: Thresholds for sure maximum shift to fifth
+    snapshot: 2
+    address: 0x0A
+    numbytes: 2
+  - name: Thresholds for sure maximum shift to sixth
+    snapshot: 2
+    address: 0x0C
+    numbytes: 2
+  - name: Thresholds for sure maximum shift to reverse
+    snapshot: 2
+    address: 0x0E
+    numbytes: 2
+  - name: Thresholds for minimum sure neutral selection
+    snapshot: 3
+    address: 0x00
+    numbytes: 2
+  - name: Thresholds for minimum sure first gear selection
+    snapshot: 3
     address: 0x02
-    numbytes: 1
-    lsb: 0
-    offset: 0
-  - name: THRESHOLDS FOR SURE MAXIMUM SHIFT TO THIRD SPEED
-    decimals: 0
+    numbytes: 2
+  - name: Thresholds for minimum sure second gear selection
+    snapshot: 3
+    address: 0x04
+    numbytes: 2
+  - name: Thresholds for minimum sure third gear selection
+    snapshot: 3
+    address: 0x06
+    numbytes: 2
+  - name: Thresholds for minimum sure fourth gear selection
+    snapshot: 3
+    address: 0x08
+    numbytes: 2
+  - name: Thresholds for minimum sure fifth gear selection
+    snapshot: 3
+    address: 0x0A
+    numbytes: 2
+  - name: Thresholds for minimum sure sixth gear selection
+    snapshot: 3
+    address: 0x0C
+    numbytes: 2
+  - name: Thresholds for minimum sure reverse gear selection
+    snapshot: 3
+    address: 0x0E
+    numbytes: 2
+  - name: Thresholds for maximum sure neutral selection
+    snapshot: 4
+    address: 0x00
+    numbytes: 2
+  - name: Thresholds for maximum sure first gear selection
+    snapshot: 4
     address: 0x02
-    numbytes: 1
-    lsb: 0
-    offset: 0
-  - name: THRESHOLDS FOR SURE MAXIMUM SHIFT TO FOURTH SPEED
-    decimals: 0
-    address: 0x02
-    numbytes: 1
-    lsb: 0
-    offset: 0
-  - name: THRESHOLDS FOR SURE MAXIMUM SHIFT TO FIFTH SPEED
-    decimals: 0
-    address: 0x02
-    numbytes: 1
-    lsb: 0
-    offset: 0
-  - name: THRESHOLDS FOR SURE MAXIMUM SHIFT TO SIXTH SPEED
-    decimals: 0
-    address: 0x02
-    numbytes: 1
-    lsb: 0
-    offset: 0
-  - name: THRESHOLDS FOR SURE MAXIMUM SHIFT TO REVERSE
-    decimals: 0
-    address: 0x02
-    numbytes: 1
-    lsb: 0
-    offset: 0
-  - name: THRESHOLDS FOR MINIMUM SURE NEUTRAL SELECTION
-    decimals: 0
-    address: 0x03
-    numbytes: 1
-    lsb: 0
-    offset: 0
-  - name: THRESHOLDS FOR MINIMUM SURE FIRST SPEED SELECTION
-    decimals: 0
-    address: 0x03
-    numbytes: 1
-    lsb: 0
-    offset: 0
-  - name: THRESHOLDS FOR MINIMUM SURE SECOND SPEED SELECTION
-    decimals: 0
-    address: 0x03
-    numbytes: 1
-    lsb: 0
-    offset: 0
-  - name: THRESHOLDS FOR MINIMUM SURE THIRD SPEED SELECTION
-    decimals: 0
-    address: 0x03
-    numbytes: 1
-    lsb: 0
-    offset: 0
-  - name: THRESHOLDS FOR MINIMUM SURE FOURTH SPEED SELECTION
-    decimals: 0
-    address: 0x03
-    numbytes: 1
-    lsb: 0
-    offset: 0
-  - name: THRESHOLDS FOR MINIMUM SURE FIFTH SPEED SELECTION
-    decimals: 0
-    address: 0x03
-    numbytes: 1
-    lsb: 0
-    offset: 0
-  - name: THRESHOLDS FOR MINIMUM SURE SIXTH SPEED SELECTION
-    decimals: 0
-    address: 0x03
-    numbytes: 1
-    lsb: 0
-    offset: 0
-  - name: THRESHOLDS FOR MINIMUM SURE REVERSE GEAR SELECTION
-    decimals: 0
-    address: 0x03
-    numbytes: 1
-    lsb: 0
-    offset: 0
-  - name: THRESHOLDS FOR MAX. SURE NEUTRAL SELECTION
-    decimals: 0
+    numbytes: 2
+  - name: Thresholds for maximum sure second gear selection
+    snapshot: 4
     address: 0x04
-    numbytes: 1
-    lsb: 0
-    offset: 0
-  - name: THRESHOLDS FOR MAX. SURE FIRST GEAR SELECTION
-    decimals: 0
-    address: 0x04
-    numbytes: 1
-    lsb: 0
-    offset: 0
-  - name: THRESHOLDS FOR MAX. SURE SECOND GEAR SELECTION
-    decimals: 0
-    address: 0x04
-    numbytes: 1
-    lsb: 0
-    offset: 0
-  - name: THRESHOLDS FOR MAX. SURE THIRD GEAR SELECTION
-    decimals: 0
-    address: 0x04
-    numbytes: 1
-    lsb: 0
-    offset: 0
-  - name: THRESHOLDS FOR MAX. SURE FOURTH GEAR SELECTION
-    decimals: 0
-    address: 0x04
-    numbytes: 1
-    lsb: 0
-    offset: 0
-  - name: THRESHOLDS FOR MAX. SURE FIFTH GEAR SELECTION
-    decimals: 0
-    address: 0x04
-    numbytes: 1
-    lsb: 0
-    offset: 0
-  - name: THRESHOLDS FOR MAX. SURE SIXTH GEAR SELECTION
-    decimals: 0
-    address: 0x04
-    numbytes: 1
-    lsb: 0
-    offset: 0
-  - name: THRESHOLDS FOR MAX. SURE REVERSE GEAR SELECTION
-    decimals: 0
-    address: 0x04
-    numbytes: 1
-    lsb: 0
-    offset: 0
-  - name: SELF-CALIBRATED CLOSED CLUTCH POSITION
+    numbytes: 2
+  - name: Thresholds for maximum sure third gear selection
+    snapshot: 4
+    address: 0x06
+    numbytes: 2
+  - name: Thresholds for maximum sure fourth gear selection
+    snapshot: 4
+    address: 0x08
+    numbytes: 2
+  - name: Thresholds for maximum sure fifth gear selection
+    snapshot: 4
+    address: 0x0A
+    numbytes: 2
+  - name: Thresholds for maximum sure sixth gear selection
+    snapshot: 4
+    address: 0x0C
+    numbytes: 2
+  - name: Thresholds for maximum sure reverse gear selection
+    snapshot: 4
+    address: 0x0E
+    numbytes: 2
+  - name: Self-calibrated closed clutch position (mm)
     decimals: 2
-    address: 0x16
-    numbytes: 1
-    lsb: 0
-    offset: 0
-  - name: P.I.. DISTANCE POSITION - CLOSED SELF-CALIBRATED
+    id: 0x16
+    numbytes: 2
+    lsb: 0.0355
+    offset: -2.70
+  - name: P.I. distance position - closed self-calibrated (mm)
     decimals: 2
     address: 0x17
-    numbytes: 1
-    lsb: 0
-    offset: 0
-  - name: SELF-CALIBRATED MIN. ACCELERATOR POSITION
+    numbytes: 2
+    lsb: 0.0355
+    offset: -2.70
+  - name: Self-calibrated min. accelerator position (mm)
     decimals: 2
     address: 0x18
-    numbytes: 1
-    lsb: 0
-    offset: 0
-  - name: >-
-      CLOSED POTENT.CURRENT AT SYSTEM CENTRE, SELF-CALIBRATED CLUTCH SOLENOID
-      VALVE
+    numbytes: 2
+    lsb: 0.105367
+    offset: -5.37
+  - name: Closed potent. current at system center, self-calibrated clutch solenoid valve (A)
     decimals: 2
     address: 0x19
-    numbytes: 1
-    lsb: 0
+    numbytes: 2
+    lsb: 0.007839
     offset: 0
+
   - name: WIDE THRESHOLDS FOR MIN. NEUTRAL SELECTION
     decimals: 0
     address: 0x07
