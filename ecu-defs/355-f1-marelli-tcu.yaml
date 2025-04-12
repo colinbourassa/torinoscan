@@ -11,7 +11,7 @@ protocol:
     bytes; (b) snapshots contain 16 bytes rather than 10. TODO: Confirm which
     parameters require RAM read operations, and which 'value read' operations.
 parameters:
-  - name: Engagement potentiometer travel
+  - name: Engagement potentiometer travel (mm)
     decimals: 2
     id: 0x01
     lsb: 0.03
@@ -319,169 +319,109 @@ parameters:
     numbytes: 2
     lsb: 0.007839
     offset: 0
-
-  - name: WIDE THRESHOLDS FOR MIN. NEUTRAL SELECTION
-    decimals: 0
-    address: 0x07
-    numbytes: 1
-    lsb: 0
-    offset: 0
-  - name: WIDE THRESHOLDS FOR MIN. FIRST GEAR SELECTION
-    decimals: 0
-    address: 0x07
-    numbytes: 1
-    lsb: 0
-    offset: 0
-  - name: WIDE THRESHOLDS FOR MIN. SECOND GEAR SELECTION
-    decimals: 0
-    address: 0x07
-    numbytes: 1
-    lsb: 0
-    offset: 0
-  - name: WIDE THRESHOLDS FOR MIN. THIRD GEAR SELECTION
-    decimals: 0
-    address: 0x07
-    numbytes: 1
-    lsb: 0
-    offset: 0
-  - name: WIDE THRESHOLDS FOR MIN. FOURTH GEAR SELECTION
-    decimals: 0
-    address: 0x07
-    numbytes: 1
-    lsb: 0
-    offset: 0
-  - name: WIDE THRESHOLDS FOR MIN. FIFTH GEAR SELECTION
-    decimals: 0
-    address: 0x07
-    numbytes: 1
-    lsb: 0
-    offset: 0
-  - name: WIDE THRESHOLDS FOR MIN. SIXTH GEAR SELECTION
-    decimals: 0
-    address: 0x07
-    numbytes: 1
-    lsb: 0
-    offset: 0
-  - name: WIDE THRESHOLDS FOR MIN. REVERSE GEAR SELECTION
-    decimals: 0
-    address: 0x07
-    numbytes: 1
-    lsb: 0
-    offset: 0
-  - name: WIDE THRESHOLDS FOR MAX. NEUTRAL SELECTION
-    decimals: 0
+  - name: Wide thresholds for min. neutral selection
+    snapshot: 7
+    address: 0x00
+    numbytes: 2
+  - name: Wide thresholds for min. first gear selection
+    snapshot: 7
+    address: 0x02
+    numbytes: 2
+  - name: Wide thresholds for min. second gear selection
+    snapshot: 7
+    address: 0x04
+    numbytes: 2
+  - name: Wide thresholds for min. third gear selection
+    snapshot: 7
+    address: 0x06
+    numbytes: 2
+  - name: Wide thresholds for min. fourth gear selection
+    snapshot: 7
     address: 0x08
-    numbytes: 1
-    lsb: 0
-    offset: 0
-  - name: WIDE THRESHOLDS FOR MAX. FIRST GEAR SELECTION
-    decimals: 0
+    numbytes: 2
+  - name: Wide thresholds for min. fifth gear selection
+    snapshot: 7
+    address: 0x0A
+    numbytes: 2
+  - name: Wide thresholds for min. sixth gear selection
+    snapshot: 7
+    address: 0x0C
+    numbytes: 2
+  - name: Wide thresholds for min. reverse gear selection
+    snapshot: 7
+    address: 0x0E
+    numbytes: 2
+  - name: Wide thresholds for max. neutral selection
+    snapshot: 8
+    address: 0x00
+    numbytes: 2
+  - name: Wide thresholds for max. first gear selection
+    snapshot: 8
+    address: 0x02
+    numbytes: 2
+  - name: Wide thresholds for max. second gear selection
+    snapshot: 8
+    address: 0x04
+    numbytes: 2
+  - name: Wide thresholds for max. third gear selection
+    snapshot: 8
+    address: 0x06
+    numbytes: 2
+  - name: Wide thresholds for max. fourth gear selection
+    snapshot: 8
     address: 0x08
-    numbytes: 1
-    lsb: 0
-    offset: 0
-  - name: WIDE THRESHOLDS FOR MAX. SECOND GEAR SELECTION
-    decimals: 0
-    address: 0x08
-    numbytes: 1
-    lsb: 0
-    offset: 0
-  - name: WIDE THRESHOLDS FOR MAX. THIRD GEAR SELECTION
-    decimals: 0
-    address: 0x08
-    numbytes: 1
-    lsb: 0
-    offset: 0
-  - name: WIDE THRESHOLDS FOR MAX. FOURTH GEAR SELECTION
-    decimals: 0
-    address: 0x08
-    numbytes: 1
-    lsb: 0
-    offset: 0
-  - name: WIDE THRESHOLDS FOR MAX. FIFTH GEAR SELECTION
-    decimals: 0
-    address: 0x08
-    numbytes: 1
-    lsb: 0
-    offset: 0
-  - name: WIDE THRESHOLDS FOR MAX. SIXTH GEAR SELECTION
-    decimals: 0
-    address: 0x08
-    numbytes: 1
-    lsb: 0
-    offset: 0
-  - name: WIDE THRESHOLDS FOR MAX. REVERSE GEAR SELECTION
-    decimals: 0
-    address: 0x08
-    numbytes: 1
-    lsb: 0
-    offset: 0
-  - name: OPEN LID STATUS
+    numbytes: 2
+  - name: Wide thresholds for max. fifth gear selection
+    snapshot: 8
+    address: 0x0A
+    numbytes: 2
+  - name: Wide thresholds for max. sixth gear selection
+    snapshot: 8
+    address: 0x0C
+    numbytes: 2
+  - name: Wide thresholds for max. reverse gear selection
+    snapshot: 8
+    address: 0x0E
+    numbytes: 2
+  - name: Open lid status
     enumvals:
       '0': 'OFF'
       '1': 'ON'
-    address: 0x0E 0x80
-    numbytes: 1
-  - name: 'ENGAGEMENT POTENTIOMETER TRAVEL: PURE VALUE'
-    decimals: 0
-    address: 0x01
-    numbytes: 1
-    lsb: 0
-    offset: 0
-  - name: 'SELECTION POTENTIOMETER TRAVEL: PURE VALUE'
-    decimals: 0
-    address: 0x02
-    numbytes: 1
-    lsb: 0
-    offset: 0
-  - name: GEARBOX ACTUATOR CENTERINg
+    id: 0x0E
+    mask: 0x80
+  - name: Gearbox actuator centering (deg)
+    snapshot: 3
+    address: 0x06
+    numbytes: 2
     decimals: 1
-    address: 
-    numbytes: 1
-    lsb: 0
-    offset: 0
-  - name: CLUTCH POSITION AS NEW
+    lsb: -0.034897
+    offset: 18.1
+  - name: Clutch position as new (mm)
     decimals: 2
-    address: 0x1F
-    numbytes: 1
-    lsb: 0
-    offset: 0
-  - name: CLUTCH WEAR
+    id: 0x1F
+    lsb: 0.0355
+    offset: -2.70
+  - name: Clutch wear (%)
     decimals: 2
-    address: 0x03
-    numbytes: 1
-    lsb: 0
-    offset: 0
+    id: 0x03
+    lsb: 0.44373
+
   - name: GEAR ENGAGEMENTS WITH WRONG SHIFTS
-    decimals: 0
-    address: 0x00
-    numbytes: 1
-    lsb: 0
-    offset: 0
+    err-address: 0x00
+    comment: TODO - This is actually in error memory (read w/ Marelli cmd 0x50)
   - name: GEARBOX INPUT HIGH RPM
-    decimals: 0
-    address: 0x01
-    numbytes: 1
-    lsb: 0
-    offset: 0
+    err-address: 0x01
+    comment: TODO - This is actually in error memory (read w/ Marelli cmd 0x50)
   - name: OPPOSITE GEARS ENGAGEMENTS
-    decimals: 0
-    address: 0x02
-    numbytes: 1
-    lsb: 0
-    offset: 0
+    err-address: 0x02
+    comment: TODO - This is actually in error memory (read w/ Marelli cmd 0x50)
   - name: CLUTCH BEYOND PIS
-    decimals: 0
-    address: 0x03
-    numbytes: 1
-    lsb: 0
-    offset: 0
+    err-address: 0x03
+    comment: TODO - This is actually in error memory (read w/ Marelli cmd 0x50)
   - name: CLUTCH HYDRAULIC FAILURE
-    decimals: 0
-    address: 0x04
-    numbytes: 1
-    lsb: 0
-    offset: 0
+    err-address: 0x04
+    comment: TODO - This is actually in error memory (read w/ Marelli cmd 0x50)
+
   - name: Pump activation counter
     id: 0x1A
   - name: Pump time on (mins)
@@ -570,14 +510,15 @@ parameters:
     address: 0x0E
     numbytes: 2
     lsb: 1
+
 faultcodes:
   - name: REVERSE SWITCH ERROR
     address: 0x00 0x01
   - name: STAND-BY SWITCH ERROR
     address: 0x00 0x02
-  - name: 'SWITCH DOWN: ERROR'
+  - name: SWITCH DOWN ERROR
     address: 0x00 0x04
-  - name: 'SWITCH UP: ERROR'
+  - name: SWITCH UP ERROR
     address: 0x00 0x08
   - name: CLUTCH POTENTIOMETER ERROR
     address: 0x00 0x10
@@ -625,34 +566,44 @@ faultcodes:
     address: 0x10 0x00
   - name: CLUTCH SOLENOID VALVE ERROR
     address: 0x20 0x00
-  - name: 'SOLENOID VALVE FOR UNEVEN GEARS ENGAGEMENT: ERROR'
+  - name: SOLENOID VALVE FOR UNEVEN GEARS ENGAGEMENT ERROR
     address: 0x40 0x00
-  - name: 'SOLENOID VALVE FOR EVEN GEARS ENGAGEMENT: ERROR'
+  - name: SOLENOID VALVE FOR EVEN GEARS ENGAGEMENT ERROR
     address: 0x80 0x00
   - name: SELECTION POSITIONING ERROR
     address: 0x00 0x01
   - name: ENGAGEMENT POSITIONING ERROR
     address: 0x00 0x02
+
 actuators:
   - name: 1st gear engagement
-    parameter: 1
+    id:
+    parameter:
     comment: >-
-      The .txt file does not seem to contain both the actuator ID and parameter
-      for these actuators. The only number provided appears to be parameter.
+      Many of the actuators here are actually exercised by using a sequence
+      of several 'activate actuator' commands.
   - name: 2nd gear engagement
-    parameter: 2
+    id:
+    parameter:
   - name: 3rd gear engagement
-    parameter: 3
+    id:
+    parameter:
   - name: 4th gear engagement
-    parameter: 4
+    id:
+    parameter:
   - name: 5th gear engagement
-    parameter: 5
+    id:
+    parameter:
   - name: 6th gear engagement
-    parameter: 6
+    id:
+    parameter:
   - name: Neutral engagement
-    parameter: 0
+    id:
+    parameter:
   - name: Reverse gear engagement
-    parameter: 7
+    id:
+    parameter:
+
   - name: ACTUATOR CENTERING
     parameter: 0
   - name: AIR BLEEDING FROM HYDRAULIC CIRCUIT (CLUTCH ACTUATOR)
@@ -661,10 +612,32 @@ actuators:
     parameter: 0
   - name: CUSTOMIZATION
   - name: SELF-LEARNING
-  - name: PUMP HANDLING
-  - name: REVERSE GEAR LIGHTS
+
+  - name: Pump on
+    id: 1
+    parameter: 1
+  - name: Pump off
+    id: 1
+    parameter: 0
+  - name: Reverse gear lights on
+    id: 3
+    parameter: 1
+  - name: Reverse gear lights off
+    id: 3
+    parameter: 0
+  - name: Display on
+    id: 0xb
+    parameter: 1
+  - name: Display off
+    id: 0xb
+    parameter: 0
+  - name: Buzzer on
+    id: 0xc
+    parameter: 1
+  - name: Buzzer off
+    id: 0xc
+    parameter: 0
+
   - name: CLUTCH SV
-  - name: DISPLAY CONTROL
-  - name: BUZZER CONTROL
   - name: CLUTCH POSITION AS NEW
 
