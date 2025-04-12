@@ -6,10 +6,9 @@ protocol:
   baud: 9600
   address: 0x02
   comment: >-
-    The Ferrari variant of this protocol has the following differences: (a)
-    bytes 01-04 of the 0xAE reply are used as real data rather than just sync
-    bytes; (b) snapshots contain 16 bytes rather than 10. TODO: Confirm which
-    parameters require RAM read operations, and which 'value read' operations.
+    The Ferrari variant of this protocol has the following differences:
+    (a) bytes 01-04 of the 0xAE reply are used as real data rather than just sync bytes;
+    (b) snapshots contain 16 bytes rather than 10.
 parameters:
   - name: Engagement potentiometer travel (mm)
     decimals: 2
@@ -21,17 +20,19 @@ parameters:
     id: 0x02
     lsb: 0.07
     offset: -41.75
-    comment: 16-bit value
+    comment: LSB is derived from devision by 14.3
   - name: Clutch travel (mm)
     decimals: 2
     id: 0x03
     lsb: 0.0355
     offset: -2.7
+    comment: LSB is derived from devision by 28.17
   - name: Clutch travel reference (mm)
     decimals: 2
     id: 0x04
     lsb: 0.0355
     offset: -2.7
+    comment: LSB is derived from devision by 28.17
   - name: Throttle potentiometer
     decimals: 0
     id: 0x05
@@ -301,23 +302,26 @@ parameters:
     numbytes: 2
     lsb: 0.0355
     offset: -2.70
+    comment: LSB is derived from devision by 28.17
   - name: P.I. distance position - closed self-calibrated (mm)
     decimals: 2
     address: 0x17
     numbytes: 2
     lsb: 0.0355
     offset: -2.70
+    comment: LSB is derived from devision by 28.17
   - name: Self-calibrated min. accelerator position (mm)
     decimals: 2
     address: 0x18
     numbytes: 2
-    lsb: 0.105367
-    offset: -5.37
+    lsb: 0.105374
+    offset: -5.374
+    comment: LSB is derived from devision by 9.4899998
   - name: Closed potent. current at system center, self-calibrated clutch solenoid valve (A)
     decimals: 2
     address: 0x19
     numbytes: 2
-    lsb: 0.007839
+    lsb: 0.00784
     offset: 0
   - name: Wide thresholds for min. neutral selection
     snapshot: 7
@@ -401,6 +405,7 @@ parameters:
     id: 0x1F
     lsb: 0.0355
     offset: -2.70
+    comment: LSB is derived from devision by 28.17
   - name: Clutch wear (%)
     decimals: 2
     id: 0x03
