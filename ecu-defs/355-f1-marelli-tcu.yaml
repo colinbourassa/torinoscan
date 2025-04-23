@@ -170,132 +170,164 @@ parameters:
     comment: 16-bit value
   - name: Thresholds for sure minimum shift to neutral
     snapshot: 1
-    address: 0x00
+    offset: 0x00
     numbytes: 2
+    lsb: 1
   - name: Thresholds for sure minimum shift to first
     snapshot: 1
-    address: 0x02
+    offset: 0x02
     numbytes: 2
+    lsb: 1
   - name: Thresholds for sure minimum shift to second
     snapshot: 1
-    address: 0x04
+    offset: 0x04
     numbytes: 2
+    lsb: 1
   - name: Thresholds for sure minimum shift to third
     snapshot: 1
-    address: 0x06
+    offset: 0x06
     numbytes: 2
+    lsb: 1
   - name: Thresholds for sure minimum shift to fourth
     snapshot: 1
-    address: 0x08
+    offset: 0x08
     numbytes: 2
+    lsb: 1
   - name: Thresholds for sure minimum shift to fifth
     snapshot: 1
-    address: 0x0A
+    offset: 0x0A
     numbytes: 2
+    lsb: 1
   - name: Thresholds for sure minimum shift to sixth
     snapshot: 1
-    address: 0x0C
+    offset: 0x0C
     numbytes: 2
+    lsb: 1
   - name: Thresholds for sure minimum shift to reverse
     snapshot: 1
-    address: 0x0E
+    offset: 0x0E
     numbytes: 2
+    lsb: 1
   - name: Thresholds for sure maximum shift to neutral
     snapshot: 2
-    address: 0x00
+    offset: 0x00
     numbytes: 2
+    lsb: 1
   - name: Thresholds for sure maximum shift to first
     snapshot: 2
-    address: 0x02
+    offset: 0x02
     numbytes: 2
+    lsb: 1
   - name: Thresholds for sure maximum shift to second
     snapshot: 2
-    address: 0x04
+    offset: 0x04
     numbytes: 2
+    lsb: 1
   - name: Thresholds for sure maximum shift to third
     snapshot: 2
-    address: 0x06
+    offset: 0x06
     numbytes: 2
+    lsb: 1
   - name: Thresholds for sure maximum shift to fourth
     snapshot: 2
-    address: 0x08
+    offset: 0x08
     numbytes: 2
+    lsb: 1
   - name: Thresholds for sure maximum shift to fifth
     snapshot: 2
-    address: 0x0A
+    offset: 0x0A
     numbytes: 2
+    lsb: 1
   - name: Thresholds for sure maximum shift to sixth
     snapshot: 2
-    address: 0x0C
+    offset: 0x0C
     numbytes: 2
+    lsb: 1
   - name: Thresholds for sure maximum shift to reverse
     snapshot: 2
-    address: 0x0E
+    offset: 0x0E
     numbytes: 2
+    lsb: 1
   - name: Thresholds for minimum sure neutral selection
     snapshot: 3
-    address: 0x00
+    offset: 0x00
     numbytes: 2
+    lsb: 1
   - name: Thresholds for minimum sure first gear selection
     snapshot: 3
-    address: 0x02
+    offset: 0x02
     numbytes: 2
+    lsb: 1
   - name: Thresholds for minimum sure second gear selection
     snapshot: 3
-    address: 0x04
+    offset: 0x04
     numbytes: 2
+    lsb: 1
   - name: Thresholds for minimum sure third gear selection
     snapshot: 3
-    address: 0x06
+    offset: 0x06
     numbytes: 2
+    lsb: 1
   - name: Thresholds for minimum sure fourth gear selection
     snapshot: 3
-    address: 0x08
+    offset: 0x08
     numbytes: 2
+    lsb: 1
   - name: Thresholds for minimum sure fifth gear selection
     snapshot: 3
-    address: 0x0A
+    offset: 0x0A
     numbytes: 2
+    lsb: 1
   - name: Thresholds for minimum sure sixth gear selection
     snapshot: 3
-    address: 0x0C
+    offset: 0x0C
     numbytes: 2
+    lsb: 1
   - name: Thresholds for minimum sure reverse gear selection
     snapshot: 3
-    address: 0x0E
+    offset: 0x0E
     numbytes: 2
+    lsb: 1
   - name: Thresholds for maximum sure neutral selection
     snapshot: 4
-    address: 0x00
+    offset: 0x00
     numbytes: 2
+    lsb: 1
   - name: Thresholds for maximum sure first gear selection
     snapshot: 4
-    address: 0x02
+    offset: 0x02
     numbytes: 2
+    lsb: 1
   - name: Thresholds for maximum sure second gear selection
     snapshot: 4
-    address: 0x04
+    offset: 0x04
     numbytes: 2
+    lsb: 1
   - name: Thresholds for maximum sure third gear selection
     snapshot: 4
-    address: 0x06
+    offset: 0x06
     numbytes: 2
+    lsb: 1
   - name: Thresholds for maximum sure fourth gear selection
     snapshot: 4
-    address: 0x08
+    offset: 0x08
     numbytes: 2
+    lsb: 1
   - name: Thresholds for maximum sure fifth gear selection
     snapshot: 4
-    address: 0x0A
+    offset: 0x0A
     numbytes: 2
+    lsb: 1
   - name: Thresholds for maximum sure sixth gear selection
     snapshot: 4
-    address: 0x0C
+    offset: 0x0C
     numbytes: 2
+    lsb: 1
   - name: Thresholds for maximum sure reverse gear selection
     snapshot: 4
-    address: 0x0E
+    offset: 0x0E
     numbytes: 2
+    lsb: 1
   - name: Self-calibrated closed clutch position (mm)
     decimals: 2
     id: 0x16
@@ -325,68 +357,84 @@ parameters:
     offset: 0
   - name: Wide thresholds for min. neutral selection
     snapshot: 7
-    address: 0x00
+    offset: 0x00
     numbytes: 2
+    lsb: 1
   - name: Wide thresholds for min. first gear selection
     snapshot: 7
-    address: 0x02
+    offset: 0x02
     numbytes: 2
+    lsb: 1
   - name: Wide thresholds for min. second gear selection
     snapshot: 7
-    address: 0x04
+    offset: 0x04
     numbytes: 2
+    lsb: 1
   - name: Wide thresholds for min. third gear selection
     snapshot: 7
-    address: 0x06
+    offset: 0x06
     numbytes: 2
+    lsb: 1
   - name: Wide thresholds for min. fourth gear selection
     snapshot: 7
-    address: 0x08
+    offset: 0x08
     numbytes: 2
+    lsb: 1
   - name: Wide thresholds for min. fifth gear selection
     snapshot: 7
-    address: 0x0A
+    offset: 0x0A
     numbytes: 2
+    lsb: 1
   - name: Wide thresholds for min. sixth gear selection
     snapshot: 7
-    address: 0x0C
+    offset: 0x0C
     numbytes: 2
+    lsb: 1
   - name: Wide thresholds for min. reverse gear selection
     snapshot: 7
-    address: 0x0E
+    offset: 0x0E
     numbytes: 2
+    lsb: 1
   - name: Wide thresholds for max. neutral selection
     snapshot: 8
-    address: 0x00
+    offset: 0x00
     numbytes: 2
+    lsb: 1
   - name: Wide thresholds for max. first gear selection
     snapshot: 8
-    address: 0x02
+    offset: 0x02
     numbytes: 2
+    lsb: 1
   - name: Wide thresholds for max. second gear selection
     snapshot: 8
-    address: 0x04
+    offset: 0x04
     numbytes: 2
+    lsb: 1
   - name: Wide thresholds for max. third gear selection
     snapshot: 8
-    address: 0x06
+    offset: 0x06
     numbytes: 2
+    lsb: 1
   - name: Wide thresholds for max. fourth gear selection
     snapshot: 8
-    address: 0x08
+    offset: 0x08
     numbytes: 2
+    lsb: 1
   - name: Wide thresholds for max. fifth gear selection
     snapshot: 8
-    address: 0x0A
+    offset: 0x0A
     numbytes: 2
+    lsb: 1
   - name: Wide thresholds for max. sixth gear selection
     snapshot: 8
-    address: 0x0C
+    offset: 0x0C
     numbytes: 2
+    lsb: 1
   - name: Wide thresholds for max. reverse gear selection
     snapshot: 8
-    address: 0x0E
+    offset: 0x0E
     numbytes: 2
+    lsb: 1
   - name: Open lid status
     enumvals:
       '0': 'OFF'
@@ -395,7 +443,7 @@ parameters:
     mask: 0x80
   - name: Gearbox actuator centering (deg)
     snapshot: 3
-    address: 0x06
+    offset: 0x06
     numbytes: 2
     decimals: 1
     lsb: -0.034897
@@ -411,108 +459,112 @@ parameters:
     id: 0x03
     lsb: 0.44373
 
-  - name: GEAR ENGAGEMENTS WITH WRONG SHIFTS
+  - name: Gear engagements with wrong shifts
     err-address: 0x00
-    comment: TODO - This is actually in error memory (read w/ Marelli cmd 0x50)
-  - name: GEARBOX INPUT HIGH RPM
+    lsb: 1
+  - name: Gearbox input high RPM
     err-address: 0x01
-    comment: TODO - This is actually in error memory (read w/ Marelli cmd 0x50)
-  - name: OPPOSITE GEARS ENGAGEMENTS
+    lsb: 1
+  - name: Opposite gears engagements
     err-address: 0x02
-    comment: TODO - This is actually in error memory (read w/ Marelli cmd 0x50)
-  - name: CLUTCH BEYOND PIS
+    lsb: 1
+  - name: Clutch beyond point of initial slip
     err-address: 0x03
-    comment: TODO - This is actually in error memory (read w/ Marelli cmd 0x50)
-  - name: CLUTCH HYDRAULIC FAILURE
+    lsb: 1
+  - name: Clutch hydraulic failure
     err-address: 0x04
-    comment: TODO - This is actually in error memory (read w/ Marelli cmd 0x50)
+    lsb: 1
 
   - name: Pump activation counter
     id: 0x1A
+    lsb: 1
   - name: Pump time on (mins)
     id: 0x1B
+    lsb: 1
   - name: System time on (mins)
     id: 0x1C
+    lsb: 1
   - name: Clutch overheat time
     id: 0x1D
+    lsb: 1
   - name: Neutral engagement counter
     snapshot: 5
-    address: 0x00
+    offset: 0x00
     numbytes: 2
     lsb: 1
   - name: 1st gear engagement counter
     snapshot: 5
-    address: 0x02
+    offset: 0x02
     numbytes: 2
     lsb: 1
   - name: 2nd gear engagement counter
     snapshot: 5
-    address: 0x04
+    offset: 0x04
     numbytes: 2
     lsb: 1
   - name: 3rd gear engagement counter
     snapshot: 5
-    address: 0x06
+    offset: 0x06
     numbytes: 2
     lsb: 1
   - name: 4th gear engagement counter
     snapshot: 5
-    address: 0x08
+    offset: 0x08
     numbytes: 2
     lsb: 1
   - name: 5th gear engagement counter
     snapshot: 5
-    address: 0x0A
+    offset: 0x0A
     numbytes: 2
     lsb: 1
   - name: 6th gear engagement counter
     snapshot: 5
-    address: 0x0C
+    offset: 0x0C
     numbytes: 2
     lsb: 1
   - name: Reverse gear engagement counter
     snapshot: 5
-    address: 0x0E
+    offset: 0x0E
     numbytes: 2
     lsb: 1
   - name: Distance run in neutral (km)
     snapshot: 6
-    address: 0x00
+    offset: 0x00
     numbytes: 2
     lsb: 1
   - name: Distance run in 1st gear (km)
     snapshot: 6
-    address: 0x02
+    offset: 0x02
     numbytes: 2
     lsb: 1
   - name: Distance run in 2nd gear (km)
     snapshot: 6
-    address: 0x04
+    offset: 0x04
     numbytes: 2
     lsb: 1
   - name: Distance run in 3rd gear (km)
     snapshot: 6
-    address: 0x06
+    offset: 0x06
     numbytes: 2
     lsb: 1
   - name: Distance run in 4th gear (km)
     snapshot: 6
-    address: 0x08
+    offset: 0x08
     numbytes: 2
     lsb: 1
   - name: Distance run in 5th gear (km)
     snapshot: 6
-    address: 0x0A
+    offset: 0x0A
     numbytes: 2
     lsb: 1
   - name: Distance run in 6th gear (km)
     snapshot: 6
-    address: 0x0C
+    offset: 0x0C
     numbytes: 2
     lsb: 1
   - name: Distance run in reverse (km)
     snapshot: 6
-    address: 0x0E
+    offset: 0x0E
     numbytes: 2
     lsb: 1
 
