@@ -75,6 +75,10 @@
             "type": "number",
             "description": "Used together with numbytes to describe a memory location in RAM/ROM."
           },
+          "err-address" : {
+            "type": "number",
+            "description": "Specifies an offset into error memory, which some ECUs manage separately from normal RAM/ROM"
+          },
           "numbytes": {
             "type": "number"
           },
@@ -137,6 +141,10 @@
               {
                 "required": ["address","numbytes"],
                 "description": "Used for memory locations (RAM/ROM)."
+              },
+              {
+                "required": ["err-address"],
+                "description": "Used for offsets into error memory, which some ECUs manage separately from the normal RAM/ROM address space."
               },
               {
                 "required": ["id"],
