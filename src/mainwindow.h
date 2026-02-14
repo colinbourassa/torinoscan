@@ -1,15 +1,15 @@
-#ifndef MAINWINDOW_H
-#define MAINWINDOW_H
-
+#pragma once
 #include <QMainWindow>
 #include <QCloseEvent>
 #include <QList>
 #include <QThread>
 #include <map>
-#include <yaml-cpp/yaml.h>
+#include <nlohmann/json.hpp>
 #include "protocoliface.h"
 #include "paramwidgetgroup.h"
 #include <iceblock/ftdi_enumerator.h>
+
+using json = nlohmann::json;
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -44,21 +44,20 @@ private:
   Ui::MainWindow* ui;
   QList<ParamWidgetGroup*> m_paramWidgets;
   std::map<std::string,std::map<std::string,std::string>> m_carConfigFilenames;
-  YAML::Node m_currentYAML;
+  json m_currentJSON;
   ProtocolIface m_iface;
   QThread m_ifaceThread;
   std::vector<FtdiDeviceInfo> m_ftdiDeviceInfo;
   uint8_t m_ecuAddr;
 
   void setupThreadsAndSignals();
-  QMap<int,QString> getEnumVals(YAML::Node node) const;
   void setParamCheckboxStates(bool checked);
   bool scanDefinitionDir(std::string& errorMsgs);
   void populateCarPickList();
-  bool parseProtocolNode(YAML::Node protocolNode);//, uint8_t& ecuAddr);
-  bool createWidgetForMemoryParam(YAML::Node node, ParamWidgetGroup*& widget);
-  bool createWidgetForStoredValueParam(YAML::Node node, ParamWidgetGroup*& widget);
-  bool createWidgetForSnapshotParam(YAML::Node node, ParamWidgetGroup*& widget);
+  bool parseProtocolNode(const json& protocolNode);//, uint8_t& ecuAddr);
+  bool createWidgetForMemoryParam(const json& node, ParamWidgetGroup*& widget);
+  bool createWidgetForStoredValueParam(const json& node, ParamWidgetGroup*& widget);
+  bool createWidgetForSnapshotParam(const json& node, ParamWidgetGroup*& widget);
   void populateParamWidgets();
   void clearParamWidgets();
   void populateActuatorWidgets();
@@ -66,6 +65,7 @@ private:
   void updateParamData(const QList<ParamWidgetGroup*>& paramWidgets);
   bool setFTDIDeviceInfo();
   void refreshFTDIDeviceList();
+  QMap<int,QString> getMapOfEnumVals(const json& node);
 
 signals:
   void connectInterface(uint8_t ecuAddr);
@@ -76,5 +76,4 @@ signals:
   void requestFaultCodes();
   void activateAcuator(unsigned int index);
 };
-#endif // MAINWINDOW_H
 

@@ -46,7 +46,7 @@
           "description": "Speed of the serial communication. This is specified in its own field because it often differs between modules, even for modules that have otherwise adhered to the official specification of a protocol."
         },
         "address": {
-          "type": "number",
+          "type": "string",
           "description": "Single-byte address of the target module that is sent in the slow-init sequence."
         },
         "comment": {
@@ -72,11 +72,11 @@
             "description": "Number of digits to appear after the decimal point when the value of this parameter is being displayed."
           },
           "address": {
-            "type": "number",
+            "type": "string",
             "description": "Used together with numbytes to describe a memory location in RAM/ROM."
           },
           "err-address" : {
-            "type": "number",
+            "type": "string",
             "description": "Specifies an offset into error memory, which some ECUs manage separately from normal RAM/ROM"
           },
           "numbytes": {
@@ -120,7 +120,7 @@
             ]
           },
           "mask": {
-            "type": "number",
+            "type": "string",
             "description": "Bitmask that is applied to the raw value (via a bitwise AND) before any further processing is done."
           },
           "comment": {
@@ -169,14 +169,14 @@
             "description": "Description of the fault."
           },
           "address": {
-            "type": "number",
+            "type": "string",
             "description": "This may be a memory address in the case of systems that store fault codes in the normally accessible memory map."
           },
           "numbytes": {
             "type": "number"
           },
           "mask": {
-            "type": "number",
+            "type": "string",
             "description": "Bitmask that is applied to the raw value (via a bitwise AND) before any further processing is done."
           },
           "comment": {

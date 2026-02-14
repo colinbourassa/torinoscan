@@ -6,8 +6,9 @@
 #include <QLabel>
 #include <QCheckBox>
 #include <QList>
+#include <fstream>
 #include "mainwindow.h"
-#include "./ui_mainwindow.h"
+#include "ui_mainwindow.h"
 #include "paramwidgetgroup.h"
 #include "actuatorwidgetgroup.h"
 #include "utils.h"
@@ -95,22 +96,23 @@ bool MainWindow::scanDefinitionDir(std::string& errorMsgs)
   errorMsgs.clear();
 
   foreach (const QFileInfo& file,
-           defDir.entryInfoList(QStringList() << "*.yaml", QDir::Files | QDir::NoSymLinks))
+           defDir.entryInfoList(QStringList() << "*.json", QDir::Files | QDir::NoSymLinks))
   {
     const std::string filePath = file.filePath().toStdString();
 
     try
     {
-      YAML::Node data = YAML::LoadFile(filePath);
-      const bool requiredFieldsPresent = data["vehicle"] && data["ecu"];
+      std::ifstream jsonFstream(filePath);
+      json data = json::parse(jsonFstream);
+      const bool requiredFieldsPresent = data.contains("vehicle") && data.contains("ecu");
 
       if (requiredFieldsPresent)
       {
-        const std::string carName = data["vehicle"].as<std::string>();
-        std::string ecuName = data["ecu"].as<std::string>();
-        if (data["position"])
+        const std::string carName = data.at("vehicle");
+        std::string ecuName = data.at("ecu");
+        if (data.contains("position"))
         {
-          ecuName += " (" + data["position"].as<std::string>() + ")";
+          ecuName += " (" + data.at("position").get<std::string>() + ")";
         }
         m_carConfigFilenames[carName][ecuName] = filePath;
       }
@@ -120,10 +122,10 @@ bool MainWindow::scanDefinitionDir(std::string& errorMsgs)
         errorMsgs += "Required fields missing from '" + filePath + "'\n";
       }
     }
-    catch (const YAML::ParserException& e)
+    catch (const json::parse_error& e)
     {
       status = false;
-      errorMsgs += "Error parsing YAML: " + std::string(e.what()) + "\n";
+      errorMsgs += "Error parsing JSON: " + std::string(e.what()) + "\n";
     }
   }
 
@@ -150,47 +152,25 @@ bool MainWindow::setFTDIDeviceInfo()
   return (index >= 0);
 }
 
-bool MainWindow::parseProtocolNode(YAML::Node protocolNode)
+bool MainWindow::parseProtocolNode(const json& protocolNode)
 {
-  bool status = false;
   ProtocolType protocol = ProtocolType::None;
   LineType initLine = LineType::None;
   std::string variant;
   int baud = 0;
+  bool status = true;
 
-  if (protocolNode["family"])
+  try
   {
-    protocol = protocolTypeFromString(protocolNode["family"].as<std::string>());
+    m_ecuAddr = std::stoul(protocolNode.at("address").get<std::string>(), nullptr, 0);
+    baud = protocolNode.at("baud");
+    protocol = protocolTypeFromString(protocolNode.at("family"));
+    variant = protocolNode.at("variant");
     status = (protocol != ProtocolType::None);
   }
-
-  if (status && protocolNode["variant"])
+  catch (const json::out_of_range& e)
   {
-    variant = protocolNode["variant"].as<std::string>();
-  }
-
-  if (status && protocolNode["baud"])
-  {
-    try
-    {
-      baud = protocolNode["baud"].as<int>();
-    }
-    catch (const YAML::Exception& e)
-    {
-      status = false;
-    }
-  }
-
-  if (status && protocolNode["address"])
-  {
-    try
-    {
-      m_ecuAddr = protocolNode["address"].as<int>();
-    }
-    catch (const YAML::Exception& e)
-    {
-      status = false;
-    }
+    status = false;
   }
 
   if (status)
@@ -208,127 +188,91 @@ bool MainWindow::parseProtocolNode(YAML::Node protocolNode)
   return status;
 }
 
-QMap<int,QString> MainWindow::getEnumVals(YAML::Node node) const
+QMap<int,QString> MainWindow::getMapOfEnumVals(const json& node)
 {
   QMap<int,QString> enumVals;
-  if (node["enumvals"].IsSequence())
+  if (node.contains("enumvals"))
   {
-    YAML::Node enumNode = node["enumvals"];
-    for (YAML::const_iterator it = enumNode.begin(); it != enumNode.end(); it++)
-    {
-      const QString keyStr = QString::fromStdString(it->first.as<std::string>());
-      bool ok = false;
-      const int key = keyStr.toInt(&ok, 0);
-      if (ok)
-      {
-        enumVals[key] = QString::fromStdString(it->second.as<std::string>());
-      }
-    }
+   const std::map<std::string,std::string> enumValsStd = node.at("enumvals");
+   for (auto const& [key, value] : enumValsStd)
+   {
+    enumVals.insert(std::stoi(key), QString::fromStdString(value));
+   }
   }
   return enumVals;
 }
 
-bool MainWindow::createWidgetForMemoryParam(YAML::Node node, ParamWidgetGroup*& widget)
+bool MainWindow::createWidgetForMemoryParam(const json& node, ParamWidgetGroup*& widget)
 {
-  bool status = false;
-  if (node["name"] && node["address"] && node["numbytes"])
+  bool status = true;
+  try
   {
-    const QString name = QString::fromStdString(node["name"].as<std::string>());
-    const MemoryType memType = node["memtype"] ? memTypeFromString(node["memtype"].as<std::string>()) : MemoryType::Unspecified;
-    const QString units = node["units"] ? QString::fromStdString(node["units"].as<std::string>()) : QString();
-    const QMap<int,QString> enumVals = getEnumVals(node);
-    unsigned int addr = 0;
-    unsigned int numBytes = 1;
-    float lsb = 1.0f;
-    float offset = 0.0f;
+    const QString name = QString::fromStdString(node.at("name"));
+    const MemoryType memType = node.contains("memtype") ? memTypeFromString(node.at("memtype")) : MemoryType::Unspecified;
+    const QString units = node.contains("units") ? QString::fromStdString(node.at("units")) : QString();
+    const QMap<int,QString> enumVals = getMapOfEnumVals(node);
 
-    try
-    {
-      status = true;
-      addr = node["address"].as<unsigned int>();
-      numBytes = node["numbytes"].as<unsigned int>();
-      lsb = node["lsb"] ? node["lsb"].as<float>() : 1.0f;
-      offset = node["offset"] ? node["offset"].as<float>() : 0.0f;
-    }
-    catch (const YAML::Exception& e)
-    {
-      status = false;
-    }
-
-    if (status)
-    {
-      widget = new ParamWidgetGroup(name, memType, addr, numBytes, lsb, offset, units, enumVals, this);
-    }
+    const unsigned int addr = std::stoul(node.at("address").get<std::string>(), nullptr, 0);
+    const unsigned int numBytes = node.at("numbytes");
+    const float lsb = node.contains("lsb") ? node.at("lsb").get<float>() : 1.0f;
+    const float offset = node.contains("offset") ? node.at("offset").get<float>() : 0.0f;
+    widget = new ParamWidgetGroup(name, memType, addr, numBytes, lsb, offset, units, enumVals, this);
+  }
+  catch (const json::out_of_range& e)
+  {
+    status = false;
   }
 
   return status;
 }
 
-bool MainWindow::createWidgetForStoredValueParam(YAML::Node node, ParamWidgetGroup*& widget)
+bool MainWindow::createWidgetForStoredValueParam(const json& node, ParamWidgetGroup*& widget)
 {
-  bool status = false;
-  if (node["name"] && node["id"])
+  bool status = true;
+
+  try
   {
-    const QString name = QString::fromStdString(node["name"].as<std::string>());
-    const QString units = node["units"] ? QString::fromStdString(node["units"].as<std::string>()) : QString();
-    const QMap<int,QString> enumVals = getEnumVals(node);
-    unsigned int id = 0;
-    float lsb = 1.0f;
-    float offset = 0.0f;
-
-    try
+    const QString name = QString::fromStdString(node.at("name"));
+    const QString units = node.contains("units") ? QString::fromStdString(node.at("units")) : QString();
+    const std::map<std::string,std::string> enumValsStd = node.at("enumvals");
+    QMap<int,QString> enumVals;
+    for (auto const& [key, value] : enumValsStd)
     {
-      status = true;
-      id = node["id"].as<unsigned int>();
-      lsb = node["lsb"] ? node["lsb"].as<float>() : 1.0f;
-      offset = node["offset"] ? node["offset"].as<float>() : 0.0f;
-    }
-    catch (const YAML::Exception& e)
-    {
-      status = false;
+      enumVals.insert(std::stoi(key), QString::fromStdString(value));
     }
 
-    if (status)
-    {
-      widget = new ParamWidgetGroup(name, id, lsb, offset, units, enumVals, this);
-    }
+    const unsigned int id = node.at("id");
+    const float lsb = node.contains("lsb") ? node["lsb"].get<float>() : 1.0f;
+    const float offset = node.contains("offset") ? node.at("offset").get<float>() : 0.0f;
+    widget = new ParamWidgetGroup(name, id, lsb, offset, units, enumVals, this);
   }
-
+  catch (const json::out_of_range& e)
+  {
+    status = false;
+  }
+  
   return status;
 }
 
-bool MainWindow::createWidgetForSnapshotParam(YAML::Node node, ParamWidgetGroup*& widget)
+bool MainWindow::createWidgetForSnapshotParam(const json& node, ParamWidgetGroup*& widget)
 {
-  bool status = false;
-  if (node["name"] && node["snapshot"] && node["address"] && node["numbytes"])
+  bool status = true;
+
+  try
   {
-    const QString name = QString::fromStdString(node["name"].as<std::string>());
-    const QString units = node["units"] ? QString::fromStdString(node["units"].as<std::string>()) : QString();
-    const QMap<int,QString> enumVals = getEnumVals(node);
-    unsigned int snapshot = 0;
-    unsigned int addr = 0;
-    unsigned int numBytes = 1;
-    float lsb = 1.0f;
-    float offset = 0.0f;
-
-    try
-    {
-      status = true;
-      snapshot = node["snapshot"].as<unsigned int>();
-      addr = node["address"].as<unsigned int>();
-      numBytes = node["numbytes"].as<unsigned int>();
-      lsb = node["lsb"] ? node["lsb"].as<float>() : 1.0f;
-      offset = node["offset"] ? node["offset"].as<float>() : 0.0f;
-    }
-    catch (const YAML::Exception& e)
-    {
-      status = false;
-    }
-
-    if (status)
-    {
-      widget = new ParamWidgetGroup(name, snapshot, addr, numBytes, lsb, offset, units, enumVals, this);
-    }
+    const QString name = QString::fromStdString(node.at("name"));
+    const QString units = node.contains("units") ? QString::fromStdString(node.at("units")) : QString();
+    const QMap<int,QString> enumVals = getMapOfEnumVals(node);
+    const unsigned int snapshot = node.at("snapshot");
+    const unsigned int addr = node.at("address");
+    const unsigned int numBytes = node.at("numbytes");
+    const float lsb = node.contains("lsb") ? node.at("lsb").get<float>() : 1.0f;
+    const float offset = node.contains("offset") ? node.at("offset").get<float>() : 0.0f;
+    widget = new ParamWidgetGroup(name, snapshot, addr, numBytes, lsb, offset, units, enumVals, this);
+  }
+  catch (const json::out_of_range& e)
+  {
+    status = false;
   }
 
   return status;
@@ -341,7 +285,7 @@ void MainWindow::populateParamWidgets()
 
   clearParamWidgets();
 
-  for (auto node : m_currentYAML["parameters"])
+  for (auto node : m_currentJSON.at("parameters"))
   {
     ParamWidgetGroup* paramWidget = nullptr;
 
@@ -378,15 +322,14 @@ void MainWindow::populateActuatorWidgets()
 
   clearActuatorWidgets();
 
-  if (m_currentYAML["actuators"].IsSequence())
+  if (m_currentJSON.contains("actuators") && m_currentJSON.at("actuators").is_array())
   {
-    for (const auto& actEntry : m_currentYAML["actuators"])
+    for (const auto& actEntry : m_currentJSON.at("actuators"))
     {
-      if (actEntry["name"] && actEntry["id"])
+      if (actEntry.contains("name") && actEntry.contains("id"))
       {
-        bool ok = false;
-        const QString name = QString::fromStdString(actEntry["name"].as<std::string>());
-        const unsigned int id = actEntry["id"].as<unsigned int>();
+        const QString name = QString::fromStdString(actEntry.at("name"));
+        const unsigned int id = actEntry.at("id");
 
         ActuatorWidgetGroup* actWidget = new ActuatorWidgetGroup(name, id, this);
         ui->actuatorsGrid->addWidget(actWidget, row, col);
@@ -449,15 +392,16 @@ void MainWindow::on_setDefinitionButton_clicked()
 
   if (m_carConfigFilenames.count(carName) && m_carConfigFilenames.at(carName).count(ecuName))
   {
-    const std::string yamlFilepath = m_carConfigFilenames.at(carName).at(ecuName);
-    m_currentYAML = YAML::LoadFile(yamlFilepath);
+    const std::string jsonFilepath = m_carConfigFilenames.at(carName).at(ecuName);
+    std::ifstream jsonFile(jsonFilepath);
+    m_currentJSON = json::parse(jsonFile);
 
     populateParamWidgets();
     populateActuatorWidgets();
 
-    if (m_currentYAML["protocol"])
+    if (m_currentJSON.contains("protocol"))
     {
-      parseProtocolNode(m_currentYAML["protocol"]);
+      parseProtocolNode(m_currentJSON.at("protocol"));
     }
     else
     {

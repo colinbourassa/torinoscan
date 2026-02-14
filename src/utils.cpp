@@ -1,5 +1,6 @@
-#include "utils.h"
+#include <algorithm>
 #include <endian.h>
+#include "utils.h"
 
 MemoryType memTypeFromString(const std::string& s)
 {
