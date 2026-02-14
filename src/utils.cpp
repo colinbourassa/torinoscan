@@ -54,7 +54,6 @@ ProtocolType protocolTypeFromString(const std::string& s)
 unsigned int vectorToUint(const std::vector<uint8_t>& v)
 {
   return vectorToUint(v.data(), v.size());
-
 }
 
 unsigned int vectorToUint(const uint8_t* const data, unsigned int numBytes)

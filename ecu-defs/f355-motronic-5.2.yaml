@@ -254,6 +254,9 @@ parameters:
       .TXT shows range as 0.000 to 2.000, but SW only ever seems to show values
       of 0.000 (for byte values 00-7F) or 1.000 (for byte values 80-FF).
 faultcodes:
+  - comment: >-
+      This ECU appears to respond to the KWP71 command byte 0x3A as part of reading fault codes,
+      although this command is not part of the official KWP71 spec.
   - name: Self-adaptive values out of range (LH)
     address: 34 35 36 00 00 3 4
   - name: Worn catalytic converter (LH)
