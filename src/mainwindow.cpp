@@ -23,6 +23,8 @@ MainWindow::MainWindow(QWidget *parent) :
   scanDefinitionDir(scanErrors);
   populateCarPickList();
   refreshFTDIDeviceList();
+
+  ui->parametersGrid->setHorizontalSpacing(20);
 }
 
 MainWindow::~MainWindow()
