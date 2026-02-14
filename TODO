@@ -1,0 +1,8 @@
+Consider converting ECU definitions back to JSON, as this would allow the use of
+nlohmann/json for JSON loading and parsing, and tristanpenman/valijson for validation
+against a schema. Both of these libraries are available in header-only forms
+to simplify build-time dependencies.
+
+JSON supports only base-10 representation of numeric values, so this change would
+require switching to string values for fields that are better represented in hex.
+
