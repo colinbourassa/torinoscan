@@ -1,5 +1,4 @@
-#ifndef PARAMWIDGETGROUP_H
-#define PARAMWIDGETGROUP_H
+#pragma once
 
 #include <QWidget>
 #include <QString>
@@ -7,14 +6,8 @@
 #include <QCheckBox>
 #include <QLabel>
 #include <QMap>
+#include "paramtype.h"
 #include "iceblock/BlockExchangeProtocol.h"
-
-enum class ParamType
-{
-  MemoryAddress,
-  StoredValue,
-  SnapshotLocation
-};
 
 class ParamWidgetGroup : public QWidget
 {
@@ -89,5 +82,4 @@ private:
   void setupContainedWidgets(const QString& name);
 };
 
-#endif // PARAMWIDGETGROUP_H
 

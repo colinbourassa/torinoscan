@@ -12,11 +12,13 @@
 #include "paramwidgetgroup.h"
 #include "actuatorwidgetgroup.h"
 #include "utils.h"
+#include "ecuconfig.h"
 
 MainWindow::MainWindow(QWidget *parent) :
   QMainWindow(parent),
   ui(new Ui::MainWindow),
-  m_ifaceThread(this)
+  m_ifaceThread(this),
+  m_ecuConfig("ecu-defs/schema.json") // TODO: build this more intelligently
 {
   ui->setupUi(this);
   setupThreadsAndSignals();
@@ -99,33 +101,23 @@ bool MainWindow::scanDefinitionDir(std::string& errorMsgs)
            defDir.entryInfoList(QStringList() << "*.json", QDir::Files | QDir::NoSymLinks))
   {
     const std::string filePath = file.filePath().toStdString();
-
-    try
+    if (m_ecuConfig.loadFile(filePath))
     {
-      std::ifstream jsonFstream(filePath);
-      json data = json::parse(jsonFstream);
-      const bool requiredFieldsPresent = data.contains("vehicle") && data.contains("ecu");
-
-      if (requiredFieldsPresent)
+      if (m_ecuConfig.isValid())
       {
-        const std::string carName = data.at("vehicle");
-        std::string ecuName = data.at("ecu");
-        if (data.contains("position"))
+        std::string carName;
+        std::string ecuName;
+        if (m_ecuConfig.getCarAndECUNames(carName, ecuName))
         {
-          ecuName += " (" + data.at("position").get<std::string>() + ")";
+          m_carConfigFilenames[carName][ecuName] = filePath;
         }
-        m_carConfigFilenames[carName][ecuName] = filePath;
       }
       else
       {
-        status = false;
-        errorMsgs += "Required fields missing from '" + filePath + "'\n";
       }
     }
-    catch (const json::parse_error& e)
+    else
     {
-      status = false;
-      errorMsgs += "Error parsing JSON: " + std::string(e.what()) + "\n";
     }
   }
 
@@ -152,30 +144,18 @@ bool MainWindow::setFTDIDeviceInfo()
   return (index >= 0);
 }
 
-bool MainWindow::parseProtocolNode(const json& protocolNode)
+bool MainWindow::setProtocol()
 {
   ProtocolType protocol = ProtocolType::None;
   LineType initLine = LineType::None;
   std::string variant;
   int baud = 0;
-  bool status = true;
+  bool status = false;
 
-  try
+  if (m_ecuConfig.getProtocolInfo(m_ecuAddr, protocol, baud, initLine, variant))
   {
-    m_ecuAddr = std::stoul(protocolNode.at("address").get<std::string>(), nullptr, 0);
-    baud = protocolNode.at("baud");
-    protocol = protocolTypeFromString(protocolNode.at("family"));
-    variant = protocolNode.at("variant");
-    status = (protocol != ProtocolType::None);
-  }
-  catch (const json::out_of_range& e)
-  {
-    status = false;
-  }
-
-  if (status)
-  {
-    if (!m_iface.setProtocol(protocol, baud, initLine, variant))
+    status = m_iface.setProtocol(protocol, baud, initLine, variant);
+    if (!status)
     {
       QMessageBox::warning(this, "Error", "Failed setting up protocol interface.", QMessageBox::Ok);
     }
@@ -188,96 +168,6 @@ bool MainWindow::parseProtocolNode(const json& protocolNode)
   return status;
 }
 
-QMap<int,QString> MainWindow::getMapOfEnumVals(const json& node)
-{
-  QMap<int,QString> enumVals;
-  if (node.contains("enumvals"))
-  {
-   const std::map<std::string,std::string> enumValsStd = node.at("enumvals");
-   for (auto const& [key, value] : enumValsStd)
-   {
-    enumVals.insert(std::stoi(key), QString::fromStdString(value));
-   }
-  }
-  return enumVals;
-}
-
-bool MainWindow::createWidgetForMemoryParam(const json& node, ParamWidgetGroup*& widget)
-{
-  bool status = true;
-  try
-  {
-    const QString name = QString::fromStdString(node.at("name"));
-    const MemoryType memType = node.contains("memtype") ? memTypeFromString(node.at("memtype")) : MemoryType::Unspecified;
-    const QString units = node.contains("units") ? QString::fromStdString(node.at("units")) : QString();
-    const QMap<int,QString> enumVals = getMapOfEnumVals(node);
-
-    const unsigned int addr = std::stoul(node.at("address").get<std::string>(), nullptr, 0);
-    const unsigned int numBytes = node.at("numbytes");
-    const float lsb = node.contains("lsb") ? node.at("lsb").get<float>() : 1.0f;
-    const float offset = node.contains("offset") ? node.at("offset").get<float>() : 0.0f;
-    widget = new ParamWidgetGroup(name, memType, addr, numBytes, lsb, offset, units, enumVals, this);
-  }
-  catch (const json::out_of_range& e)
-  {
-    status = false;
-  }
-
-  return status;
-}
-
-bool MainWindow::createWidgetForStoredValueParam(const json& node, ParamWidgetGroup*& widget)
-{
-  bool status = true;
-
-  try
-  {
-    const QString name = QString::fromStdString(node.at("name"));
-    const QString units = node.contains("units") ? QString::fromStdString(node.at("units")) : QString();
-    const std::map<std::string,std::string> enumValsStd = node.at("enumvals");
-    QMap<int,QString> enumVals;
-    for (auto const& [key, value] : enumValsStd)
-    {
-      enumVals.insert(std::stoi(key), QString::fromStdString(value));
-    }
-
-    const unsigned int id = node.at("id");
-    const float lsb = node.contains("lsb") ? node["lsb"].get<float>() : 1.0f;
-    const float offset = node.contains("offset") ? node.at("offset").get<float>() : 0.0f;
-    widget = new ParamWidgetGroup(name, id, lsb, offset, units, enumVals, this);
-  }
-  catch (const json::out_of_range& e)
-  {
-    status = false;
-  }
-  
-  return status;
-}
-
-bool MainWindow::createWidgetForSnapshotParam(const json& node, ParamWidgetGroup*& widget)
-{
-  bool status = true;
-
-  try
-  {
-    const QString name = QString::fromStdString(node.at("name"));
-    const QString units = node.contains("units") ? QString::fromStdString(node.at("units")) : QString();
-    const QMap<int,QString> enumVals = getMapOfEnumVals(node);
-    const unsigned int snapshot = node.at("snapshot");
-    const unsigned int addr = node.at("address");
-    const unsigned int numBytes = node.at("numbytes");
-    const float lsb = node.contains("lsb") ? node.at("lsb").get<float>() : 1.0f;
-    const float offset = node.contains("offset") ? node.at("offset").get<float>() : 0.0f;
-    widget = new ParamWidgetGroup(name, snapshot, addr, numBytes, lsb, offset, units, enumVals, this);
-  }
-  catch (const json::out_of_range& e)
-  {
-    status = false;
-  }
-
-  return status;
-}
-
 void MainWindow::populateParamWidgets()
 {
   int row = 0;
@@ -285,16 +175,27 @@ void MainWindow::populateParamWidgets()
 
   clearParamWidgets();
 
-  for (auto node : m_currentJSON.at("parameters"))
+  const auto paramDataList = m_ecuConfig.getParameterDefs();
+  for (const auto& p : paramDataList)
   {
-    ParamWidgetGroup* paramWidget = nullptr;
+    ParamWidgetGroup* widget = nullptr;
 
-    // Check the node for all the required fields to define a memory offset, stored value, or snapshot parameter.
-    if (createWidgetForMemoryParam(node, paramWidget) ||
-        createWidgetForStoredValueParam(node, paramWidget) ||
-        createWidgetForSnapshotParam(node, paramWidget))
+    if (p.type == ParamType::MemoryAddress)
     {
-      ui->parametersGrid->addWidget(paramWidget, row, col);
+      widget = new ParamWidgetGroup(p.name, p.memType, p.address, p.numByte, p.lsb, p.offset, p.units, p.enumVals, this);
+    }
+    else if (p.type == ParamType::StoredValue)
+    {
+      widget = new ParamWidgetGroup(p.name, p.id, p.lsb, p.offset, p.units, p.enumVals, this);
+    }
+    else if (p.type == ParamType::SnapshotLocation)
+    {
+      widget = new ParamWidgetGroup(p.name, p.snapshot, p.address, p.numByte, p.lsb, p.offset, p.units, p.enumVals, this);
+    }
+
+    if (widget)
+    {
+      ui->parametersGrid->addWidget(widget, row, col);
       if (++col > 1)
       {
         col = 0;
@@ -319,28 +220,20 @@ void MainWindow::populateActuatorWidgets()
 {
   int row = 0;
   int col = 0;
-
   clearActuatorWidgets();
 
-  if (m_currentJSON.contains("actuators") && m_currentJSON.at("actuators").is_array())
+  const auto actuatorList = m_ecuConfig.getActuators();
+
+  for (const auto [name, id] : actuatorList)
   {
-    for (const auto& actEntry : m_currentJSON.at("actuators"))
+    ActuatorWidgetGroup* actWidget = new ActuatorWidgetGroup(QString::fromStdString(name), id, this);
+    ui->actuatorsGrid->addWidget(actWidget, row, col);
+    // TODO: connect the button click signal
+
+    if (++col > 1)
     {
-      if (actEntry.contains("name") && actEntry.contains("id"))
-      {
-        const QString name = QString::fromStdString(actEntry.at("name"));
-        const unsigned int id = actEntry.at("id");
-
-        ActuatorWidgetGroup* actWidget = new ActuatorWidgetGroup(name, id, this);
-        ui->actuatorsGrid->addWidget(actWidget, row, col);
-        // TODO: connect the button click signal
-
-        if (++col > 1)
-        {
-          col = 0;
-          row++;
-        }
-      }
+      col = 0;
+      row++;
     }
   }
 }
@@ -392,20 +285,24 @@ void MainWindow::on_setDefinitionButton_clicked()
 
   if (m_carConfigFilenames.count(carName) && m_carConfigFilenames.at(carName).count(ecuName))
   {
-    const std::string jsonFilepath = m_carConfigFilenames.at(carName).at(ecuName);
-    std::ifstream jsonFile(jsonFilepath);
-    m_currentJSON = json::parse(jsonFile);
+    const std::string ecuCfgFilePath = m_carConfigFilenames.at(carName).at(ecuName);
 
-    populateParamWidgets();
-    populateActuatorWidgets();
-
-    if (m_currentJSON.contains("protocol"))
+    if (m_ecuConfig.loadFile(ecuCfgFilePath))
     {
-      parseProtocolNode(m_currentJSON.at("protocol"));
+      if (m_ecuConfig.isValid())
+      {
+        populateParamWidgets();
+        populateActuatorWidgets();
+        setProtocol();
+      }
+      else
+      {
+        //TODO
+      }
     }
     else
     {
-      QMessageBox::warning(this, "Error", "Definition file does not contain valid protocol information.", QMessageBox::Ok);
+      //TODO
     }
   }
 }
@@ -460,3 +357,4 @@ void MainWindow::on_disconnectButton_clicked()
   ui->disconnectButton->setEnabled(false);
   emit disconnectInterface();
 }
+

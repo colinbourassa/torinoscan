@@ -4,12 +4,10 @@
 #include <QList>
 #include <QThread>
 #include <map>
-#include <nlohmann/json.hpp>
 #include "protocoliface.h"
 #include "paramwidgetgroup.h"
+#include "ecuconfig.h"
 #include <iceblock/ftdi_enumerator.h>
-
-using json = nlohmann::json;
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -44,20 +42,16 @@ private:
   Ui::MainWindow* ui;
   QList<ParamWidgetGroup*> m_paramWidgets;
   std::map<std::string,std::map<std::string,std::string>> m_carConfigFilenames;
-  json m_currentJSON;
   ProtocolIface m_iface;
   QThread m_ifaceThread;
   std::vector<FtdiDeviceInfo> m_ftdiDeviceInfo;
   uint8_t m_ecuAddr;
+  ECUConfig m_ecuConfig;
 
   void setupThreadsAndSignals();
   void setParamCheckboxStates(bool checked);
   bool scanDefinitionDir(std::string& errorMsgs);
   void populateCarPickList();
-  bool parseProtocolNode(const json& protocolNode);//, uint8_t& ecuAddr);
-  bool createWidgetForMemoryParam(const json& node, ParamWidgetGroup*& widget);
-  bool createWidgetForStoredValueParam(const json& node, ParamWidgetGroup*& widget);
-  bool createWidgetForSnapshotParam(const json& node, ParamWidgetGroup*& widget);
   void populateParamWidgets();
   void clearParamWidgets();
   void populateActuatorWidgets();
@@ -65,7 +59,7 @@ private:
   void updateParamData(const QList<ParamWidgetGroup*>& paramWidgets);
   bool setFTDIDeviceInfo();
   void refreshFTDIDeviceList();
-  QMap<int,QString> getMapOfEnumVals(const json& node);
+  bool setProtocol();
 
 signals:
   void connectInterface(uint8_t ecuAddr);

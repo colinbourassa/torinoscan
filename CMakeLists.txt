@@ -13,7 +13,8 @@ set(MAIN_EXEC_NAME ${CMAKE_PROJECT_NAME})
 
 find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Widgets)
 find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets)
-find_package(yaml-cpp)
+find_package(nlohmann_json REQUIRED)
+find_package(valijson REQUIRED)
 find_package(PkgConfig)
 pkg_check_modules(LIBRARY_ICEBLOCK libiceblock IMPORTED_TARGET)
 
@@ -26,6 +27,8 @@ set(PROJECT_SOURCES
       src/mainwindow.cpp
       src/mainwindow.h
       src/mainwindow.ui
+      src/ecuconfig.cpp
+      src/ecuconfig.h
       src/paramwidgetgroup.cpp
       src/paramwidgetgroup.h
       src/actuatorwidgetgroup.cpp
@@ -49,7 +52,8 @@ endif()
 
 target_link_libraries(${MAIN_EXEC_NAME} PRIVATE
     Qt${QT_VERSION_MAJOR}::Widgets
-    yaml-cpp
+    nlohmann_json
+    valijson
     iceblock
     )
 
