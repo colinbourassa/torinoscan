@@ -1,0 +1,255 @@
+{
+    "vehicle": "550 Maranello",
+    "ecu": "Bilstein suspension",
+    "protocol": {
+        "family": "Bilstein",
+        "variant": "standard",
+        "baud": 9600,
+        "address": "0x00"
+    },
+    "parameters": [
+        {
+            "name": "Switch position",
+            "enumvals": {
+                "0": "SOFT",
+                "1": "SPORT"
+            },
+            "address": "0x0055",
+            "numbytes": 1,
+            "mask": "0x01"
+        },
+        {
+            "name": "Accelerometer state",
+            "enumvals": {
+                "0": "NOT ACTIVE",
+                "8": "ACTIVE"
+            },
+            "address": "0x0055",
+            "numbytes": 1,
+            "mask": "0x08"
+        },
+        {
+            "name": "LH front rated actuator",
+            "decimals": 1,
+            "address": "0x0068",
+            "numbytes": 1,
+            "lsb": 0.4,
+            "offset": 0,
+            "units": "percent"
+        },
+        {
+            "name": "LH front current actuator",
+            "decimals": 1,
+            "address": "0x0069",
+            "numbytes": 1,
+            "lsb": 0.4,
+            "offset": 0,
+            "units": "percent"
+        },
+        {
+            "name": "RH front rated actuator",
+            "decimals": 1,
+            "address": "0x006C",
+            "numbytes": 1,
+            "lsb": 0.4,
+            "offset": 0,
+            "units": "percent"
+        },
+        {
+            "name": "RH front current actuator",
+            "decimals": 1,
+            "address": "0x006D",
+            "numbytes": 1,
+            "lsb": 0.4,
+            "offset": 0,
+            "units": "percent"
+        },
+        {
+            "name": "LH rear rated actuator",
+            "decimals": 1,
+            "address": "0x0070",
+            "numbytes": 1,
+            "lsb": 0.4,
+            "offset": 0,
+            "units": "percent"
+        },
+        {
+            "name": "LH rear current actuator",
+            "decimals": 1,
+            "address": "0x0071",
+            "numbytes": 1,
+            "lsb": 0.4,
+            "offset": 0,
+            "units": "percent"
+        },
+        {
+            "name": "RH rear rated actuator",
+            "decimals": 1,
+            "address": "0x0074",
+            "numbytes": 1,
+            "lsb": 0.4,
+            "offset": 0,
+            "units": "percent"
+        },
+        {
+            "name": "RH rear current actuator",
+            "decimals": 1,
+            "address": "0x0075",
+            "numbytes": 1,
+            "lsb": 0.4,
+            "offset": 0,
+            "units": "percent"
+        },
+        {
+            "name": "Steering angle",
+            "decimals": 1,
+            "address": "0x0078",
+            "numbytes": 2,
+            "lsb": 4.5,
+            "offset": 0,
+            "units": "degrees",
+            "comment": "Note that this is a signed multibyte value, but the protocol supports only one byte per read."
+        },
+        {
+            "name": "Steering speed",
+            "decimals": 0,
+            "address": "0x007E",
+            "numbytes": 1,
+            "lsb": 1,
+            "offset": 0,
+            "units": "degrees per second"
+        },
+        {
+            "name": "Throttle pot voltage",
+            "decimals": 2,
+            "address": "0x0089",
+            "numbytes": 1,
+            "lsb": 0.02,
+            "offset": 0,
+            "units": "V"
+        },
+        {
+            "name": "Vehicle speed",
+            "decimals": 0,
+            "address": "0x009F",
+            "numbytes": 1,
+            "lsb": 1,
+            "offset": 0,
+            "units": "km/h"
+        }
+    ],
+    "faultcodes": [
+        {
+            "name": "Switch error (no contact)",
+            "address": "0x0056",
+            "numbytes": 1,
+            "mask": "0x10",
+            "comment": "Alternate offset is 0x0001 with cmd 0x11"
+        },
+        {
+            "name": "Switch error (multiple contact)",
+            "address": "0x0056",
+            "numbytes": 1,
+            "mask": "0x20",
+            "comment": "Alternate offset is 0x0001 with cmd 0x11"
+        },
+        {
+            "name": "Lamp error (short circuit)",
+            "address": "0x0056",
+            "numbytes": 1,
+            "mask": "0x40",
+            "comment": "Alternate offset is 0x0001 with cmd 0x11"
+        },
+        {
+            "name": "Lamp error (open circuit)",
+            "address": "0x0057",
+            "numbytes": 1,
+            "mask": "0x01",
+            "comment": "Alternate offset is 0x0002 with cmd 0x11"
+        },
+        {
+            "name": "Braking system sensor disconnected",
+            "address": "0x0057",
+            "numbytes": 1,
+            "mask": "0x04",
+            "comment": "Alternate offset is 0x0002 with cmd 0x11"
+        },
+        {
+            "name": "Acceleration sensor line L disconnected",
+            "address": "0x0057",
+            "numbytes": 1,
+            "mask": "0x08",
+            "comment": "Alternate offset is 0x0002 with cmd 0x11"
+        },
+        {
+            "name": "Acceleration sensor line H disconnected",
+            "address": "0x0057",
+            "numbytes": 1,
+            "mask": "0x10",
+            "comment": "Alternate offset is 0x0002 with cmd 0x11"
+        },
+        {
+            "name": "Left front actuator not in position",
+            "address": "0x0058",
+            "numbytes": 1,
+            "mask": "0x10",
+            "comment": "Alternate offset is 0x0003 with cmd 0x11"
+        },
+        {
+            "name": "Right front actuator not in position",
+            "address": "0x0058",
+            "numbytes": 1,
+            "mask": "0x20",
+            "comment": "Alternate offset is 0x0003 with cmd 0x11"
+        },
+        {
+            "name": "Left rear actuator not in position",
+            "address": "0x0058",
+            "numbytes": 1,
+            "mask": "0x40",
+            "comment": "Alternate offset is 0x0003 with cmd 0x11"
+        },
+        {
+            "name": "Right rear actuator not in position",
+            "address": "0x0057",
+            "numbytes": 1,
+            "mask": "0x02",
+            "comment": "Alternate offset is 0x0002 with cmd 0x11"
+        },
+        {
+            "name": "Left front actuator locked",
+            "address": "0x0058",
+            "numbytes": 1,
+            "mask": "0x01",
+            "comment": "Alternate offset is 0x0003 with cmd 0x11"
+        },
+        {
+            "name": "Right front actuator locked",
+            "address": "0x0058",
+            "numbytes": 1,
+            "mask": "0x02",
+            "comment": "Alternate offset is 0x0003 with cmd 0x11"
+        },
+        {
+            "name": "Left rear actuator locked",
+            "address": "0x0058",
+            "numbytes": 1,
+            "mask": "0x04",
+            "comment": "Alternate offset is 0x0003 with cmd 0x11"
+        },
+        {
+            "name": "Right rear actuator locked",
+            "address": "0x0058",
+            "numbytes": 1,
+            "mask": "0x08",
+            "comment": "Alternate offset is 0x0003 with cmd 0x11"
+        },
+        {
+            "name": "Speed signal not detected",
+            "address": "0x0057",
+            "numbytes": 1,
+            "mask": "0x20",
+            "comment": "Alternate offset is 0x0002 with cmd 0x11"
+        }
+    ]
+}
