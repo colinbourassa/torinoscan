@@ -1,0 +1,1057 @@
+{
+    "vehicle": "F355",
+    "ecu": "Marelli F1 TCU",
+    "protocol": {
+        "family": "Marelli1AF",
+        "variant": "ferrari",
+        "baud": 9600,
+        "address": "0x02",
+        "comment": "The Ferrari variant of this protocol has the following differences: (a) bytes 01-04 of the 0xAE reply are used as real data rather than just sync bytes; (b) snapshots contain 16 bytes rather than 10."
+    },
+    "parameters": [
+        {
+            "name": "Engagement potentiometer travel",
+            "decimals": 2,
+            "id": "0x01",
+            "lsb": 0.03,
+            "offset": -3.71,
+            "units": "mm"
+        },
+        {
+            "name": "Potentiometer clutch travel",
+            "decimals": 2,
+            "id": "0x02",
+            "lsb": 0.07,
+            "offset": -41.75,
+            "units": "deg",
+            "comment": "LSB is derived from division by 14.3"
+        },
+        {
+            "name": "Clutch travel",
+            "decimals": 2,
+            "id": "0x03",
+            "lsb": 0.0355,
+            "offset": -2.7,
+            "units": "mm",
+            "comment": "LSB is derived from division by 28.17"
+        },
+        {
+            "name": "Clutch travel reference",
+            "decimals": 2,
+            "id": "0x04",
+            "lsb": 0.0355,
+            "offset": -2.7,
+            "units": "mm",
+            "comment": "LSB is derived from division by 28.17"
+        },
+        {
+            "name": "Throttle potentiometer",
+            "decimals": 0,
+            "id": "0x05",
+            "lsb": 1,
+            "offset": 0
+        },
+        {
+            "name": "Hydraulic circuit pressure",
+            "decimals": 1,
+            "id": "0x06",
+            "lsb": 0.1,
+            "offset": 0,
+            "units": "bar"
+        },
+        {
+            "name": "Water temperature",
+            "decimals": 1,
+            "id": "0x07",
+            "offset": 0,
+            "bcd": true,
+            "units": "C",
+            "comment": "Example: 0x1253 is 125.3 deg"
+        },
+        {
+            "name": "Battery voltage",
+            "decimals": 1,
+            "id": "0x08",
+            "lsb": 2.44,
+            "offset": 0,
+            "units": "V"
+        },
+        {
+            "name": "Lever status",
+            "enumvals": {
+                "0": "Neutral",
+                "1": "Up",
+                "2": "Rev. gear",
+                "3": "Down",
+                "4": "Neutral"
+            },
+            "id": "0x09"
+        },
+        {
+            "name": "Engine speed",
+            "decimals": 0,
+            "id": "0x0A",
+            "lsb": 1,
+            "offset": 0,
+            "units": "RPM"
+        },
+        {
+            "name": "Gearbox primary angle speed",
+            "decimals": 0,
+            "id": "0x0B",
+            "lsb": 1,
+            "offset": 0,
+            "units": "RPM"
+        },
+        {
+            "name": "Vehicle speed",
+            "decimals": 0,
+            "id": "0x0C",
+            "lsb": 3.068493151,
+            "offset": 0,
+            "units": "km/h"
+        },
+        {
+            "name": "Gear engaged",
+            "enumvals": {
+                "0": "Neutral",
+                "1": "First",
+                "2": "Second",
+                "3": "Third",
+                "4": "Fourth",
+                "5": "Fifth",
+                "6": "Sixth",
+                "7": "Reverse"
+            },
+            "id": "0x0D",
+            "comment": "8-bit value"
+        },
+        {
+            "name": "Brake SW status",
+            "enumvals": {
+                "0": "ON",
+                "1": "OFF"
+            },
+            "id": "0x0E",
+            "mask": "0x01"
+        },
+        {
+            "name": "Driver side door status",
+            "enumvals": {
+                "0": "OFF",
+                "1": "ON"
+            },
+            "id": "0x0E",
+            "mask": "0x02"
+        },
+        {
+            "name": "Key input condition",
+            "enumvals": {
+                "0": "OFF",
+                "1": "ON"
+            },
+            "id": "0x0E",
+            "mask": "0x04"
+        },
+        {
+            "name": "Start-up input status",
+            "enumvals": {
+                "0": "OFF",
+                "1": "ON"
+            },
+            "id": "0x0E",
+            "mask": "0x08"
+        },
+        {
+            "name": "Auto SW status",
+            "enumvals": {
+                "0": "OFF",
+                "1": "ON"
+            },
+            "id": "0x0E",
+            "mask": "0x10"
+        },
+        {
+            "name": "Sport SW status",
+            "enumvals": {
+                "0": "OFF",
+                "1": "ON"
+            },
+            "id": "0x0E",
+            "mask": "0x20"
+        },
+        {
+            "name": "Low grip SW status",
+            "enumvals": {
+                "0": "OFF",
+                "1": "ON"
+            },
+            "id": "0x0E",
+            "mask": "0x40"
+        },
+        {
+            "name": "SV current control for uneven gear engagement (mA)",
+            "decimals": 1,
+            "id": "0x0F",
+            "lsb": 9.8,
+            "offset": 0,
+            "units": "mA",
+            "comment": "8-bit value"
+        },
+        {
+            "name": "SV current control for even gear engagement",
+            "decimals": 1,
+            "id": "0x10",
+            "lsb": 9.8,
+            "offset": 0,
+            "units": "mA",
+            "comment": "8-bit value"
+        },
+        {
+            "name": "Clutch SV current control",
+            "decimals": 2,
+            "id": "0x11",
+            "lsb": 78.4,
+            "offset": 0,
+            "units": "A",
+            "comment": "8-bit value"
+        },
+        {
+            "name": "1-2-3 SELECTION SV CONTROL",
+            "enumvals": {
+                "0": "RANG 1a-2a",
+                "1": "RANG 3a-4a",
+                "2": "RANG 5a-6a",
+                "3": "REVERSE STATUS"
+            },
+            "id": "0x12"
+        },
+        {
+            "name": "Pump relay control",
+            "enumvals": {
+                "0x00000000": "Relay OFF",
+                "0x01000000": "Relay ON"
+            },
+            "id": "0x14"
+        },
+        {
+            "name": "Effective torque Motronic",
+            "decimals": 0,
+            "id": "0x15",
+            "lsb": 1,
+            "offset": 0,
+            "units:": "Nm",
+            "comment": "16-bit value"
+        },
+        {
+            "name": "Thresholds for sure minimum shift to neutral",
+            "snapshot": "0x01",
+            "address": "0x00",
+            "numbytes": 2,
+            "lsb": 1
+        },
+        {
+            "name": "Thresholds for sure minimum shift to first",
+            "snapshot": "0x01",
+            "address": "0x02",
+            "numbytes": 2,
+            "lsb": 1
+        },
+        {
+            "name": "Thresholds for sure minimum shift to second",
+            "snapshot": "0x01",
+            "address": "0x04",
+            "numbytes": 2,
+            "lsb": 1
+        },
+        {
+            "name": "Thresholds for sure minimum shift to third",
+            "snapshot": "0x01",
+            "address": "0x06",
+            "numbytes": 2,
+            "lsb": 1
+        },
+        {
+            "name": "Thresholds for sure minimum shift to fourth",
+            "snapshot": "0x01",
+            "address": "0x08",
+            "numbytes": 2,
+            "lsb": 1
+        },
+        {
+            "name": "Thresholds for sure minimum shift to fifth",
+            "snapshot": "0x01",
+            "address": "0x0A",
+            "numbytes": 2,
+            "lsb": 1
+        },
+        {
+            "name": "Thresholds for sure minimum shift to sixth",
+            "snapshot": "0x01",
+            "address": "0x0C",
+            "numbytes": 2,
+            "lsb": 1
+        },
+        {
+            "name": "Thresholds for sure minimum shift to reverse",
+            "snapshot": "0x01",
+            "address": "0x0E",
+            "numbytes": 2,
+            "lsb": 1
+        },
+        {
+            "name": "Thresholds for sure maximum shift to neutral",
+            "snapshot": "0x02",
+            "address": "0x00",
+            "numbytes": 2,
+            "lsb": 1
+        },
+        {
+            "name": "Thresholds for sure maximum shift to first",
+            "snapshot": "0x02",
+            "address": "0x02",
+            "numbytes": 2,
+            "lsb": 1
+        },
+        {
+            "name": "Thresholds for sure maximum shift to second",
+            "snapshot": "0x02",
+            "address": "0x04",
+            "numbytes": 2,
+            "lsb": 1
+        },
+        {
+            "name": "Thresholds for sure maximum shift to third",
+            "snapshot": "0x02",
+            "address": "0x06",
+            "numbytes": 2,
+            "lsb": 1
+        },
+        {
+            "name": "Thresholds for sure maximum shift to fourth",
+            "snapshot": "0x02",
+            "address": "0x08",
+            "numbytes": 2,
+            "lsb": 1
+        },
+        {
+            "name": "Thresholds for sure maximum shift to fifth",
+            "snapshot": "0x02",
+            "address": "0x0A",
+            "numbytes": 2,
+            "lsb": 1
+        },
+        {
+            "name": "Thresholds for sure maximum shift to sixth",
+            "snapshot": "0x02",
+            "address": "0x0C",
+            "numbytes": 2,
+            "lsb": 1
+        },
+        {
+            "name": "Thresholds for sure maximum shift to reverse",
+            "snapshot": "0x02",
+            "address": "0x0E",
+            "numbytes": 2,
+            "lsb": 1
+        },
+        {
+            "name": "Thresholds for minimum sure neutral selection",
+            "snapshot": "0x03",
+            "address": "0x00",
+            "numbytes": 2,
+            "lsb": 1
+        },
+        {
+            "name": "Thresholds for minimum sure first gear selection",
+            "snapshot": "0x03",
+            "address": "0x02",
+            "numbytes": 2,
+            "lsb": 1
+        },
+        {
+            "name": "Thresholds for minimum sure second gear selection",
+            "snapshot": "0x03",
+            "address": "0x04",
+            "numbytes": 2,
+            "lsb": 1
+        },
+        {
+            "name": "Thresholds for minimum sure third gear selection",
+            "snapshot": "0x03",
+            "address": "0x06",
+            "numbytes": 2,
+            "lsb": 1
+        },
+        {
+            "name": "Thresholds for minimum sure fourth gear selection",
+            "snapshot": "0x03",
+            "address": "0x08",
+            "numbytes": 2,
+            "lsb": 1
+        },
+        {
+            "name": "Thresholds for minimum sure fifth gear selection",
+            "snapshot": "0x03",
+            "address": "0x0A",
+            "numbytes": 2,
+            "lsb": 1
+        },
+        {
+            "name": "Thresholds for minimum sure sixth gear selection",
+            "snapshot": "0x03",
+            "address": "0x0C",
+            "numbytes": 2,
+            "lsb": 1
+        },
+        {
+            "name": "Thresholds for minimum sure reverse gear selection",
+            "snapshot": "0x03",
+            "address": "0x0E",
+            "numbytes": 2,
+            "lsb": 1
+        },
+        {
+            "name": "Thresholds for maximum sure neutral selection",
+            "snapshot": "0x04",
+            "address": "0x00",
+            "numbytes": 2,
+            "lsb": 1
+        },
+        {
+            "name": "Thresholds for maximum sure first gear selection",
+            "snapshot": "0x04",
+            "address": "0x02",
+            "numbytes": 2,
+            "lsb": 1
+        },
+        {
+            "name": "Thresholds for maximum sure second gear selection",
+            "snapshot": "0x04",
+            "address": "0x04",
+            "numbytes": 2,
+            "lsb": 1
+        },
+        {
+            "name": "Thresholds for maximum sure third gear selection",
+            "snapshot": "0x04",
+            "address": "0x06",
+            "numbytes": 2,
+            "lsb": 1
+        },
+        {
+            "name": "Thresholds for maximum sure fourth gear selection",
+            "snapshot": "0x04",
+            "address": "0x08",
+            "numbytes": 2,
+            "lsb": 1
+        },
+        {
+            "name": "Thresholds for maximum sure fifth gear selection",
+            "snapshot": "0x04",
+            "address": "0x0A",
+            "numbytes": 2,
+            "lsb": 1
+        },
+        {
+            "name": "Thresholds for maximum sure sixth gear selection",
+            "snapshot": "0x04",
+            "address": "0x0C",
+            "numbytes": 2,
+            "lsb": 1
+        },
+        {
+            "name": "Thresholds for maximum sure reverse gear selection",
+            "snapshot": "0x04",
+            "address": "0x0E",
+            "numbytes": 2,
+            "lsb": 1
+        },
+        {
+            "name": "Self-calibrated closed clutch position",
+            "decimals": 2,
+            "id": "0x16",
+            "numbytes": 2,
+            "lsb": 0.0355,
+            "offset": -2.7,
+            "units": "mm",
+            "comment": "LSB is derived from division by 28.17"
+        },
+        {
+            "name": "P.I. distance position - closed self-calibrated",
+            "decimals": 2,
+            "id": "0x17",
+            "numbytes": 2,
+            "lsb": 0.0355,
+            "offset": -2.7,
+            "units": "mm",
+            "comment": "LSB is derived from division by 28.17"
+        },
+        {
+            "name": "Self-calibrated min. accelerator position",
+            "decimals": 2,
+            "address": "0x18",
+            "numbytes": 2,
+            "lsb": 0.105374,
+            "offset": -5.374,
+            "units": "mm",
+            "comment": "LSB is derived from division by 9.4899998"
+        },
+        {
+            "name": "Closed potent. current at system center, self-calibrated clutch solenoid valve",
+            "decimals": 2,
+            "address": "0x19",
+            "numbytes": 2,
+            "lsb": 0.00784,
+            "offset": 0,
+            "units": "A"
+        },
+        {
+            "name": "Wide thresholds for min. neutral selection",
+            "snapshot": "0x07",
+            "address": "0x00",
+            "numbytes": 2,
+            "lsb": 1
+        },
+        {
+            "name": "Wide thresholds for min. first gear selection",
+            "snapshot": "0x07",
+            "address": "0x02",
+            "numbytes": 2,
+            "lsb": 1
+        },
+        {
+            "name": "Wide thresholds for min. second gear selection",
+            "snapshot": "0x07",
+            "address": "0x04",
+            "numbytes": 2,
+            "lsb": 1
+        },
+        {
+            "name": "Wide thresholds for min. third gear selection",
+            "snapshot": "0x07",
+            "address": "0x06",
+            "numbytes": 2,
+            "lsb": 1
+        },
+        {
+            "name": "Wide thresholds for min. fourth gear selection",
+            "snapshot": "0x07",
+            "address": "0x08",
+            "numbytes": 2,
+            "lsb": 1
+        },
+        {
+            "name": "Wide thresholds for min. fifth gear selection",
+            "snapshot": "0x07",
+            "address": "0x0A",
+            "numbytes": 2,
+            "lsb": 1
+        },
+        {
+            "name": "Wide thresholds for min. sixth gear selection",
+            "snapshot": "0x07",
+            "address": "0x0C",
+            "numbytes": 2,
+            "lsb": 1
+        },
+        {
+            "name": "Wide thresholds for min. reverse gear selection",
+            "snapshot": "0x07",
+            "address": "0x0E",
+            "numbytes": 2,
+            "lsb": 1
+        },
+        {
+            "name": "Wide thresholds for max. neutral selection",
+            "snapshot": "0x08",
+            "address": "0x00",
+            "numbytes": 2,
+            "lsb": 1
+        },
+        {
+            "name": "Wide thresholds for max. first gear selection",
+            "snapshot": "0x08",
+            "address": "0x02",
+            "numbytes": 2,
+            "lsb": 1
+        },
+        {
+            "name": "Wide thresholds for max. second gear selection",
+            "snapshot": "0x08",
+            "address": "0x04",
+            "numbytes": 2,
+            "lsb": 1
+        },
+        {
+            "name": "Wide thresholds for max. third gear selection",
+            "snapshot": "0x08",
+            "address": "0x06",
+            "numbytes": 2,
+            "lsb": 1
+        },
+        {
+            "name": "Wide thresholds for max. fourth gear selection",
+            "snapshot": "0x08",
+            "address": "0x08",
+            "numbytes": 2,
+            "lsb": 1
+        },
+        {
+            "name": "Wide thresholds for max. fifth gear selection",
+            "snapshot": "0x08",
+            "address": "0x0A",
+            "numbytes": 2,
+            "lsb": 1
+        },
+        {
+            "name": "Wide thresholds for max. sixth gear selection",
+            "snapshot": "0x08",
+            "address": "0x0C",
+            "numbytes": 2,
+            "lsb": 1
+        },
+        {
+            "name": "Wide thresholds for max. reverse gear selection",
+            "snapshot": "0x08",
+            "address": "0x0E",
+            "numbytes": 2,
+            "lsb": 1
+        },
+        {
+            "name": "Open lid status",
+            "enumvals": {
+                "0": "OFF",
+                "1": "ON"
+            },
+            "id": "0x0E",
+            "mask": 128
+        },
+        {
+            "name": "Gearbox actuator centering",
+            "snapshot": "0x03",
+            "address": "0x06",
+            "numbytes": 2,
+            "decimals": 1,
+            "lsb": -0.034897,
+            "offset": 18.1,
+            "units": "degrees"
+        },
+        {
+            "name": "Clutch position as new",
+            "decimals": 2,
+            "id": "0x1F",
+            "lsb": 0.0355,
+            "offset": -2.7,
+            "units": "mm",
+            "comment": "LSB is derived from division by 28.17"
+        },
+        {
+            "name": "Clutch wear",
+            "decimals": 2,
+            "id": "0x03",
+            "lsb": 0.44373,
+            "units": "percent"
+        },
+        {
+            "name": "Gear engagements with wrong shifts",
+            "err-address": "0x00",
+            "lsb": 1
+        },
+        {
+            "name": "Gearbox input high RPM",
+            "err-address": "0x01",
+            "lsb": 1
+        },
+        {
+            "name": "Opposite gears engagements",
+            "err-address": "0x02",
+            "lsb": 1
+        },
+        {
+            "name": "Clutch beyond point of initial slip",
+            "err-address": "0x03",
+            "lsb": 1
+        },
+        {
+            "name": "Clutch hydraulic failure",
+            "err-address": "0x04",
+            "lsb": 1
+        },
+        {
+            "name": "Pump activation counter",
+            "id": "0x1A",
+            "lsb": 1
+        },
+        {
+            "name": "Pump time on",
+            "id": "0x1B",
+            "lsb": 1,
+            "units": "mins"
+        },
+        {
+            "name": "System time on",
+            "id": "0x1C",
+            "lsb": 1,
+            "units": "mins"
+        },
+        {
+            "name": "Clutch overheat time",
+            "id": "0x1D",
+            "lsb": 1
+        },
+        {
+            "name": "Neutral engagement counter",
+            "snapshot": "0x05",
+            "offset": "0x00",
+            "numbytes": 2,
+            "lsb": 1
+        },
+        {
+            "name": "1st gear engagement counter",
+            "snapshot": "0x05",
+            "offset": "0x02",
+            "numbytes": 2,
+            "lsb": 1
+        },
+        {
+            "name": "2nd gear engagement counter",
+            "snapshot": "0x05",
+            "offset": "0x04",
+            "numbytes": 2,
+            "lsb": 1
+        },
+        {
+            "name": "3rd gear engagement counter",
+            "snapshot": "0x05",
+            "offset": "0x06",
+            "numbytes": 2,
+            "lsb": 1
+        },
+        {
+            "name": "4th gear engagement counter",
+            "snapshot": "0x05",
+            "offset": "0x08",
+            "numbytes": 2,
+            "lsb": 1
+        },
+        {
+            "name": "5th gear engagement counter",
+            "snapshot": "0x05",
+            "offset": "0x0A",
+            "numbytes": 2,
+            "lsb": 1
+        },
+        {
+            "name": "6th gear engagement counter",
+            "snapshot": "0x05",
+            "offset": "0x0C",
+            "numbytes": 2,
+            "lsb": 1
+        },
+        {
+            "name": "Reverse gear engagement counter",
+            "snapshot": "0x05",
+            "offset": "0x0E",
+            "numbytes": 2,
+            "lsb": 1
+        },
+        {
+            "name": "Distance run in neutral",
+            "snapshot": "0x06",
+            "offset": "0x00",
+            "numbytes": 2,
+            "lsb": 1,
+            "units": "km"
+        },
+        {
+            "name": "Distance run in 1st gear",
+            "snapshot": "0x06",
+            "offset": "0x02",
+            "numbytes": 2,
+            "lsb": 1,
+            "units": "km"
+        },
+        {
+            "name": "Distance run in 2nd gear",
+            "snapshot": "0x06",
+            "offset": "0x04",
+            "numbytes": 2,
+            "lsb": 1,
+            "units": "km"
+        },
+        {
+            "name": "Distance run in 3rd gear",
+            "snapshot": "0x06",
+            "offset": "0x06",
+            "numbytes": 2,
+            "lsb": 1,
+            "units": "km"
+        },
+        {
+            "name": "Distance run in 4th gear",
+            "snapshot": "0x06",
+            "offset": "0x08",
+            "numbytes": 2,
+            "lsb": 1,
+            "units": "km"
+        },
+        {
+            "name": "Distance run in 5th gear",
+            "snapshot": "0x06",
+            "offset": "0x0A",
+            "numbytes": 2,
+            "lsb": 1,
+            "units": "km"
+        },
+        {
+            "name": "Distance run in 6th gear",
+            "snapshot": "0x06",
+            "offset": "0x0C",
+            "numbytes": 2,
+            "lsb": 1,
+            "units": "km"
+        },
+        {
+            "name": "Distance run in reverse",
+            "snapshot": "0x06",
+            "offset": "0x0E",
+            "numbytes": 2,
+            "lsb": 1,
+            "units": "km"
+        }
+    ],
+    "faultcodes": [
+        {
+            "name": "REVERSE SWITCH ERROR",
+            "address": "0x00 0x01"
+        },
+        {
+            "name": "STAND-BY SWITCH ERROR",
+            "address": "0x00 0x02"
+        },
+        {
+            "name": "SWITCH DOWN ERROR",
+            "address": "0x00 0x04"
+        },
+        {
+            "name": "SWITCH UP ERROR",
+            "address": "0x00 0x08"
+        },
+        {
+            "name": "CLUTCH POTENTIOMETER ERROR",
+            "address": "0x00 0x10"
+        },
+        {
+            "name": "SELECTION POTENTIOMETER ERROR",
+            "address": "0x00 0x20"
+        },
+        {
+            "name": "ENGAGEMENT POTENTIOMETER ERROR",
+            "address": "0x00 0x40"
+        },
+        {
+            "name": "ACCELERATOR POTENTIOMETER ERROR",
+            "address": "0x01 0x00"
+        },
+        {
+            "name": "OIL PRESSURE SENSOR ERROR",
+            "address": "0x02 0x00"
+        },
+        {
+            "name": "BATTERY VOLTAGE ERROR",
+            "address": "0x08 0x00"
+        },
+        {
+            "name": "CAN LINE ERROR",
+            "address": "0x80 0x00"
+        },
+        {
+            "name": "ENGINE REVOLUTIONS ERROR",
+            "address": "0x00 0x04"
+        },
+        {
+            "name": "GEARBOX OUTPUT REVOLUTIONS ERROR",
+            "address": "0x00 0x08"
+        },
+        {
+            "name": "GEARBOX INPUT REVOLUTIONS ERROR",
+            "address": "0x00 0x10"
+        },
+        {
+            "name": "ERROR ON THE SECOND MICROPROCESSOR",
+            "address": "0x00 0x20"
+        },
+        {
+            "name": "RESET ECU ERROR",
+            "address": "0x00 0x40"
+        },
+        {
+            "name": "GROUND DETACHMENT ERROR",
+            "address": "0x00 0x80"
+        },
+        {
+            "name": "DISPLAY CONTROL ERROR",
+            "address": "0x00 0x01"
+        },
+        {
+            "name": "BUZZER CONTROL ERROR",
+            "address": "0x00 0x02"
+        },
+        {
+            "name": "PUMP RELAY ERROR",
+            "address": "0x00 0x08"
+        },
+        {
+            "name": "MOTOR IGNITION RELAY ERROR",
+            "address": "0x00 0x10"
+        },
+        {
+            "name": "SELF-SUPPLY RELAY ERROR",
+            "address": "0x00 0x20"
+        },
+        {
+            "name": "SEL.1 SOLENOID VALVE ERROR",
+            "address": "0x02 0x00"
+        },
+        {
+            "name": "SEL.2 SOLENOID VALVE ERROR",
+            "address": "0x04 0x00"
+        },
+        {
+            "name": "SEL.4 SOLENOID VALVE ERROR",
+            "address": "0x08 0x00"
+        },
+        {
+            "name": "REVERSE LIGHT RELAY ERROR",
+            "address": "0x10 0x00"
+        },
+        {
+            "name": "CLUTCH SOLENOID VALVE ERROR",
+            "address": "0x20 0x00"
+        },
+        {
+            "name": "SOLENOID VALVE FOR UNEVEN GEARS ENGAGEMENT ERROR",
+            "address": "0x40 0x00"
+        },
+        {
+            "name": "SOLENOID VALVE FOR EVEN GEARS ENGAGEMENT ERROR",
+            "address": "0x80 0x00"
+        },
+        {
+            "name": "SELECTION POSITIONING ERROR",
+            "address": "0x00 0x01"
+        },
+        {
+            "name": "ENGAGEMENT POSITIONING ERROR",
+            "address": "0x00 0x02"
+        }
+    ],
+    "actuators": [
+        {
+            "name": "1st gear engagement",
+            "id": null,
+            "parameter": null,
+            "comment": "Many of the actuators here are actually exercised by using a sequence of several 'activate actuator' commands."
+        },
+        {
+            "name": "2nd gear engagement",
+            "id": null,
+            "parameter": null
+        },
+        {
+            "name": "3rd gear engagement",
+            "id": null,
+            "parameter": null
+        },
+        {
+            "name": "4th gear engagement",
+            "id": null,
+            "parameter": null
+        },
+        {
+            "name": "5th gear engagement",
+            "id": null,
+            "parameter": null
+        },
+        {
+            "name": "6th gear engagement",
+            "id": null,
+            "parameter": null
+        },
+        {
+            "name": "Neutral engagement",
+            "id": null,
+            "parameter": null
+        },
+        {
+            "name": "Reverse gear engagement",
+            "id": null,
+            "parameter": null
+        },
+        {
+            "name": "ACTUATOR CENTERING",
+            "parameter": 0
+        },
+        {
+            "name": "AIR BLEEDING FROM HYDRAULIC CIRCUIT (CLUTCH ACTUATOR)",
+            "parameter": 0
+        },
+        {
+            "name": "AIR BLEEDING FROM HYDRAULIC CIRCUIT (ENGAGEMENT/SELECTION ACTUATOR)",
+            "parameter": 0
+        },
+        {
+            "name": "CUSTOMIZATION"
+        },
+        {
+            "name": "SELF-LEARNING"
+        },
+        {
+            "name": "Pump on",
+            "id": "0x01",
+            "parameter": "0x01"
+        },
+        {
+            "name": "Pump off",
+            "id": "0x01",
+            "parameter": "0x00"
+        },
+        {
+            "name": "Reverse gear lights on",
+            "id": "0x03",
+            "parameter": "0x01"
+        },
+        {
+            "name": "Reverse gear lights off",
+            "id": "0x03",
+            "parameter": "0x00"
+        },
+        {
+            "name": "Display on",
+            "id": "0x0B",
+            "parameter": "0x01"
+        },
+        {
+            "name": "Display off",
+            "id": "0x0B",
+            "parameter": "0x00"
+        },
+        {
+            "name": "Buzzer on",
+            "id": "0x0C",
+            "parameter": "0x01"
+        },
+        {
+            "name": "Buzzer off",
+            "id": "0x0C",
+            "parameter": "0x00"
+        },
+        {
+            "name": "CLUTCH SV"
+        },
+        {
+            "name": "CLUTCH POSITION AS NEW"
+        }
+    ]
+}
