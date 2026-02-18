@@ -1,0 +1,123 @@
+{
+    "vehicle": "F355",
+    "ecu": "Bilstein suspension",
+    "protocol": {
+        "family": "Bilstein",
+        "variant": "standard",
+        "baud": 9600,
+        "address": "0x00"
+    },
+    "parameters": [
+        {
+            "name": "Braking in progress",
+            "enumvals": {
+                "0": "NO",
+                "1": "YES"
+            },
+            "address": "0x53",
+            "numbytes": 1,
+            "mask": "0x01"
+        },
+        {
+            "name": "First inertia sensor",
+            "enumvals": {
+                "0": "NOT ACTIVE",
+                "2": "ACTIVE"
+            },
+            "address": "0x53",
+            "numbytes": 1,
+            "mask": "0x02"
+        },
+        {
+            "name": "Accelerometer state",
+            "enumvals": {
+                "0": "NOT ACTIVE",
+                "4": "ACTIVE"
+            },
+            "address": "0x53",
+            "numbytes": 1,
+            "mask": "0x04"
+        },
+        {
+            "name": "LH front rated actuator",
+            "decimals": 1,
+            "address": "0x0068",
+            "numbytes": 1,
+            "lsb": 0.4,
+            "offset": 0,
+            "units": "percent"
+        },
+        {
+            "name": "LH front current actuator",
+            "decimals": 1,
+            "address": "0x0069",
+            "numbytes": 1,
+            "lsb": 0.4,
+            "offset": 0,
+            "units": "percent"
+        },
+        {
+            "name": "RH front rated actuator",
+            "decimals": 1,
+            "address": "0x006C",
+            "numbytes": 1,
+            "lsb": 0.4,
+            "offset": 0,
+            "units": "percent"
+        },
+        {
+            "name": "RH front current actuator",
+            "decimals": 1,
+            "address": "0x006D",
+            "numbytes": 1,
+            "lsb": 0.4,
+            "offset": 0,
+            "units": "percent"
+        },
+        {
+            "name": "LH rear rated actuator",
+            "decimals": 1,
+            "address": "0x0070",
+            "numbytes": 1,
+            "lsb": 0.4,
+            "offset": 0,
+            "units": "percent"
+        },
+        {
+            "name": "LH rear current actuator",
+            "decimals": 1,
+            "address": "0x0071",
+            "numbytes": 1,
+            "lsb": 0.4,
+            "offset": 0,
+            "units": "percent"
+        },
+        {
+            "name": "RH rear rated actuator",
+            "decimals": 1,
+            "address": "0x0074",
+            "numbytes": 1,
+            "lsb": 0.4,
+            "offset": 0,
+            "units": "percent"
+        },
+        {
+            "name": "RH rear current actuator",
+            "decimals": 1,
+            "address": "0x0075",
+            "numbytes": 1,
+            "lsb": 0.4,
+            "offset": 0,
+            "units": "percent"
+        },
+        {
+            "name": "Vehicle speed",
+            "decimals": 0,
+            "address": "0x009B",
+            "numbytes": 1,
+            "lsb": 1,
+            "offset": 0,
+            "units": "km/h"
+        }
+    ]
+}
